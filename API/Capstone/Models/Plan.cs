@@ -7,8 +7,10 @@ namespace Capstone.Models
 {
     public class Plan
     {
-
         public int PlanId { get; set; }
 
+        public String PlanName { get; set; }
+
+        List<Meal> PlanMeals { get; set; }
     }
 }
