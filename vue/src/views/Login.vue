@@ -74,3 +74,14 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+#login{
+  border: 1px solid black;
+  margin: 0px auto;
+  width: 1000px;
+  padding: 20px;
+}
+
+</style>
