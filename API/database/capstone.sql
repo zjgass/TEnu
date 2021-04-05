@@ -38,14 +38,14 @@ CREATE TABLE recipe
 (
 	recipe_id int IDENTITY(1,1) NOT NULL,
 	recipe_name varchar(50) NOT NULL,
-	public_or_private bit NOT NULL,
+	is_public bit NOT NULL,
 	servings int NOT NULL,
 	prep_time varchar(20),
 	cook_time varchar(20),
 	total_time varchar(20),
-	ingredients varchar(Max) NOT NULL,
-	utensils varchar(Max),
-	instructions varchar(Max) NOT NULL,
+	ingredients nvarchar(Max) NOT NULL,
+	utensils nvarchar(Max),
+	instructions nvarchar(Max) NOT NULL,
 	img_url varchar(200)
 
 	constraint pk_recipe primary key(recipe_id)
