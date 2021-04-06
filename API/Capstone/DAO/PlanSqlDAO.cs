@@ -112,8 +112,9 @@ namespace Capstone.DAO
             Plan u = new Plan()
             {
                 PlanId = Convert.ToInt32(reader["meal_plan_id"]),
-                UserId = Convert.ToInt32(reader["user_id"]),
                 Name = Convert.ToString(reader["meal_plan_name"]),
+                UserId = Convert.ToInt32(reader["user_id"]),
+               
             };
 
             return u;
