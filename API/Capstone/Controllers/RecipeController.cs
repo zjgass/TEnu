@@ -14,26 +14,28 @@ namespace Capstone.Controllers
     {
         private readonly IRecipeDAO recipeDAO;
 
-        //GetReceipe
+        //GetRecipe
         [HttpGet("{recipeId}")]
         public ActionResult<Recipe> GetRecipe(int recipeId)
         {
             return Ok(recipeDAO.GetRecipe(recipeId));
         }
-        //CreateReceipe
+        //CreateRecipe
         [HttpPost]
         public ActionResult<RecipeController> CreateRecipe(Recipe recipe)
         {
             Recipe added = recipeDAO.CreateRecipe(recipe);
             return Created($"/recipe/{recipe.RecipeId}", added);
         }
-        //UpdateReceipe
-        [HttpPut("{receipeId}")]
-        public ActionResult<RecipeController> UpdateReceipe(Recipe recipe)
+        //UpdateRecipe
+        [HttpPut("{recipeId}")]
+        public ActionResult<RecipeController> UpdateRecipe(Recipe recipe)
         {
             Recipe updated = recipeDAO.UpdateRecipe(recipe);
             return Ok(updated);
         }
-        //Delete
+        //TODO Delete
+
+        //TODO get api/recipe return all recipes of user
     }
 }

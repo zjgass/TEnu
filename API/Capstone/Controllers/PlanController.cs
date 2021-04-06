@@ -51,6 +51,7 @@ namespace Capstone.Controllers
         }
 
         //DeletePlan
+        // api/plan/planId
 
 
 
