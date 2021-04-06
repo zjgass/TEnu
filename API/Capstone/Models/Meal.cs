@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    //TODO MODELNEEDSCOMPLETED
+    
     public class Meal
     {
         public int MealId { get; set; }
+
+        public string Name { get; set; }
     }
 }
