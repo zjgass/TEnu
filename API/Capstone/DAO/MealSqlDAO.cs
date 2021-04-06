@@ -22,10 +22,9 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("Insert INTO meal (meal_name) VALUES (@meal_name);select Scope_Identity() as meal_Identity;" ,conn);
+                    SqlCommand cmd = new SqlCommand("Insert INTO meal (meal_name) VALUES (@meal_name);" ,conn);
                     
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
-                    //cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
                     cmd.ExecuteNonQuery();
                         
                         
@@ -86,17 +85,18 @@ namespace Capstone.DAO
 
             return returnMeal;
         }
-        public List<Meal> GetMeals(int mealId)
+        public List<Meal> GetMeals(int userId)
         {
+            /*
             List<Meal> returnMeals = new List<Meal>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                  
+                  //TODO Create joint query
                     SqlCommand cmd = new SqlCommand("SELECT meal_name, meal_id From Meal ", conn);
-                    cmd.Parameters.AddWithValue("", mealId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if(reader.HasRows)
                     {
@@ -113,14 +113,15 @@ namespace Capstone.DAO
                 throw;
             }
             return returnMeals;
-
+            */
+            throw new NotImplementedException();
         }
         public Meal UpdateMeal(Meal meal)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE meal_name SET meal_name = @meal_name WHERE meal_recipe_id = @meal_recipe_id ", conn);
+                SqlCommand cmd = new SqlCommand("UPDATE meal_name SET meal_name = @meal_name WHERE meal_id = @meal_id ", conn);
                 cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                 cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
                 cmd.ExecuteNonQuery();
