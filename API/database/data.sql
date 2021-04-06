@@ -6,16 +6,16 @@ insert into recipe (recipe_name, is_public, serves,
 	ingredients, utensils, instructions, img_url)
 values ('banana bread', 1, 8,
 	'[{"name": "banana", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
-	'{"utensils": ["mixing bowl", "mixer", "bread pan"]}',
-	'{"instructions": ["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
+	'["mixing bowl", "mixer", "bread pan"]',
+	'["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg');
 
 insert into recipe (recipe_name, is_public, serves,
 	ingredients, utensils, instructions, img_url)
 values ('zucchini bread', 1, 8, 
 	'[{"name": "zucchini", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
-	'{"utensils": ["mixing bowl", "mixer", "bread pan"]}',
-	'{"instructions": ["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
+	'["mixing bowl", "mixer", "bread pan"]',
+	'["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
 	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85');
 
 --Add the recipes to user
