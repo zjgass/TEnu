@@ -9,8 +9,12 @@ namespace Capstone.Models
     {
         public int PlanId { get; set; }
 
-        public String PlanName { get; set; }
+        public int UserId { get; set; }
 
-        List<Meal> PlanMeals { get; set; }
+        public String Name { get; set; }
+
+       
+
+        List<Meal> Meals { get; set; }
     }
 }

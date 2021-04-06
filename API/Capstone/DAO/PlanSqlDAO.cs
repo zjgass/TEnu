@@ -23,11 +23,18 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    //TODO Complete SELECT statment and parameters
-                    SqlCommand cmd = new SqlCommand("", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO meal_plan (meal_plan_name, user_id) VALUES (@meal_plan_name, @user_id)", conn);
+                    cmd.Parameters.AddWithValue("@meal_plan_name", plan.Name);
+                    cmd.Parameters.AddWithValue("@user_id", plan.UserId);
+                    cmd.ExecuteNonQuery();
                 }
             }
-            throw new NotImplementedException();
+            //TODO Implement better exception handling
+            catch (SqlException)
+            {
+                throw;
+            }
+            return GetPlan(plan.PlanId);
         }
 
         public Plan GetPlan(int planId)
@@ -40,9 +47,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    //TODO Complete SELECT and Parameters statement
-                    SqlCommand cmd = new SqlCommand("SELECT ", conn);
-                    cmd.Parameters.AddWithValue("", planId);
+                    SqlCommand cmd = new SqlCommand("SELECT meal_plan_id, meal_plan_name, user_id FROM meal_plan WHERE meal_plan_id = @meal_plan_id ", conn);
+                    cmd.Parameters.AddWithValue("@meal_plan_id", planId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if(reader.HasRows && reader.Read())
@@ -68,8 +74,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    //TODO Need to write SELECT and Parameters 
-                    SqlCommand cmd = new SqlCommand("", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT meal_plan_id, meal_plan_name, user_id FROM meal_plan", conn);
                     cmd.Parameters.AddWithValue("", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
@@ -91,14 +96,24 @@ namespace Capstone.DAO
 
         public Plan UpdatePlan(Plan plan)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE meal_plan SET meal_plan_name = @meal_plan_name WHERE meal_plan_id = @meal_plan_id ", conn);
+                cmd.Parameters.AddWithValue("@meal_plan_name", plan.Name);
+                cmd.Parameters.AddWithValue("@meal_plan_id", plan.PlanId);
+                cmd.ExecuteNonQuery();
+            }
+            return GetPlan(plan.PlanId);
         }
 
         private Plan GetPlanFromReader(SqlDataReader reader)
         {
             Plan u = new Plan()
             {
-                //TODO Implement this, need table schema
+                PlanId = Convert.ToInt32(reader["meal_plan_id"]),
+                UserId = Convert.ToInt32(reader["user_id"]),
+                Name = Convert.ToString(reader["meal_plan_name"]),
             };
 
             return u;
