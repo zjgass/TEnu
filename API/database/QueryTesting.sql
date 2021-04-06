@@ -5,10 +5,13 @@ declare @json  nvarchar(4000);
 set @json = N'{"ingredients":
 	[{"name": "bananas", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]}';
 
-select recipe_name, json_query(@json, '$.ingredients[0]') as first
+select recipe_name
 from recipe
-where recipe_name like '%banana%';
+where JSON_Query(ingredients, '$') like '%banana%'
 
+SELECT ingredient_list
+FROM recipe
+WHERE JSON_VALUE(ingredient_list, '$.ingredient') = 'banana'
 -------------------------------------
 
 DECLARE @jsonInfo NVARCHAR(MAX)
