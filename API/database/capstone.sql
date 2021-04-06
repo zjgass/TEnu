@@ -46,7 +46,7 @@ CREATE TABLE recipe
 	ingredients nvarchar(4000) NOT NULL,
 	utensils nvarchar(4000),
 	instructions nvarchar(4000) NOT NULL,
-	img_url varchar(200)
+	img_url varchar(200),
 
 	constraint pk_recipe primary key(recipe_id)
 );
@@ -118,33 +118,36 @@ CREATE TABLE meal_recipe
 );
 
 --Plan Table
-CREATE TABLE meal_plan
+CREATE TABLE mplan
 (
-	meal_plan_id int IDENTITY(1,1) NOT NULL,
-	meal_plan_name varchar(50),
+	mplan_id int IDENTITY(1,1) NOT NULL,
+	mplan_name varchar(50),
 	user_id int NOT NULL,
 
-	constraint pk_plan primary key(meal_plan_id),
+	constraint pk_plan primary key(mplan_id),
 	constraint fk_plan_user
 		foreign key(user_id)
 		references users(user_id)
 );
 
 --Meal Plan Join Table
-CREATE TABLE meal_meal_plan
+CREATE TABLE meal_mplan
 (
 	meal_id int NOT NULL,
-	meal_plan_id int NOT NULL,
+	mplan_id int NOT NULL,
 
-	constraint pk_meal_meal_plan
-		primary key(meal_id, meal_plan_id),
-	constraint fk_meal_meal_plan_meal
+	constraint pk_meal_mplan
+		primary key(meal_id, mplan_id),
+	constraint fk_meal_mplan_meal
 		foreign key(meal_id)
 		references meal(meal_id),
-	constraint fk_meal_meal_plan_meal_plan
-		foreign key(meal_plan_id)
-		references meal_plan(meal_plan_id)
+	constraint fk_meal_mplan_mplan
+		foreign key(mplan_id)
+		references mplan(mplan_id)
 );
 
 commit transaction;
 
+--ALTER TABLE recipe 
+--	add constraint [ingredient_list record should be formatted as JSON]
+--	check (ISJASON(ingredient_list) = 1);

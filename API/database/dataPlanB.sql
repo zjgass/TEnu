@@ -3,7 +3,7 @@ GO
 
 --Insert some ingredients
 insert into ingredient (ingredient_name)
-values ('bananas'), ('flour'), ('zucchini'), ('butter'),
+values ('banana'), ('flour'), ('zucchini'), ('butter'),
 		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries');
 
 --Insert some recipes
