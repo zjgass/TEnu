@@ -13,8 +13,15 @@
 </template>
 
 <script>
+// import PlanService from '../services/PlanService';
 export default {
-
+  name: "plan-list",
+  data() {
+    return {
+      docs: []
+    }
+    
+  }
 
 }
 </script>

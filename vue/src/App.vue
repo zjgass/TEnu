@@ -3,11 +3,13 @@
     <div id="banner">
         <h1>Meal Planner</h1>
         
-        <p>subtext</p>
+
+                <p>pun</p>
         <!-- <img id='banner-image' src="/spoon-and-fork" alt='fork and knife' width='100' height='100'/> -->
       </div>
     <div id="nav" v-if="$store.state.token != ''">
       <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link>
+
       <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
@@ -83,6 +85,7 @@ color: red;
 #nav .router-link-exact-active{
 /* background-color: silver; */
 border: 1px black solid;
+background-color: lightgrey;
 
 }
 
@@ -137,6 +140,8 @@ font-family: arial;
   border-right: 1px solid black;
   border-radius: 0px; */
 }
+
+
 
 
 </style>

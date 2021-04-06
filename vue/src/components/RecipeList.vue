@@ -2,7 +2,10 @@
 
 <template>
 <div>
-    <p>this text is in the RecipeList component</p>
+<ul>
+<li class='plan-item'>unordered list of recipes</li>
+<li class='plan-item'>recipe </li>
+    </ul>
 
 </div>
 
