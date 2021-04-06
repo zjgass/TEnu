@@ -51,7 +51,8 @@ namespace Capstone.Controllers
         }
 
         //DeletePlan
-
+        [HttpDelete("{planId}")]
+        public ActionResult
 
 
 
