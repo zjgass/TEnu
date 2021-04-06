@@ -17,7 +17,6 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-
         public Recipe CreateRecipe(Recipe recipe)
         {
             try
@@ -29,8 +28,8 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand("INSERT INTO recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time, ingredients, utensils, instructions, img_url)" +
                                                      " VALUES (@recipe_name, @is_public, @serves, @prep_time, @cook_time, @total_time, @ingredients, @utensils, @instructions, @img_url)", conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
-                    //TODO needs fixed, stored as byte in database
-                    cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic);
+                    //need to convert bool to bit for is_public column in DB
+                    cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic ? 1 : 0);
                     cmd.Parameters.AddWithValue("@serves", recipe.Serves);
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
@@ -82,7 +81,22 @@ namespace Capstone.DAO
         //TODO needs implemented
         public Recipe UpdateRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            try
+            {
+                
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    //TODO Need to finish select statement and params
+                    SqlCommand cmd = new SqlCommand("", conn);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            return GetRecipe(recipe.RecipeId);
         }
 
         private Recipe GetRecipeFromReader(SqlDataReader reader)
