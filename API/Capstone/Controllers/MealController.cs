@@ -35,6 +35,10 @@ namespace Capstone.Controllers
             return Ok(updated);
         }
         //TODO ADDDELETEMEALMESSAGE
+
+
+        //TODO ADD GET api/meal return all meals saved by user
+
     }
     
     
