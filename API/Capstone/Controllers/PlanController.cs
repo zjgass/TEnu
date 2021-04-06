@@ -15,6 +15,11 @@ namespace Capstone.Controllers
 
         private readonly IPlanDAO planDAO;
 
+        public PlanController(IPlanDAO _planDAO)
+        {
+            planDAO = _planDAO;
+        }
+
         //GetUserPlans
         [HttpGet]
         public ActionResult<List<Plan>> GetUserPlans(int userId)
@@ -23,7 +28,7 @@ namespace Capstone.Controllers
         }
 
         //GetPlan
-        [HttpGet("{planId}")]
+        [HttpGet("{planId}", Name = "GetPlan")]
         public ActionResult<Plan> GetPlan(int planId)
         {
             return Ok(planDAO.GetPlan(planId));
@@ -31,15 +36,15 @@ namespace Capstone.Controllers
 
         //CreatePlan
         [HttpPost]
-        public ActionResult<PlanController> AddPlan(Plan plan)
+        public ActionResult<Plan> AddPlan(Plan plan)
         {
             Plan added = planDAO.CreatePlan(plan);
-            return Created($"/plan/{plan.PlanId}", added);
+            return CreatedAtRoute("GetPlan", new { planId = plan.PlanId }, plan);
         }
 
         //UpdatePlan
         [HttpPut("{planId}")]
-        public ActionResult<PlanController> UpdatePlan(Plan plan)
+        public ActionResult<Plan> UpdatePlan(Plan plan)
         {
             Plan updated = planDAO.UpdatePlan(plan);
             return Ok(updated);    
