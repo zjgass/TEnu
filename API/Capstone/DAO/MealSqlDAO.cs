@@ -21,11 +21,41 @@ namespace Capstone.DAO
                 using(SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                        //TODO Complete SELECT statement and parameters
-                        SqlCommand cmd = new SqlCommand("", conn);
+
+                    SqlCommand cmd = new SqlCommand("Insert INTO meal (meal_name) VALUES (@meal_name);select Scope_Identity() as meal_Identity;" ,conn);
+                    
+                    cmd.Parameters.AddWithValue("@meal_name", meal.Name);
+                    //cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.ExecuteNonQuery();
+                        
+                        
                 }
             }
-            throw new NotImplementedException();
+            catch (SqlException)
+            {
+                throw ;
+            }
+            return GetMeal(meal.MealId);
+        }
+        public Meal AddRecipeToMeal(Meal meal,int RecipeId)
+        {
+            try
+            {
+             using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("Insert INTO meal_recipe(meal_id, recipe_id) Values(@meal_id @recipe_id);", conn);
+                    cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.Parameters.AddWithValue("@recipe_id",RecipeId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return GetMeal(meal.MealId); 
         }
         public Meal GetMeal(int mealId)
         {
@@ -37,13 +67,14 @@ namespace Capstone.DAO
                     conn.Open();
 
                     //TODO Complete SELECT and Parameters statement
-                    SqlCommand cmd = new SqlCommand("SELECT", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT meal_name,meal_id From Meal ", conn);
                     cmd.Parameters.AddWithValue("", mealId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if(reader.HasRows && reader.Read())
+                    if(reader.HasRows&& reader.Read())
                     {
-                        returnMeal = GetMealFromReader(reader);
+                            returnMeal = GetMealFromReader(reader);
+                              
                     }
                 }
             }
@@ -55,17 +86,17 @@ namespace Capstone.DAO
 
             return returnMeal;
         }
-        public List<Meal> GetMeals(int userId)
+        public List<Meal> GetMeals(int mealId)
         {
-            List<Plan> returnMeals = new List<Plan>();
+            List<Meal> returnMeals = new List<Meal>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    //TODO Need to write SELECT and Parameters
-                    SqlCommand cmd = new SqlCommand("", conn);
-                    cmd.Parameters.AddWithValue("", userId);
+                  
+                    SqlCommand cmd = new SqlCommand("SELECT meal_name, meal_id From Meal ", conn);
+                    cmd.Parameters.AddWithValue("", mealId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if(reader.HasRows)
                     {
@@ -77,7 +108,7 @@ namespace Capstone.DAO
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
                 throw;
             }
@@ -86,13 +117,23 @@ namespace Capstone.DAO
         }
         public Meal UpdateMeal(Meal meal)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE meal_name SET meal_name = @meal_name WHERE meal_recipe_id = @meal_recipe_id ", conn);
+                cmd.Parameters.AddWithValue("@meal_name", meal.Name);
+                cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                cmd.ExecuteNonQuery();
+            }
+            return GetMeal(meal.MealId);
         }
         private Meal GetMealFromReader(SqlDataReader reader)
         {
             Meal m = new Meal()
             {
-                //TODO implement this,need table schema
+                MealId = Convert.ToInt32(reader["meal_id"]),
+                Name = Convert.ToString(reader["meal_name"]),
+                
             };
             return m;
         }
