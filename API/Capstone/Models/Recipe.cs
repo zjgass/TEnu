@@ -11,21 +11,21 @@ namespace Capstone.Models
 
         public string Name { get; set; }
 
-        public bool Public { get; set; }
+        public bool IsPublic { get; set; }
 
-        public int Servings { get; set; }
+        public int Serves { get; set; }
 
         public string PrepTime { get; set; }
 
         public string CookTime { get; set; }
 
         public string TotalTime { get; set; }
-
-        //TODO Add ingredients to Model? Storing as JSON in database
-
+        //JSON string
+        public string Ingredients { get; set; }
+        //JSON string
         public string Utensils { get; set; }
-
-        //TODO Add instructions to Model? Storing as JSON in database
+        //JSON string
+        public string Instructions { get; set; }
 
         public string ImgUrl { get; set; }
     }
