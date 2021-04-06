@@ -5,6 +5,11 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
+import AddPlan from '../views/AddPlan.vue'
+import AddRecipe from '../views/AddRecipe.vue'
+import AddMeal from '../views/AddMeal.vue'
+import ViewRecipes from '../views/ViewRecipes.vue'
+
 
 Vue.use(Router)
 
@@ -38,6 +43,7 @@ const router = new Router({
       }
     },
     {
+
       path: "/logout",
       name: "logout",
       component: Logout,
@@ -53,6 +59,40 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "/AddPlan",
+      name: "AddPlan",
+      component: AddPlan,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/AddRecipe",
+      name: "AddRecipe",
+      component: AddRecipe,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/AddMeal",
+      name: "AddMeal",
+      component: AddMeal,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/ViewRecipes",
+      name: "ViewRecipes",
+      component: ViewRecipes,
+      meta: {
+        requiresAuth: true
+      }
+    }
+
+
   ]
 })
 

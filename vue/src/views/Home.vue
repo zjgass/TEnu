@@ -1,10 +1,10 @@
 <template>
   <div class="home">
 
-    <h1>Home</h1>
+    <h1>Your Meal Plans</h1>
 
-    
-    <p>You must be authenticated to see this</p>
+<plan-list></plan-list>
+
 
 
 
@@ -12,16 +12,20 @@
 </template>
 
 <script>
+import PlanList from "@/components/PlanList";
 export default {
+    components: {
+    PlanList
+  },
   name: "home"
 };
 </script>
 <style scoped>
 .home{
-border: 1px black solid;
+/* border: 1px black solid;
 width: 1000px;
 margin: 0px auto 0px;
-padding: 20px;
+padding: 20px; */
 
 }
 
