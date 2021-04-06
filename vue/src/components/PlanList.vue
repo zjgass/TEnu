@@ -1,18 +1,11 @@
 
-
-
 <template>
 <div id='meals'>
-    <p>this text is in the PlanList component</p>
-<div id='breakfast'>
 
-</div>
-<div id='lunch'>
-
-</div>
-<div id='dinner'>
-
-</div>
+<ul>
+<li class='plan-item'>Week of (monday)</li>
+<li class='plan-item'>plan </li>
+    </ul>
 
 </div>
 
@@ -21,15 +14,26 @@
 
 <script>
 export default {
-    data(){
-        
 
-
-    }
 
 }
 </script>
 
 <style>
+
+.plan-item{
+
+list-style-type: none;
+margin-bottom: 10px;
+padding: 10px;
+width: 90%;
+background-color: silver;
+height: 30px;
+border-radius: 5px;
+border: 1px solid black;
+
+}
+
+
 
 </style>

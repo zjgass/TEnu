@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Add A New Meal Plan</h1>
-
     <plan-form />
+
   </div>
 </template>
 

@@ -1,18 +1,19 @@
 <template>
   <div>
-    <h1>Add A New Meal</h1>
-    <meal-form />
-    
+    <h1>Recipes</h1>
+    <recipe-list />
+
   </div>
 </template>
 
 <script>
-import MealForm from "@/components/MealForm";
+import RecipeList from "@/components/RecipeList";
 
 export default {
   components: {
-    MealForm
+    RecipeList
   }
+
 };
 </script>
 <style scoped>

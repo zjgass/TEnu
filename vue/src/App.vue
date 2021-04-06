@@ -11,11 +11,11 @@
       <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
-      <router-link  class='nav-button' v-bind:to="{ name: '' }" >View Recipes</router-link>
+      <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
     <router-view id='router' />
-    <plan-form />
+
   </div>
 </template>
 
@@ -48,10 +48,11 @@
 
 }
 
-.nav-button :hover{
-background-color: red;
-
+.nav-button:hover{
+color: red;
 }
+
+
 #banner-image{
   width: 100px;
   height: 100px;
@@ -67,14 +68,22 @@ background-color: red;
 .nav-button{
   font-size: 20px;
   height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-decoration: none;
   margin-left: 10px;
   margin-right: 20px;
   display: flex;
-
+  font-weight: bold;
   align-items: center;
 
   
+}
+
+#nav .router-link-exact-active{
+/* background-color: silver; */
+border: 1px black solid;
+
 }
 
 #banner{
@@ -122,6 +131,7 @@ font-family: arial;
 }
 
 #app{
+  
   /* margin-top: 0px;
   border-left: 1px solid black;
   border-right: 1px solid black;

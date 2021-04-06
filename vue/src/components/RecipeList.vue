@@ -1,24 +1,21 @@
+
+
 <template>
 <div>
-<p>this text is in the RecipeForm component</p>
+    <p>this text is in the RecipeList component</p>
+
+</div>
 
 
-
-
-    </div>
 </template>
 
 <script>
 export default {
 
+
 }
 </script>
 
 <style>
-
-
-#form{
-
-}
 
 </style>
