@@ -25,6 +25,45 @@ where user_id = 1;
 --values(@recipe_name, @is_public, @serves, @prep_time, @cook_time, @total_time,
 --	@ingredients, @utensils, @instructions, @img_url)
 
+--Update recipe
+--update recipe
+--set
+--	recipe_name = @recipe_name,
+--	is_public = @is_public,
+--	serves = @serves,
+--	prep_time = @prep_time,
+--	cook_time = @cook_time,
+--	total_time = @total_time,
+--	ingredients = @ingredients,
+--	utensils = @utensils,
+--	instructions = @instructions,
+--	img_url = @img_url
+--where recipe_id = @recipe_id
+
+--Delete recipe
+begin transaction;
+
+select * from category_recipe;
+select * from meal_recipe;
+select * from recipe_users;
+select * from recipe;
+
+delete from category_recipe
+where recipe_id = 1;
+delete from meal_recipe
+where recipe_id = 1;
+delete from recipe_users
+where recipe_id = 1;
+delete from recipe
+where recipe_id = 1;
+
+select * from category_recipe;
+select * from meal_recipe;
+select * from recipe_users;
+select * from recipe;
+
+rollback transaction;
+
 --Select all public recipes
 select recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url

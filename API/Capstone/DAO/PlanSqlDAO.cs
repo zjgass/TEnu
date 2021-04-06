@@ -114,15 +114,15 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sqlText = "delete from meal_mplan\n" +
-                                        "where mplan_id = @mplan_id;\n" +
-                                        "delete from mplan\n" +
+                    string sqlText = "delete from meal_mplan " +
+                                        "where mplan_id = @mplan_id; " +
+                                        "delete from mplan " +
                                         "where mplan_id = @mplan_id; ";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@mplan_id", PlanId);
                     int rowsAffected = cmd.ExecuteNonQuery();
 
-                    return rowsAffected >= 1;
+                    return rowsAffected > 0;
                 }
             }
             catch (Exception)
