@@ -43,10 +43,10 @@ CREATE TABLE recipe
 	prep_time varchar(20),
 	cook_time varchar(20),
 	total_time varchar(20),
-	ingredients nvarchar(4000) NOT NULL,
+	ingredients nvarchar(4000),
 	utensils nvarchar(4000),
-	instructions nvarchar(4000) NOT NULL,
-	img_url varchar(200)
+	instructions nvarchar(4000),
+	img_url varchar(200),
 
 	constraint pk_recipe primary key(recipe_id)
 );
@@ -148,3 +148,6 @@ CREATE TABLE meal_meal_plan
 
 commit transaction;
 
+--ALTER TABLE recipe 
+--	add constraint [ingredient_list record should be formatted as JSON]
+--	check (ISJASON(ingredient_list) = 1);
