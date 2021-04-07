@@ -1,4 +1,5 @@
 ﻿using Capstone.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -49,6 +50,7 @@ namespace Capstone.DAO
             {
                 throw;
             }
+            //TODO what should we return here?  revisit when working on front-end
             return recipe;
         }
 
@@ -87,6 +89,8 @@ namespace Capstone.DAO
         public List<Recipe> GetRecipes(int userId)
         {
             List<Recipe> recipes = new List<Recipe>() { };
+
+         
 
             try
             {
@@ -185,7 +189,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "SELECT recipe_id, recipe_name, is_public, servings, prep_time, cook_time, total_time, " +
+                    string sqlText = "SELECT recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "FROM recipe " +
                         "WHERE recipe_id = @recipe_id";
@@ -283,6 +287,8 @@ namespace Capstone.DAO
 
         private Recipe GetRecipeFromReader(SqlDataReader reader)
         {
+         
+
             Recipe r = new Recipe()
             {
                 RecipeId = Convert.ToInt32(reader["recipe_id"]),
@@ -297,11 +303,9 @@ namespace Capstone.DAO
                 Utensils = Convert.ToString(reader["utensils"]),
                 Instructions = Convert.ToString(reader["instructions"]),
                 ImgUrl = Convert.ToString(reader["img_url"]),
-
             };
             return r;
         }
-
 
     }
 }

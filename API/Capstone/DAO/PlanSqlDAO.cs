@@ -23,8 +23,8 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO meal_plan (meal_plan_name, user_id) VALUES (@meal_plan_name, @user_id)", conn);
-                    cmd.Parameters.AddWithValue("@meal_plan_name", plan.Name);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO mplan (mplan_name, user_id) VALUES (@mplan_name, @user_id)", conn);
+                    cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
                     cmd.Parameters.AddWithValue("@user_id", plan.UserId);
                     cmd.ExecuteNonQuery();
                 }
@@ -47,8 +47,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT meal_plan_id, meal_plan_name, user_id FROM meal_plan WHERE meal_plan_id = @meal_plan_id ", conn);
-                    cmd.Parameters.AddWithValue("@meal_plan_id", planId);
+                    SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan WHERE mplan_id = @mplan_id ", conn);
+                    cmd.Parameters.AddWithValue("@mplan_id", planId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if(reader.HasRows && reader.Read())
@@ -73,8 +73,9 @@ namespace Capstone.DAO
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+                    //TODO needs completed
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT meal_plan_id, meal_plan_name, user_id FROM meal_plan", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan", conn);
                     cmd.Parameters.AddWithValue("", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
@@ -100,8 +101,8 @@ namespace Capstone.DAO
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE meal_plan SET meal_plan_name = @meal_plan_name WHERE meal_plan_id = @meal_plan_id ", conn);
-                cmd.Parameters.AddWithValue("@meal_plan_name", plan.Name);
-                cmd.Parameters.AddWithValue("@meal_plan_id", plan.PlanId);
+                cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
+                cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
                 cmd.ExecuteNonQuery();
             }
             return GetPlan(plan.PlanId);
@@ -136,8 +137,8 @@ namespace Capstone.DAO
         {
             Plan u = new Plan()
             {
-                PlanId = Convert.ToInt32(reader["meal_plan_id"]),
-                Name = Convert.ToString(reader["meal_plan_name"]),
+                PlanId = Convert.ToInt32(reader["mplan_id"]),
+                Name = Convert.ToString(reader["mplan_name"]),
                 UserId = Convert.ToInt32(reader["user_id"]),
                
             };
