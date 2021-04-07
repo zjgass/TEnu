@@ -1,8 +1,8 @@
 USE final_capstone
 GO
-/
+
 --Insert some recipes
-insert into recipe (recipe_name, is_public, servings,
+insert into recipe (recipe_name, is_public, serves,
 	ingredients, utensils, instructions, img_url)
 values ('banana bread', 1, 8,
 	'[{"name": "banana", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
@@ -10,7 +10,7 @@ values ('banana bread', 1, 8,
 	'["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg');
 
-insert into recipe (recipe_name, is_public, servings,
+insert into recipe (recipe_name, is_public, serves,
 	ingredients, utensils, instructions, img_url)
 values ('zucchini bread', 1, 8, 
 	'[{"name": "zucchini", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
@@ -71,3 +71,8 @@ values ('empty the freezer of bananas',
 insert into meal_mplan (meal_id, mplan_id)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select mplan_id from mplan where mplan_name like '%bananas%'));
+
+
+
+		INSERT INTO recipe_users (recipe_id, user_id) VALUES (2, 3)
+

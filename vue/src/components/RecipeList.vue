@@ -1,29 +1,26 @@
 <template>
 <div>
+
+
   <table>
 
     <thead>
       <tr>
-        <th>&nbsp;</th>
-        <th>Recipe</th>
-        <th>some property of a recipe</th>
-        <th>some property of a recipe</th>
+        <th>heading of column 1</th>
+        <th>heading of column 2</th>
+        <th>heading of column 3</th>
+
       </tr>
     </thead>
 
     <tbody>
-      <tr v-for="recipe in allRecipes" :key="recipe.id" v-on:click="viewDocument(recipe.id)">
 
-        <td>
-        </td>
-
-        <td class="name">{{ recipe.name }}</td>
-        
-        <td>
-        </td>
-        <td>{{ doc.lastOpened }}</td>
-        
+      <tr class="recipe-row" v-for="recipe in Recipes" :key="recipe.recipeId" v-on:click="viewRecipe(recipe.id)">
+        <td>table td</td>
+        <td>row: {{ recipe.name }}</td>
+        <td></td>
       </tr>
+
     </tbody>
 
   </table>
@@ -33,26 +30,31 @@
 </template>
 
 <script>
-// import RecipeService from "../services/RecipeService";
+import RecipeService from "../services/RecipeService";
 
-// export default {
-//   name: "recipe-list",
-//   data() {
-//     return {
-//       allRecipes: []
-//     };
-//   },
-//   methods: {
-//     viewRecipe(recipeid) {
-//       this.$router.push(`/recipe/${recipeId}`);
-//     }
-//   },
-//   created() {
-//     RecipeService.list().then((response) => {
-//       this.allRecipes = response.data;
-//     });
-//   }
-// };
+export default {
+  name: "recipe-list",
+  data() {
+    return {
+      Recipes: []
+
+
+    };
+  },
+  methods: {
+    viewRecipe(recipeId) {
+      this.$router.push(`/recipe/${recipeId}`);
+    }
+  },
+  created() {
+    RecipeService.getRecipes().then((response) => {
+      this.Recipes = response.data;
+    });
+  }
+};
+
+
+
 </script>
 
 <style>
