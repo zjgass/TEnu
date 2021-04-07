@@ -158,6 +158,10 @@ namespace Capstone.DAO
                     }
                                             
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    for (int i = 0; i < args.Length; i++)
+                    {
+                        cmd.Parameters.AddWithValue(ParamList[i], args[i]);
+                    }
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
