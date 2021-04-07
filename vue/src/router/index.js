@@ -10,6 +10,7 @@ import AddRecipe from '../views/AddRecipe.vue'
 import AddMeal from '../views/AddMeal.vue'
 import ViewRecipes from '../views/ViewRecipes.vue'
 import Home2 from '../views/Home2.vue'
+import RecipeDetailView from '../views/RecipeDetailView.vue'
 
 Vue.use(Router)
 
@@ -90,6 +91,12 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/Recipes/:id",
+      name: 'RecipeDetailView',
+      component: RecipeDetailView
+
     },
     {
       path: '/home2',
