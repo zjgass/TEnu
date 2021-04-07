@@ -43,8 +43,8 @@ border: 1px solid black;
 }
 
 #meals{
-    border: 1px solid black;
-    border-radius: 5px;
+    /* border: 1px solid black;
+    border-radius: 5px; */
 
 }
 
