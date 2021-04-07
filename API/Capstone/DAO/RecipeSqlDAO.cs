@@ -243,6 +243,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                     cmd.ExecuteNonQuery();
                 }
             }
