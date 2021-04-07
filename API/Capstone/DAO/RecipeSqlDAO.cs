@@ -90,15 +90,13 @@ namespace Capstone.DAO
         {
             List<Recipe> recipes = new List<Recipe>() { };
 
-         
-
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
@@ -287,8 +285,6 @@ namespace Capstone.DAO
 
         private Recipe GetRecipeFromReader(SqlDataReader reader)
         {
-         
-
             Recipe r = new Recipe()
             {
                 RecipeId = Convert.ToInt32(reader["recipe_id"]),

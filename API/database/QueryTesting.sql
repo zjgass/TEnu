@@ -20,7 +20,7 @@ join recipe_users on recipe_users.recipe_id = recipe.recipe_id
 where user_id = 1;
 
 --Create a new recipe
-insert into recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time,
+insert into recipe (recipe_name, is_public, serves,
 	ingredients, utensils, instructions)
 values('pumpkin bread', 1, 8,
 	'[{"name": "pumpkin puree", "qty": "1can"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
