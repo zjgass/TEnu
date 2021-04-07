@@ -6,11 +6,11 @@ const http = axios.create({
 
 export default {
 
-  getPlans() {
-    return http.get('/plan');
+  getRecipe() {
+    return http.get('/recipe');
   },
 
-  getPlan(planId) {
-    return http.get(`/plan/${planId}`)
+  getRecipe(recipeId) {
+    return http.get(`/recipe/${recipeId}`)
   }
 }
