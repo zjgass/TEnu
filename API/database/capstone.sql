@@ -155,3 +155,5 @@ commit transaction;
 --ALTER TABLE recipe 
 --	add constraint [ingredient_list record should be formatted as JSON]
 --	check (ISJASON(ingredient_list) = 1);
+
+		
