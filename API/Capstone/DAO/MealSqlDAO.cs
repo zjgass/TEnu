@@ -66,8 +66,8 @@ namespace Capstone.DAO
                     conn.Open();
 
                     //TODO Complete SELECT and Parameters statement
-                    SqlCommand cmd = new SqlCommand("SELECT meal_name,meal_id From Meal ", conn);
-                    cmd.Parameters.AddWithValue("", mealId);
+                    SqlCommand cmd = new SqlCommand("SELECT meal_name, recipe_name from meal join meal_recipe on meal_recipe.meal_id = meal.meal_id join recipe on recipe.recipe_id = meal_recipe.recipe_id where meal.meal_id = @mealId; ", conn);
+                    cmd.Parameters.AddWithValue("@mealId", mealId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if(reader.HasRows&& reader.Read())
@@ -87,7 +87,7 @@ namespace Capstone.DAO
         }
         public List<Meal> GetMeals(int userId)
         {
-            /*
+            
             List<Meal> returnMeals = new List<Meal>();
             try
             {
@@ -95,7 +95,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
                   //TODO Create joint query
-                    SqlCommand cmd = new SqlCommand("SELECT meal_name, meal_id From Meal ", conn);
+                    SqlCommand cmd = new SqlCommand("select meal_name, recipe_name from meal join meal_recipe on meal_recipe.meal_id = meal.meal_id join recipe on recipe.recipe_id = meal_recipe.recipe_id where user_id = @userId; ", conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if(reader.HasRows)
@@ -113,7 +113,7 @@ namespace Capstone.DAO
                 throw;
             }
             return returnMeals;
-            */
+            
             throw new NotImplementedException();
         }
         public Meal UpdateMeal(Meal meal)
@@ -128,6 +128,27 @@ namespace Capstone.DAO
             }
             return GetMeal(meal.MealId);
         }
+        public bool DeleteMeal(int mealId)
+        {
+            try
+            {
+               using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("delete from meal_recipe where meal_id = @mealId; delete from meal_mplan where meal_id = @mealId; delete from meal where meal_id = @mealId;");
+                    cmd.Parameters.AddWithValue("@mealId", mealId);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         private Meal GetMealFromReader(SqlDataReader reader)
         {
             Meal m = new Meal()
