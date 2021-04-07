@@ -13,7 +13,10 @@ namespace Capstone.Controllers
     public class MealController : Controller
     {
         private readonly IMealDAO mealDAO;
-
+        public MealController(IMealDAO _mealDAO)
+        {
+            mealDAO = _mealDAO;
+        }
         //GetMeal
         [HttpGet("{mealId}")]
         public ActionResult<Meal> GetMeal(int mealId)
@@ -34,8 +37,18 @@ namespace Capstone.Controllers
             Meal updated = mealDAO.UpdateMeal(meal);
             return Ok(updated);
         }
-        //TODO ADDDELETEMEALMESSAGE
+        //TODO ADD DELETE MEAL MESSAGE
+        [HttpDelete("{mealId}")]
+        public ActionResult DeleteMeal(int mealId)
+        {
+            bool success = mealDAO.DeleteMeal(mealId);
+            if (success)
+            {
+                return NoContent();
+            }
 
+            return BadRequest();
+        }
 
         //TODO ADD GET api/meal return all meals saved by user
 

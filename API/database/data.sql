@@ -1,8 +1,8 @@
 USE final_capstone
 GO
-
+/
 --Insert some recipes
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, is_public, servings,
 	ingredients, utensils, instructions, img_url)
 values ('banana bread', 1, 8,
 	'[{"name": "banana", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
@@ -10,7 +10,7 @@ values ('banana bread', 1, 8,
 	'["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg');
 
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, is_public, servings,
 	ingredients, utensils, instructions, img_url)
 values ('zucchini bread', 1, 8, 
 	'[{"name": "zucchini", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
