@@ -1,4 +1,4 @@
-﻿using Capstone.Models;
+﻿ using Capstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -105,6 +105,31 @@ namespace Capstone.DAO
                 cmd.ExecuteNonQuery();
             }
             return GetPlan(plan.PlanId);
+        }
+
+        public bool DeletePlan(int PlanId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sqlText = "delete from meal_mplan " +
+                                        "where mplan_id = @mplan_id; " +
+                                        "delete from mplan " +
+                                        "where mplan_id = @mplan_id; ";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@mplan_id", PlanId);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private Plan GetPlanFromReader(SqlDataReader reader)

@@ -33,6 +33,14 @@ INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','Yh
 
 GO
 
+CREATE TABLE ingredient
+(
+	ingredient_id int IDENTITY(1,1) NOT NULL,
+	ingredient_name varchar(25) NOT NULL,
+
+	constraint pk_ingredient primary key(ingredient_id)
+);
+
 --Recipe Table
 CREATE TABLE recipe
 (
@@ -43,10 +51,9 @@ CREATE TABLE recipe
 	prep_time varchar(20),
 	cook_time varchar(20),
 	total_time varchar(20),
-	ingredients nvarchar(4000) NOT NULL,
 	utensils nvarchar(4000),
 	instructions nvarchar(4000) NOT NULL,
-	img_url varchar(200),
+	img_url varchar(200)
 
 	constraint pk_recipe primary key(recipe_id)
 );
@@ -65,6 +72,23 @@ CREATE TABLE recipe_users
 	constraint fk_recipe_users_users
 		foreign key(user_id)
 		references users(user_id)
+);
+
+CREATE TABLE ingredient_recipe
+(
+	ingredient_id int NOT NULL,
+	recipe_id int NOT NULL,
+	quantity float NOT NULL,
+	unit varchar(25) NOT NULL,
+
+	constraint pk_ingredient_recipe
+		primary key(ingredient_id, recipe_id),
+	constraint fk_ingredient_recipe_ingredient
+		foreign key(ingredient_id)
+		references ingredient(ingredient_id),
+	constraint fk_ingredient_recipe_recipe
+		foreign key(recipe_id)
+		references recipe(recipe_id)
 );
 
 --Category Table
@@ -97,12 +121,8 @@ CREATE TABLE meal
 (
 	meal_id int IDENTITY(1,1) NOT NULL,
 	meal_name varchar(50),
-	user_id int NOT NULL,
 
-	constraint pk_meal primary key(meal_id),
-	constraint fk_user_id
-		foreign key(user_id)
-		references users(user_id)
+	constraint pk_meal primary key(meal_id)
 );
 
 --Meal Recipe Join Table
@@ -122,36 +142,33 @@ CREATE TABLE meal_recipe
 );
 
 --Plan Table
-CREATE TABLE mplan
+CREATE TABLE meal_plan
 (
-	mplan_id int IDENTITY(1,1) NOT NULL,
-	mplan_name varchar(50),
+	meal_plan_id int IDENTITY(1,1) NOT NULL,
+	meal_plan_name varchar(50),
 	user_id int NOT NULL,
 
-	constraint pk_plan primary key(mplan_id),
+	constraint pk_plan primary key(meal_plan_id),
 	constraint fk_plan_user
 		foreign key(user_id)
 		references users(user_id)
 );
 
 --Meal Plan Join Table
-CREATE TABLE meal_mplan
+CREATE TABLE meal_meal_plan
 (
 	meal_id int NOT NULL,
-	mplan_id int NOT NULL,
+	meal_plan_id int NOT NULL,
 
-	constraint pk_meal_mplan
-		primary key(meal_id, mplan_id),
-	constraint fk_meal_mplan_meal
+	constraint pk_meal_meal_plan
+		primary key(meal_id, meal_plan_id),
+	constraint fk_meal_meal_plan_meal
 		foreign key(meal_id)
 		references meal(meal_id),
-	constraint fk_meal_mplan_mplan
-		foreign key(mplan_id)
-		references mplan(mplan_id)
+	constraint fk_meal_meal_plan_meal_plan
+		foreign key(meal_plan_id)
+		references meal_plan(meal_plan_id)
 );
 
 commit transaction;
 
---ALTER TABLE recipe 
---	add constraint [ingredient_list record should be formatted as JSON]
---	check (ISJASON(ingredient_list) = 1);
