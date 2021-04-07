@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="banner">
+      <div id='title-and-sub'>
         <h1>Meal Planner</h1>
-        
-
-                <p>pun</p>
-        <!-- <img id='banner-image' src="/spoon-and-fork" alt='fork and knife' width='100' height='100'/> -->
+        <p>food pun</p>
+        </div>
+        <img id='banner-image' src="@/images/spoon-and-fork.gif" alt='fork and knife' width='100' height='90'/>
       </div>
     <div id="nav" v-if="$store.state.token != ''">
       <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link>
@@ -47,21 +47,28 @@
   align-items: center;
   padding: 20px;
   font-family: arial;
+  box-shadow: 5px 5px 5px ;
+  background-color: #ffd07b;
+}
 
+#title-and-sub{
+  /* background-color: red; */
+  width: 50%;
 }
 
 .nav-button:hover{
-color: red;
+color: #1789fc;
 }
 
 
 #banner-image{
-  width: 100px;
+  /* width: 100px;
   height: 100px;
   background-color: silver;
   margin-top: 0px;
   margin-left: 100%;
-  display: block;
+  display: block; */
+  margin-top: -20px;
 
 }
 
@@ -78,14 +85,16 @@ color: red;
   display: flex;
   font-weight: bold;
   align-items: center;
+  color: #296eb4;
 
   
 }
 
 #nav .router-link-exact-active{
 /* background-color: silver; */
-border: 1px black solid;
-background-color: lightgrey;
+border-bottom: 5px #1789fc solid;
+border-radius: 0px;
+background-color: #ffd07b;
 
 }
 
@@ -96,7 +105,11 @@ height: 50px;
 border: solid 1px black;
 margin: 20px auto 10px;
 font-family: arial;
-
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+box-shadow: 5px 5px 5px ;
+background-color: #ffd07b;
 }
 
 #banner h1{
@@ -127,6 +140,8 @@ height: auto;
 border: solid 1px black;
 margin: 0px auto 0px;
 font-family: arial;
+box-shadow: 5px 5px 5px ;
+background-color: #ffd07b;
 }
 
 *{
@@ -134,14 +149,13 @@ font-family: arial;
 }
 
 #app{
-  
-  /* margin-top: 0px;
+  /* width: 1200px;
+  margin: 0px auto;
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-radius: 0px; */
+
 }
-
-
 
 
 </style>
