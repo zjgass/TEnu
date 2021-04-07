@@ -79,6 +79,33 @@ join meal_recipe on meal_recipe.meal_id = meal.meal_id
 join recipe on recipe.recipe_id = meal_recipe.recipe_id
 where meal.meal_id = 1;
 
+--Select all meals for a given user
+select meal_name, recipe_name
+from meal
+join meal_recipe on meal_recipe.meal_id = meal.meal_id
+join recipe on recipe.recipe_id = meal_recipe.recipe_id
+where user_id = 1;
+
+--Delete a meal
+begin transaction;
+
+select * from meal;
+select * from meal_mplan;
+select * from meal_recipe;
+
+delete from meal_recipe
+where meal_id = 1;
+delete from meal_mplan
+where meal_id = 1;
+delete from meal
+where meal_id = 1;
+
+select * from meal;
+select * from meal_mplan;
+select * from meal_recipe;
+
+rollback transaction;
+
 --Select all the recipes on a meal
 select recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url

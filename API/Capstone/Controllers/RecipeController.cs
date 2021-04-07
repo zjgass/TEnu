@@ -10,7 +10,7 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecipeController :Controller
+    public class RecipeController : ControllerBase
     {
         private readonly IRecipeDAO recipeDAO;
 
