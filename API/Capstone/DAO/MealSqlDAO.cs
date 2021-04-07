@@ -22,19 +22,20 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("Insert into meal (meal_name, user_id) VALUES (@meal_name, @user_id);" ,conn);
+                    string sqlText = "insert into meal (meal_name, user_id) " +
+                        "values (@meal_name, @user_id);" +
+                        "select scope_Identity();";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                     cmd.Parameters.AddWithValue("@user_id", userId);
-                    cmd.ExecuteNonQuery();
-                        
-                        
+                    meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (SqlException)
             {
                 throw ;
             }
-            return GetMeal(meal.MealId);
+            return meal;
         }
         public Meal AddRecipeToMeal(Meal meal,int recipeId)
         {
@@ -66,7 +67,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "SELECT meal.meal_id, meal_name, recipe_name, user_id " +
+                    string sqlText = "select meal.meal_id, meal_name, recipe_name, user_id " +
                         "from meal " +
                         "join meal_recipe on meal_recipe.meal_id = meal.meal_id " +
                         "join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
@@ -134,9 +135,9 @@ namespace Capstone.DAO
             {
                 conn.Open();
 
-                string sqlText = "UPDATE meal_name " +
-                    "SET meal_name = @meal_name " +
-                    "WHERE meal_id = @meal_id;";
+                string sqlText = "update meal " +
+                    "set meal_name = @meal_name " +
+                    "where meal_id = @meal_id;";
                 SqlCommand cmd = new SqlCommand(sqlText, conn);
                 cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                 cmd.Parameters.AddWithValue("@meal_id", meal.MealId);

@@ -188,10 +188,10 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "SELECT recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
-                        "FROM recipe " +
-                        "WHERE recipe_id = @recipe_id";
+                        "from recipe " +
+                        "where recipe_id = @recipe_id";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     SqlDataReader reader = cmd.ExecuteReader();

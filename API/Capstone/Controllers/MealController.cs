@@ -26,7 +26,6 @@ namespace Capstone.Controllers
             int userId = Int32.Parse(User.FindFirst("sub").Value);
             return Ok(mealDAO.GetMeals(userId));
         }
-
         //GetMeal
         [HttpGet("{mealId}")]
         public ActionResult<Meal> GetMeal(int mealId)
