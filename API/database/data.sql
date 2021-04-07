@@ -47,11 +47,11 @@ values ((select category_id from category where category_name='quick bread'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'));
 
 --Add a meal
-insert into meal (meal_name)
-values ('breakfast of champions');
+insert into meal (meal_name, user_id)
+values ('breakfast of champions', 1);
 
-insert into meal (meal_name)
-values ('just another lunch');
+insert into meal (meal_name, user_id)
+values ('just another lunch', 1);
 
 --Add a recipe to a meal
 insert into meal_recipe (meal_id, recipe_id)

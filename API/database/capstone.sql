@@ -97,8 +97,12 @@ CREATE TABLE meal
 (
 	meal_id int IDENTITY(1,1) NOT NULL,
 	meal_name varchar(50),
+	user_id int NOT NULL,
 
-	constraint pk_meal primary key(meal_id)
+	constraint pk_meal primary key(meal_id),
+	constraint fk_user_id
+		foreign key(user_id)
+		references users(user_id)
 );
 
 --Meal Recipe Join Table
