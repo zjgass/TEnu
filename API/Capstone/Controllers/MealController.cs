@@ -13,10 +13,20 @@ namespace Capstone.Controllers
     public class MealController : Controller
     {
         private readonly IMealDAO mealDAO;
+
         public MealController(IMealDAO _mealDAO)
         {
             mealDAO = _mealDAO;
         }
+
+        //GetMeals
+        [HttpGet]
+        public ActionResult<List<Meal>> GetMeals()
+        {
+            int userId = Int32.Parse(User.FindFirst("sub").Value);
+            return Ok(mealDAO.GetMeals(userId));
+        }
+
         //GetMeal
         [HttpGet("{mealId}")]
         public ActionResult<Meal> GetMeal(int mealId)
@@ -25,14 +35,14 @@ namespace Capstone.Controllers
         }
         //CreateMeal
         [HttpPost]
-        public ActionResult<MealController> CreateMeal(Meal meal)
+        public ActionResult<Meal> CreateMeal(Meal meal)
         {
             Meal added = mealDAO.CreateMeal(meal);
             return Created($"/meal/{meal.MealId}", added);
         }
         //UpdateMeal
         [HttpPut("{mealId}")]
-        public ActionResult<MealController> UpdateMeal(Meal meal)
+        public ActionResult<Meal> UpdateMeal(Meal meal)
         {
             Meal updated = mealDAO.UpdateMeal(meal);
             return Ok(updated);
