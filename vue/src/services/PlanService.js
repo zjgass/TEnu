@@ -10,7 +10,7 @@ export default {
     return http.get('/plan');
   },
 
-  getPlan(boardID) {
-    return http.get(`/plan/${mealId}`)
+  getPlan(planId) {
+    return http.get(`/plan/${planId}`)
   }
 }

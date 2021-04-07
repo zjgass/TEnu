@@ -1,11 +1,11 @@
 
 <template>
-<div id='meals'>
+<div id='meal-plan-list'>
 
 <ul>
-<li class='plan-item'>Week of (monday)</li>
-<li class='plan-item'>week of next week </li>
-    </ul>
+<li class='plan-item'>first plan week of (monday)</li>
+<li class='plan-item'>next plan </li>
+</ul>
 
 </div>
 
@@ -30,21 +30,21 @@ export default {
 
 .plan-item{
 color: white;
-
+font-size: 20pt;
 list-style-type: none;
-margin: 0px auto 10px;
 padding: 10px;
-width: 900px;
+width: 95%;
 background-color: #1789fc;
 height: 30px;
 border-radius: 5px;
 border: 1px solid black;
-
+cursor: pointer;
 }
 
-#meals{
-    /* border: 1px solid black;
-    border-radius: 5px; */
+#meal-plan-list{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #296eb4;
 
 }
 

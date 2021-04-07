@@ -12,9 +12,11 @@
 <option value=""> Friday </option>
 </select>
 </form>
-<h1>*plan name from box</h1>
-<div id='week'>
 
+
+<h1>*plan name from box</h1>
+
+<div id='meal-plan'>
 <div class='plan-column' id='monday'>
     <h1>Monday</h1>
     <h2>Breakfast:</h2>
@@ -39,21 +41,31 @@
 
 </div>
 
+
 </div>
 </template>
 
 <script>
 // import PlanService from '../services/PlanService';
-export default {
-  name: "plan-list-2",
-  data() {
-    return {
-      docs: []
-    }
-    
-  }
 
-}
+// export default {
+//   name: 'meal-plan',
+//   data() {
+//     return {
+//       mealPlan: {
+//         id: null,
+//         name: '',
+//         meals: []
+
+//       }
+//     };
+//   },
+//   created() {
+//     PlanService.get(this.$route.params.id).then((response) => {
+//       this.meals = response.data;
+//     });
+//   }
+// };
 </script>
 
 <style>
@@ -72,7 +84,7 @@ border: 1px solid black;
 
 }
 
-#week{
+#meal-plan{
     border: 1px solid black;
     border-radius: 5px;
     min-height: 400px;
