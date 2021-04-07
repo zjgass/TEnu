@@ -64,7 +64,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe " +
                         "where is_public = 1;";
@@ -130,7 +130,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe ";
 
@@ -243,6 +243,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                     cmd.ExecuteNonQuery();
                 }
             }
