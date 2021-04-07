@@ -46,23 +46,23 @@
 </template>
 
 <script>
-// import PlanService from '../services/PlanService';
+// import docsService from "../services/DocsService";
 
 // export default {
-//   name: 'meal-plan',
+//   name: "meal-plan-list",
 //   data() {
 //     return {
-//       mealPlan: {
-//         id: null,
-//         name: '',
-//         meals: []
-
-//       }
+//       allPlans: []
 //     };
 //   },
+//   methods: {
+//     viewDocument(id) {
+//       this.$router.push(`/plans/${planId}`);
+//     }
+//   },
 //   created() {
-//     PlanService.get(this.$route.params.id).then((response) => {
-//       this.meals = response.data;
+//     docsService.list().then((response) => {
+//       this.allPlans = response.data;
 //     });
 //   }
 // };
