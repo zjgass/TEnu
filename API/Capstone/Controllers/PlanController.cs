@@ -51,8 +51,18 @@ namespace Capstone.Controllers
         }
 
         //DeletePlan
-        // api/plan/planId
+        [HttpDelete("{planId}")]
+        public ActionResult DeletePlan(int planId)
+        {
+            bool success = planDAO.DeletePlan(planId);
+            //return success ? NoContent() : BadRequest();
+            if (success)
+            {
+                return NoContent();
+            }
 
+            return BadRequest();
+        }
 
 
 

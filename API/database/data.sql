@@ -63,11 +63,11 @@ values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'));
 
 --Add a meal plan
-insert into meal_plan (meal_plan_name, user_id)
+insert into mplan (mplan_name, user_id)
 values ('empty the freezer of bananas',
 		(select user_id from users where username = 'user'));
 
 --Add meal to meal plan
-insert into meal_meal_plan (meal_id, meal_plan_id)
+insert into meal_mplan (meal_id, mplan_id)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
-		(select meal_plan_id from meal_plan where meal_plan_name like '%bananas%'));
+		(select mplan_id from mplan where mplan_name like '%bananas%'));

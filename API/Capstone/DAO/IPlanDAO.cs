@@ -17,6 +17,6 @@ namespace Capstone.DAO
 
         List<Plan> GetPlans(int userId);
 
-
+        bool DeletePlan(int planID);
     }
 }

@@ -25,10 +25,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time, ingredients, utensils, instructions, img_url)" +
-                                                     " VALUES (@recipe_name, @is_public, @serves, @prep_time, @cook_time, @total_time, @ingredients, @utensils, @instructions, @img_url)", conn);
+                    string sqlText = "INSERT INTO recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                        "ingredients, utensils, instructions, img_url)" +
+                        "VALUES (@recipe_name, @is_public, @serves, @prep_time, @cook_time, @total_time, " +
+                        "@ingredients, @utensils, @instructions, @img_url);" +
+                        "select scope_Identity();";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
-                    //need to convert bool to bit for is_public column in DB
                     cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic ? 1 : 0);
                     cmd.Parameters.AddWithValue("@serves", recipe.Serves);
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
@@ -38,7 +41,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
-                    cmd.ExecuteNonQuery();
+                    recipe.RecipeId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             //TODO needs better exception handling
@@ -46,8 +49,126 @@ namespace Capstone.DAO
             {
                 throw;
             }
-            //TODO needs fixed, will need to grab id when execting sql statement to use it here
-            return GetRecipe();
+            return recipe;
+        }
+
+        public List<Recipe> GetPublicRecipes()
+        {
+            List<Recipe> recipes = new List<Recipe>() { };
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                        "ingredients, utensils, instructions, img_url " +
+                        "from recipe " +
+                        "where is_public = 1;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        recipes.Add(GetRecipeFromReader(reader));
+                    }
+
+                    return recipes;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<Recipe> GetRecipes(int userId)
+        {
+            List<Recipe> recipes = new List<Recipe>() { };
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                        "ingredients, utensils, instructions, img_url " +
+                        "from recipe " +
+                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "where user_id = @user_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        recipes.Add(GetRecipeFromReader(reader));
+                    }
+
+                    return recipes;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<Recipe> SearchRecipes(string[] args, bool fuzzy)
+        {
+            List<Recipe> recipes = new List<Recipe>() { };
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                        "ingredients, utensils, instructions, img_url " +
+                        "from recipe ";
+
+                    // TODO
+                    // Trying to implement the ability to search for multiple ingredients, and fuzzy searching.
+                    // Similar to this link.
+                    // https://www.svenbit.com/2014/08/using-sqlparameter-with-sqls-in-clause-in-csharp/
+                    List<string> ParamList = new List<string>();
+                    int index = 0;
+                    foreach (string query in args)
+                    {
+                        string paramName = "@queryParam" + index;
+                        if (fuzzy)
+                        {
+                            sqlText += $"where JSON_Query(ingredients, '$') like '%@{paramName}%' ";
+                        }
+                        else
+                        {
+                            sqlText += $"where JSON_Query(ingredients, '$') = @{paramName} ";
+                        }
+                        
+                        index++;
+                    }
+                                            
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        recipes.Add(GetRecipeFromReader(reader));
+                    }
+
+                    return recipes;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public Recipe GetRecipe(int recipeId)
@@ -60,7 +181,11 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT recipe_id, recipe_name, is_public, servings, prep_time, cook_time, total_time, ingredients, utensils, instructions, img_url FROM recipe WHERE recipe_id = @recipe_id", conn);
+                    string sqlText = "SELECT recipe_id, recipe_name, is_public, servings, prep_time, cook_time, total_time, " +
+                        "ingredients, utensils, instructions, img_url " +
+                        "FROM recipe " +
+                        "WHERE recipe_id = @recipe_id";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -83,12 +208,35 @@ namespace Capstone.DAO
         {
             try
             {
-                
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
+
+                    string sqlText = "update recipe " +
+                        "set " +
+                        "recipe_name = @recipe_name, " +
+                        "serves = @serves, " +
+                        "prep_time = @prep_time, " +
+                        "cook_time = @cook_time, " +
+                        "total_time = @total_time, " +
+                        "ingredients = @ingredients, " +
+                        "utensils = @utensils, " +
+                        "instructions = @instructions, " +
+                        "img_url = @img_url " +
+                        "where recipe_id = @recipe_id;";
+
                     //TODO Need to finish select statement and params
-                    SqlCommand cmd = new SqlCommand("", conn);
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
+                    cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@serves", recipe.Serves);
+                    cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
+                    cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
+                    cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
+                    cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
+                    cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
+                    cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
+                    cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -97,6 +245,36 @@ namespace Capstone.DAO
                 throw;
             }
             return GetRecipe(recipe.RecipeId);
+        }
+
+        public bool DeleteRecipe(int recipeId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "delete from category_recipe " +
+                        "where recipe_id = @recipe_id; " +
+                        "delete from meal_recipe " +
+                        "where recipe_id = @recipe_id; " +
+                        "delete from recipe_users " +
+                        "where recipe_id = @recipe_id; " +
+                        "delete from recipe " +
+                        "where recipe_id = @recipe_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipeId);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private Recipe GetRecipeFromReader(SqlDataReader reader)
