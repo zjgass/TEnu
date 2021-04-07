@@ -26,13 +26,14 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "INSERT INTO recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "INSERT INTO recipe (recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url)" +
-                        "VALUES (@recipe_name, @is_public, @serves, @prep_time, @cook_time, @total_time, " +
+                        "VALUES (@recipe_name, @description, @is_public, @serves, @prep_time, @cook_time, @total_time, " +
                         "@ingredients, @utensils, @instructions, @img_url);" +
                         "select scope_Identity();";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
+                    cmd.Parameters.AddWithValue("@description", recipe.Description);
                     cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic ? 1 : 0);
                     cmd.Parameters.AddWithValue("@serves", recipe.Serves);
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
@@ -64,7 +65,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe " +
                         "where is_public = 1;";
@@ -96,7 +97,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
@@ -130,7 +131,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "from recipe ";
 
@@ -187,7 +188,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "SELECT recipe_id, recipe_name, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "SELECT recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url " +
                         "FROM recipe " +
                         "WHERE recipe_id = @recipe_id";
@@ -221,6 +222,7 @@ namespace Capstone.DAO
                     string sqlText = "update recipe " +
                         "set " +
                         "recipe_name = @recipe_name, " +
+                        "description = @description, " +
                         "serves = @serves, " +
                         "prep_time = @prep_time, " +
                         "cook_time = @cook_time, " +
@@ -234,6 +236,7 @@ namespace Capstone.DAO
                     //TODO Need to finish select statement and params
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
+                    cmd.Parameters.AddWithValue("@description", recipe.Description);
                     cmd.Parameters.AddWithValue("@is_public", recipe.IsPublic ? 1 : 0);
                     cmd.Parameters.AddWithValue("@serves", recipe.Serves);
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
@@ -290,7 +293,7 @@ namespace Capstone.DAO
             {
                 RecipeId = Convert.ToInt32(reader["recipe_id"]),
                 Name = Convert.ToString(reader["recipe_name"]),
-                //TODO probably needs changed to covert 1 to true, 0 to false from bit
+                Description = Convert.ToString(reader["description"]),
                 IsPublic = Convert.ToBoolean(reader["is_public"]),
                 Serves = Convert.ToInt32(reader["serves"]),
                 PrepTime = Convert.ToString(reader["prep_time"]),

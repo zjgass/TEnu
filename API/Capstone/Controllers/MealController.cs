@@ -37,7 +37,8 @@ namespace Capstone.Controllers
         [HttpPost]
         public ActionResult<Meal> CreateMeal(Meal meal)
         {
-            Meal added = mealDAO.CreateMeal(meal);
+            int userId = Int32.Parse(User.FindFirst("sub").Value);
+            Meal added = mealDAO.CreateMeal(meal, userId);
             return Created($"/meal/{meal.MealId}", added);
         }
         //UpdateMeal

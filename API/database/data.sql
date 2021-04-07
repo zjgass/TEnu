@@ -1,18 +1,30 @@
 USE final_capstone
 GO
 
+-- TODO rate recipes
+-- TODO best of the week
+-- TODO for add meal have a list based on search query
+-- TODO short description and categories
+-- TODO button to add from the view page
+-- TODO add background image
+
 --Insert some recipes
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url)
-values ('banana bread', 1, 8,
-	'[{"name": "banana", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
-	'["mixing bowl", "mixer", "bread pan"]',
-	'["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
+values ('banana bread', 1, 8, '20mins', '45 mins', 'about an hour',
+	'[{"name": "banana", "qty": "4 ea"}, {"name": "sugar", "qty": "3/4 cup"},
+		{"name": "chia seeds", "qty": "2T"}, {"name": "flour", "qty": "1 1/2 cups"},
+		{"name": "coconut oil", "qty": "3T"}, {"name": "baking soda", "qty": "1t"},
+		{"name": "salt", "qty": "1t"}, {"name": "manderin oranges", "qty": "1 can"},
+		{"name": "maraschino cherries", "qty": "to taste"},
+		{"name": "chocolate chips", "qty": "to taste"}]',
+	'["mixing bowl", "mixer", "bread pan", "oven"]',
+	'["thaw bananas", "mix all ingredients together", "pour in bread pan", "bake in oven at 350F, check every half-hour"]',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg');
 
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url)
-values ('zucchini bread', 1, 8, 
+values ('zucchini bread', 1, 8, '20mins', '45 mins', 'about an hour',
 	'[{"name": "zucchini", "qty": "6ea"}, {"name": "flour", "qty": "4cups"}, {"name": "butter", "qty": "1stick"}]',
 	'["mixing bowl", "mixer", "bread pan"]',
 	'["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
