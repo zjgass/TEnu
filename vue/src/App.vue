@@ -9,7 +9,7 @@
       </div>
     <div id="nav" v-if="$store.state.token != ''">
       <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link>
-
+      <router-link class='nav-button' v-bind:to="{ name: 'home2' }">Home 2</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
@@ -38,7 +38,7 @@
 <style scoped>
 #nav{
   border: 1px black solid;
-  width: 1000px;
+
   height: 20px;
   margin: auto auto 10px;
   display: flex;
@@ -99,7 +99,7 @@ background-color: #ffd07b;
 }
 
 #banner{
-width: 1000px;
+
 padding: 20px;
 height: 50px;
 border: solid 1px black;
@@ -133,7 +133,7 @@ background-color: #ffd07b;
 
 
 #router{
-width: 1000px;
+
 padding: 20px;
 min-height: 600px;
 height: auto;
@@ -156,6 +156,18 @@ background-color: #ffd07b;
   border-radius: 0px; */
 
 }
+body, html{
+  width: 100%;
+  min-height: 100%;
+  background-color: red;
+}
+
+#nav, #banner, #router{
+width: 1200px
+
+}
+
+
 
 
 </style>

@@ -102,7 +102,7 @@ h2{
 
 #recipe-input{
     border: 1px solid black;
-    width: 470px;
+    width: 47%;
     padding: 10px;
     border-radius: 5px;
     min-height: 300px;
@@ -112,7 +112,7 @@ h2{
 }
 #current-recipe{
 
-    width: 470px;
+    width: 47%;
     min-height: 300px;
     height: auto;
     padding: 10px;
