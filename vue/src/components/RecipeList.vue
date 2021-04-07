@@ -12,16 +12,16 @@
     </thead>
 
     <tbody>
-      <tr v-for="recipe in allRecipes" :key="recipe.id" v-on:click="viewDocument(recipe.id)">
+      <tr v-for="recipe in Recipes" :key="recipe.recipeId" >
 
         <td>
         </td>
-
+        <router-link v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
         <td class="name">{{ recipe.name }}</td>
-        
+        </router-link>
         <td>
         </td>
-        <td>{{ doc.lastOpened }}</td>
+        <td></td>
         
       </tr>
     </tbody>
@@ -33,26 +33,21 @@
 </template>
 
 <script>
-// import RecipeService from "../services/RecipeService";
+import RecipeService from "../services/RecipeService";
 
-// export default {
-//   name: "recipe-list",
-//   data() {
-//     return {
-//       allRecipes: []
-//     };
-//   },
-//   methods: {
-//     viewRecipe(recipeid) {
-//       this.$router.push(`/recipe/${recipeId}`);
-//     }
-//   },
-//   created() {
-//     RecipeService.list().then((response) => {
-//       this.allRecipes = response.data;
-//     });
-//   }
-// };
+export default {
+  name: "recipe-list",
+  data() {
+    return {
+      Recipes: []
+    };
+  },
+  created() {
+    RecipeService.getRecipes().then((response) => {
+      this.Recipes = response.data;
+    });
+  }
+};
 </script>
 
 <style>
