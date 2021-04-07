@@ -74,5 +74,5 @@ values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 
 
 
-		INSERT INTO recipe_users (recipe_id, user_id) VALUES (2, 3)
+
 
