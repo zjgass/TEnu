@@ -83,3 +83,8 @@ values ('empty the freezer of bananas',
 insert into meal_mplan (meal_id, mplan_id)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select mplan_id from mplan where mplan_name like '%bananas%'));
+
+
+
+
+

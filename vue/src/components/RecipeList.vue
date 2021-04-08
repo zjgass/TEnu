@@ -1,13 +1,15 @@
 <template>
 <div>
+
+
   <table>
 
     <thead>
       <tr>
-        <th>&nbsp;</th>
-        <th>Recipe</th>
-        <th>some property of a recipe</th>
-        <th>some property of a recipe</th>
+        <th>heading of column 1</th>
+        <th>heading of column 2</th>
+        <th>heading of column 3</th>
+
       </tr>
     </thead>
 
@@ -24,6 +26,7 @@
         <td></td>
         
       </tr>
+
     </tbody>
 
   </table>

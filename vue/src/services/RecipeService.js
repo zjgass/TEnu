@@ -14,3 +14,7 @@ export default {
     return http.get(`/recipe/${recipeId}`)
   }
 }
+
+
+//https://localhost:44315/recipe
+//https://localhost:44315/recipe/1

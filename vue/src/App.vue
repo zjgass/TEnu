@@ -2,8 +2,8 @@
   <div id="app">
     <div id="banner">
       <div id='title-and-sub'>
-        <h1>Meal Planner</h1>
-        <p>food pun</p>
+        <h1>TEnue</h1>
+        <p>A meal planner by Tech Elevator</p>
         </div>
         <img id='banner-image' src="@/images/spoon-and-fork.gif" alt='fork and knife' width='100' height='90'/>
       </div>
@@ -121,7 +121,7 @@ background-color: #ffd07b;
 
 #banner p{
   margin-top: 0px;
-    max-width: 50%;
+    max-width: 70%;
     
 
 }
