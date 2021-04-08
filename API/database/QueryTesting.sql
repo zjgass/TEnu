@@ -7,13 +7,13 @@ from recipe
 where JSON_Query(ingredients, '$') like '%banana%'
 
 --Select a recipe
-select recipe_name, is_public, serves, prep_time, cook_time, total_time,
+select recipe_name, description, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url
 from recipe
 where recipe_id = 1;
 
 --Select all recipes for a given user
-select recipe_name, is_public, serves, prep_time, cook_time, total_time,
+select recipe_name, description, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url
 from recipe
 join recipe_users on recipe_users.recipe_id = recipe.recipe_id
@@ -31,6 +31,7 @@ values('pumpkin bread', 1, 8,
 --update recipe
 --set
 --	recipe_name = @recipe_name,
+--	description = @description,
 --	is_public = @is_public,
 --	serves = @serves,
 --	prep_time = @prep_time,

@@ -8,11 +8,14 @@ namespace Capstone.DAO
 {
     public interface IMealDAO
     {
+        List<Meal> GetMeals(int userId);
+
         Meal GetMeal(int mealId);
 
-        Meal CreateMeal(Meal meal);
+        Meal CreateMeal(Meal meal, int userId);
 
         Meal UpdateMeal(Meal meal);
+
         bool DeleteMeal(int mealId);
     }
 }
