@@ -11,6 +11,7 @@ import AddMeal from '../views/AddMeal.vue'
 import ViewRecipes from '../views/ViewRecipes.vue'
 import Home2 from '../views/Home2.vue'
 import RecipeDetailView from '../views/RecipeDetailView.vue'
+// import ViewGroceries from '../views/ViewGroceries.vue'
 
 Vue.use(Router)
 
@@ -105,7 +106,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    // {
+    //   path: '/GroceryList',
+    //   name: 'GroceryList',
+    //   component: GroceryList,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // }
 
 
   ]

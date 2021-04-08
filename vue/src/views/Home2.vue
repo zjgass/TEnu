@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <h1>Your Meal Plan</h1>
+ 
 
 <plan-list-2></plan-list-2>
 

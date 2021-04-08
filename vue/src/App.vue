@@ -2,18 +2,24 @@
   <div id="app">
     <div id="banner">
       <div id='title-and-sub'>
-        <h1>TEnue</h1>
-        <p>A meal planner by Tech Elevator</p>
+        <h1 id='site-title'>TEnue</h1>
+        <p id='subtitle'>A meal planner by Tech Elevator</p>
         </div>
-        <img id='banner-image' src="@/images/spoon-and-fork.gif" alt='fork and knife' width='100' height='90'/>
+
+        <img id='banner-image' src="@/images/Grub_logo2_large.png" alt='fork and knife' />
+
+
+        
       </div>
     <div id="nav" v-if="$store.state.token != ''">
-      <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link>
-      <router-link class='nav-button' v-bind:to="{ name: 'home2' }">Home 2</router-link>
+      <!-- <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link> -->
+      <router-link class='nav-button' v-bind:to="{ name: 'home2' }">Home</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
+      <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
+      <p class='spacer'></p>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
     <router-view id='router' />
@@ -31,143 +37,131 @@
 
 //   },
 // })
+
+
+
 </script>
 
 
 
 <style scoped>
 #nav{
-  border: 1px black solid;
 
+background-color: lightgrey;
   height: 20px;
-  margin: auto auto 10px;
+  border-top: black 1px solid;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px;
   font-family: arial;
-  box-shadow: 5px 5px 5px ;
-  background-color: #ffd07b;
-}
-
-#title-and-sub{
-  /* background-color: red; */
-  width: 50%;
-}
-
-.nav-button:hover{
-color: #1789fc;
-}
 
 
-#banner-image{
-  /* width: 100px;
-  height: 100px;
-  background-color: silver;
-  margin-top: 0px;
-  margin-left: 100%;
-  display: block; */
-  margin-top: -20px;
+
+
 
 }
-
-
 
 .nav-button{
   font-size: 20px;
-  height: 40px;
+  height: 60px;
   padding-left: 10px;
   padding-right: 10px;
   text-decoration: none;
-  margin-left: 10px;
-  margin-right: 20px;
   display: flex;
+  justify-content: space-around;
   font-weight: bold;
   align-items: center;
-  color: #296eb4;
+  color: white;
+  background-color: darkcyan;
+  min-width: 120px;
+  border-left: 2px solid black;
 
   
 }
 
+#logout-button{
+    border-right: 2px solid black;
+}
+
+.nav-button:hover{
+color: cyan;
+}
+
 #nav .router-link-exact-active{
-/* background-color: silver; */
-border-bottom: 5px #1789fc solid;
-border-radius: 0px;
-background-color: #ffd07b;
+color: black;
+background-color: white;
 
 }
 
 #banner{
+  /* background-color: cyan; */
+  background-image: url("images/banner-image.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-padding: 20px;
-height: 50px;
-border: solid 1px black;
-margin: 20px auto 10px;
-font-family: arial;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-box-shadow: 5px 5px 5px ;
-background-color: #ffd07b;
+}
+#banner-image{
+justify-self: flex-end;
+width: 200px;
+height: 200px;
+
 }
 
-#banner h1{
-  max-width: 50%;
-  margin-top: 0px;
+#site-title{
+
+margin-top: 10px;
   margin-bottom: 0px;
-
+  font-size: 56pt;
 }
 
-#banner p{
+#subtitle{
+
   margin-top: 0px;
-    max-width: 70%;
-    
+  font-size: 24pt;
+}
+
+#title-and-sub{
+
+  width: 50%;
+  padding: 10px;
 
 }
 
-#logout-button{
-/* align-self: flex-end; */
-
+#spacer{
+  width: 50%;
 }
 
-
-#router{
-
-padding: 20px;
-min-height: 600px;
-height: auto;
-border: solid 1px black;
-margin: 0px auto 0px;
-font-family: arial;
-box-shadow: 5px 5px 5px ;
-background-color: #ffd07b;
-}
-
-*{
-  border-radius: 5px;
-}
 
 #app{
-  /* width: 1200px;
-  margin: 0px auto;
+  width: 1440px;
+  min-height: 2000px;
+  margin: -8px auto;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  border-radius: 0px; */
+  /* padding: 20px; */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
-}
-body, html{
-  width: 100%;
-  min-height: 100%;
-  background-color: red;
-}
+
 
 #nav, #banner, #router{
-width: 1200px
+width: 1400px;
+padding: 20px;
+margin: auto;
+
 
 }
 
+#spacer{
+  width: 50px;
+}
 
 
+#router{}
 
 </style>
