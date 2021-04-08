@@ -23,6 +23,14 @@ values ('zucchini bread', 1, 8, '20mins', '45 mins', 'about an hour',
 	'["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]',
 	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85');
 
+insert into recipe (recipe_name, is_public, serves,
+	ingredients, utensils, instructions, img_url)
+values ('lasagna', 1, 8,
+	'[{"name": "ground beef", "qty": "1pound"}, {"name": "diced onion", "qty": "3/4cup"}, {"name": "diced bell pepper", "qty": "3/4cup"} , {"name": "minced garlic", "qty": "2"}, {"name": "tomato sauce", "qty": "1 can"}, {"name": "tomato paste", "qty": "3 oz"}, {"name": "crushed tomato", "qty": "1 can"}, {"name": "fresh oregano", "qty": "2 tbs"}, {"name": "fresh parsely", "qty": "1/4 cup"}, {"name": "italian seasoning", "qty": "1 tbs"}, {"name": "garlic salt", "qty": "pinch"}, {"name": "wine vinegar", "qty": "1tbs"}, {"name": "lasagna noodles", "qty": "9"}, {"name": "ricotta cheese", "qty": "15 oz"}, {"name": "mozzarella cheese", "qty": "1 1/2lb"}, {"name": "parmesan cheese", "qty": "1/4 lb"}]',
+	'["mixing bowl", "mixer", "9x13 inch casserole", "medium size pot"]',
+	'["brown the ground beef and set aside", "cook vegetables add back the beef", "transfer to medium size pot, add tomatoes and remaining sauce ingredients", "boil and drain noodles", "In casserole dish ladle a cup of sauce.arrange one layer of lasagna noodles.spread a lasagna sauce.add half of the ricottacheese.sprincle parmesancheese", "Bake at 375F for 45 minutes"]',
+	'https://.jpeg');
+
 --Add the recipes to user
 insert into recipe_users (recipe_id, user_id)
 values ((select recipe_id from recipe where recipe_name = 'banana bread'),
