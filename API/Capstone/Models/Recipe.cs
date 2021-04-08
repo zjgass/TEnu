@@ -15,6 +15,8 @@ namespace Capstone.Models
 
         public bool IsPublic { get; set; }
 
+        public int Rating { get; set; }
+
         public int Serves { get; set; }
 
         public string PrepTime { get; set; }
@@ -23,7 +25,7 @@ namespace Capstone.Models
 
         public string TotalTime { get; set; }
         //JSON string
-        public string Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
         //JSON string
         public string Utensils { get; set; }
         //JSON string
