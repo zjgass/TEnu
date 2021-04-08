@@ -1,13 +1,6 @@
 USE final_capstone
 GO
 
--- TODO rate recipes
--- TODO best of the week
--- TODO for add meal have a list based on search query
--- TODO short description and categories
--- TODO button to add from the view page
--- TODO add background image
-
 --Insert some recipes
 insert into recipe (recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	ingredients, utensils, instructions, img_url)
