@@ -11,21 +11,8 @@ namespace Capstone.Models
 
         public string Name { get; set; }
 
-       // public int TempPublicByte { get; set; }
-        //TODO revisit if need public set for IsPublic
-        /*
-        public bool IsPublic
-        {
-            get
-            {
-                return (TempPublicByte == 1) ? true : false;
-            }
-            set
-            {
-                IsPublic = value;
-            }
-        }
-        */
+        public string Description { get; set; }
+
         public bool IsPublic { get; set; }
 
         public int Serves { get; set; }
