@@ -1,69 +1,98 @@
 <template>
-<div>
-<div id='new-recipe-page'>
+    <div>
+        <div id='new-recipe-page'>
 
-<form id='recipe-input' action="" method="">
+        <form id='recipe-input' action="" method="">
 
-<div class='input-line'>
-    <p class='input-label'>name of new recipe: </p>
-    <input type='text' name = 'recipe-name'  />
+            <div class='input-line'>
+                <p class='input-label'>name of new recipe: </p>
+                <input type='text' v-model="recipe.name"  />
 
-</div>
+            </div>
 
-<div class='input-line'>
-    <p class='input-label'>equipment needed: </p>
-    <input type='text' name = 'equipment'  />
-    <button>Add Equipment</button>
-        <button>Clear Equipment</button>
-</div>
+            <div class='input-line'>
+                <p class='input-label'>equipment needed: </p>
+                <input type='text' name = 'equipment'  />
+                <button>Add Equipment</button>
+                <button>Clear Equipment</button>
+            </div>
 
-<div class='input-line'>
-    <p class='input-label'>ingredients: </p>
-    <input type='text' name = 'meal-name'  />
-    <button>Add Ingredient</button>
-        <button>Clear Ingredients</button>
-</div>
+            <div class='input-line'>
+                <p class='input-label'>ingredients: </p>
+                <input type='text' name = 'meal-name'  />
+                <button>Add Ingredient</button>
+                <button>Clear Ingredients</button>
+            </div>
 
-<div class='input-line'>
-    <p class='input-label'>Instructions: </p>
-    <input type='text' name = 'meal-name'  />
-    <button>Add Step</button>
-        <button>Clear Steps</button>
-</div>
+            <div class='input-line'>
+                <p class='input-label'>Instructions: </p>
+                <input type='text' name = 'meal-name'  />
+                <button>Add Step</button>
+                <button>Clear Steps</button>
+            </div>
 
-        <button  id='submit-button'>Submit Recipe</button>
-</form>
+            <button  id='submit-button'>Submit Recipe</button>
+        </form>
 
-<div id='current-recipe'>
-<h2>Recipe Name: </h2>
-<p> bind recipe name v-modl=''</p>
-<h2>Required Equipment: </h2>
-<ul>
-<li>list item in equipment list</li>
-
-</ul>
-
-<h2>Required Ingredients: </h2>
-<ul>
-<li>list of ingredients</li>
-
-</ul>
-<h2>Instructions: </h2>
-<ul>
-
-<li>list item in instructions list</li>
-
-</ul>
+            <div id='current-recipe'>
+                <h2>Recipe Name: </h2>
+            <p> {{recipe.name}}</p>
+            <h2>Required utensils: </h2>
+            <ul>
+                <li v-for >list item in equipment list</li>
+            </ul>
+            <h2>Required Ingredients: </h2>
+            <ul>
+                <li>list of ingredients</li>
+            </ul>
+            <h2>Instructions: </h2>
+            <ul>
+                <li>list item in instructions list</li>
+            </ul>
+        </div>
 
     </div>
-
-
 </div>
-    </div>
 </template>
 
 <script>
+
+import recipeService from "../services/RecipeService";
+
 export default {
+    name: "recipe-form",
+    data() {
+        return {
+            recipe: {
+               // recipeId: 0, 
+                name: "",
+                isPublic: "",
+                serves: "",
+                prepTime: "",
+                cookTime: "",
+                totalTime: "",
+                ingredients: [],
+                utensils: [],
+                instructions: [],
+                imgUrl: ""
+            }
+        };
+    },
+    methods: {
+        saveRecipe() {
+            recipeService.addRecipe(this.recipe)
+            .then(response => {
+                if(response.status === 201){
+                    console.Log("Created successfully");
+                }
+            })
+            .catch(error => {
+                if(error.response) {
+                    this.errorMsg = "Error creating new Recipe. Response received was '" + error.response.statusText + "'.";
+                }
+            })
+        }
+    }
 
 }
 </script>
