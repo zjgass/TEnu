@@ -16,6 +16,10 @@ export default {
 
   addRecipe(recipe) {
     return http.post('/recipe', recipe);
+  },
+
+  deleteRecipe(recipeId){
+    return http.delete(`/recipe/${recipeId}`);
   }
 
 
