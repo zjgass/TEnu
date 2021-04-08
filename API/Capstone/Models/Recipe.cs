@@ -32,6 +32,8 @@ namespace Capstone.Models
         public string Instructions { get; set; }
 
         public string ImgUrl { get; set; }
+
+        public string SubmittedBy { get; set; }
     }
 
 }
