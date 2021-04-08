@@ -66,8 +66,7 @@ namespace Capstone
             services.AddTransient<IPlanDAO>(m => new PlanSqlDAO(connectionString));
             services.AddTransient<IMealDAO>(m => new MealSqlDAO(connectionString));
             services.AddTransient<IRecipeDAO>(m => new RecipeSqlDAO(connectionString)); 
-
-
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
