@@ -1,46 +1,19 @@
 <template>
-<div>
+  <div class="recipe-list">
+    
+    <recipe-card v-bind:recipe="recipe" v-for="recipe in recipes" v-bind:key="recipe.recipeId"/>
 
-
-  <table class='recipe-list'>
-
-    <thead>
-      <tr>
-        <th class='icon'>icon</th>
-        <th class='name'>recipe name</th>
-        <th class='rating'>rating</th>
-
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr v-for="recipe in Recipes" :key="recipe.recipeId" >
-
-        <td>
-        </td>
-        
-        <router-link v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
-        <td class="name">{{ recipe.name }}</td>
-        </router-link>
-        <td>
-        </td>
-        <td></td>
-        
-      </tr>
-
-    </tbody>
-
-  </table>
-</div>
-
+  </div>
 
 </template>
 
 <script>
 import RecipeService from "../services/RecipeService";
+import RecipeCard from "../components/RecipeCard.vue";
 
 export default {
   name: "recipe-list",
+  components: RecipeCard,
   data() {
     return {
       Recipes: []
@@ -67,4 +40,11 @@ width: 200px;
 }
 
 
+
+/*
+    <router-link v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
+        
+        </router-link>
+        */
 </style>
+
