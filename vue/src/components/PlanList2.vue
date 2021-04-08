@@ -24,19 +24,19 @@
 </div>
 
 <div class='plan-column' id='tuesday'>
-        <h1>Monday</h1>
+        <h1>Tuesday</h1>
 </div>
 
 <div class='plan-column' id='wednesday'>
-        <h1>Monday</h1>
+        <h1>Wednesday</h1>
 </div>
 
 <div class='plan-column' id='thursday'>
-        <h1>Monday</h1>
+        <h1>Thursday</h1>
 </div>
 
 <div class='plan-column' id='friday'>
-        <h1>Monday</h1>
+        <h1>Friday</h1>
 </div>
 
 </div>
@@ -79,30 +79,25 @@ padding: 10px;
 width: 900px;
 background-color: #1789fc;
 height: 30px;
-border-radius: 5px;
+
 border: 1px solid black;
 
 }
 
 #meal-plan{
-    border: 1px solid black;
-    border-radius: 5px;
+    /* border: 1px solid black; */
+
     min-height: 400px;
-    background-color:#296eb4;
+
     display:flex;
     flex-direction: row;
     justify-content: space-around;
 
 }
 .plan-column{
-    color: white;
-    width: 18%;
-    min-height: 50px;
-    background-color:#1789fc;
-    border: 1px solid black;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
+/* background-color: silver; */
+width: 15%;
+text-align: center;
 }
 
 .plan-column h1{
