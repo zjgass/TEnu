@@ -140,10 +140,12 @@ margin-top: 10px;
 #app{
   /* width: 85%; */
 width: 1440px;
-  min-height: 2000px;
+height: auto;
+  min-height: 1200px;
   margin: -8px auto;
   border-left: 1px solid black;
   border-right: 1px solid black;
+  border-bottom: 1px solid black;
   /* padding: 20px; */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

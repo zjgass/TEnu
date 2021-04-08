@@ -142,6 +142,7 @@ h2{
     height: auto;
     padding: 10px;
     border: solid 1px black;
+
     /* margin-left: 5px; */
 
 
