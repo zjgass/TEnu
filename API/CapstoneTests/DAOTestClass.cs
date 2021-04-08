@@ -114,6 +114,21 @@ namespace CapstoneTests
             // Define TestPlan2
             TestPlan2.Name = "something other than quick-breads";
             TestPlan2.UserId = TestUser1.UserId;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    // Insert Users into the database
+                    string sqlText = "insert into users (username, password_hash, salt) " +
+                        "values (@username, @hash, @salt); select scope_Identity();";
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
