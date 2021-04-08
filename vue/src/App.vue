@@ -74,7 +74,7 @@ background-color: lightgrey;
   align-items: center;
   color: white;
   background-color: darkcyan;
-  min-width: 120px;
+  min-width: 140px;
   border-left: 2px solid black;
 
   
@@ -98,7 +98,7 @@ background-color: white;
   /* background-color: cyan; */
   background-image: url("images/banner-image.png");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
   
   display: flex;
   flex-direction: row;
@@ -138,7 +138,8 @@ margin-top: 10px;
 
 
 #app{
-  width: 1440px;
+  /* width: 85%; */
+width: 1440px;
   min-height: 2000px;
   margin: -8px auto;
   border-left: 1px solid black;
@@ -150,6 +151,7 @@ margin-top: 10px;
 
 
 #nav, #banner, #router{
+/* width: 97.5%; */
 width: 1400px;
 padding: 20px;
 margin: auto;
@@ -163,5 +165,48 @@ margin: auto;
 
 
 #router{}
+
+
+@media(max-width: 1400px) {
+#app{
+width: 90%}
+
+#nav, #banner, #router{
+/* width: 97.5%; */
+width: 100%;
+
+margin: auto;
+background-size: 100% 100%;
+/* background-image: none; */
+/* background-color: silver; */
+
+}
+#nav{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: solid black 1px;
+  height: auto;
+  padding: 0px;
+  width: 100%;
+
+}
+#banner{
+  /* background-color: red; */
+ padding: 0px;
+}
+
+
+
+.nav-button{
+  margin-top: 0px;
+  border-bottom: 1px solid black;
+}
+
+
+#router{
+  width: 100%;
+}
+}
 
 </style>
