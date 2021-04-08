@@ -13,3 +13,8 @@
 
 -- strech goal have ingreidients auto suggest from list of in gredients in vue.store:
 https://www.geeksforgeeks.org/javascript-auto-complete-suggestion-feature/
+
+
+
+Useful Links:
+https://www.red-gate.com/hub/product-learning/sql-prompt/consider-using-not-exists-instead-not-subquery

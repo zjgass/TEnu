@@ -26,7 +26,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "INSERT INTO recipe (recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "insert into recipe (recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
                         "ingredients, utensils, instructions, img_url)" +
                         "VALUES (@recipe_name, @description, @is_public, @serves, @prep_time, @cook_time, @total_time, " +
                         "@ingredients, @utensils, @instructions, @img_url);" +
