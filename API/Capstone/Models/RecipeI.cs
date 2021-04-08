@@ -23,7 +23,7 @@ namespace Capstone.Models
 
         public string TotalTime { get; set; }
         //JSON string
-        public Dictionary<Ingredient, QtyUnit> Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
         //JSON string
         public string Utensils { get; set; }
         //JSON string

@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Capstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Capstone.DAO
 {
-    public class IIngredientDAO
+    public interface IIngredientDAO
     {
-        public 
+        Ingredient CreateIngredient(Ingredient ingredient);
+        List<Ingredient> GetIngredients();
     }
 }

@@ -10,5 +10,9 @@ namespace Capstone.Models
         public int IngredientId { get; set; }
 
         public string Name { get; set; }
+
+        public double Qty { get; set; }
+
+        public string Unit { get; set; }
     }
 }
