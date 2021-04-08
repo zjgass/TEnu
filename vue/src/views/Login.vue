@@ -43,11 +43,16 @@
 
       <button type="submit">Sign in</button>
 </div>
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
 
 
+
+      <router-link id='new-account' :to="{ name: 'register' }">Need an account?</router-link>
+            <button id='submit' type="submit">Sign in as guest</button>
     </form>
-                <button type="submit">Sign in as guest</button>
+
+
+
+
   </div>
 </template>
 
@@ -104,6 +109,7 @@ export default {
   width: 400px;
   margin: 0px auto;
   padding: 10px;
+
   /* display: flex; */
   /* flex-direction: row; */
 }
@@ -112,12 +118,26 @@ export default {
   /* width: 100px;
   height: 20px; */
 }
-#password{
+
+
+
+#username-box, #password-box, button{
+  margin-top: 10px;
 
 }
 
-.sr-only{
-  width: 200px;
+label{
+  width: 250px;
 }
+
+
+#new-account, #submit{
+margin: 0px auto;
+
+}
+
+
+
+
 
 </style>

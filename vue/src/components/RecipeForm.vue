@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id='new-recipe-page'>
+        <div id='form-page'>
 
         <form id='recipe-input' action="" method="">
 
@@ -100,10 +100,6 @@ export default {
 <style>
 
 
-#form{
-
-}
-
 
 li, p{
     font-size: 16pt;
@@ -146,18 +142,19 @@ h2{
     height: auto;
     padding: 10px;
     border: solid 1px black;
+
     /* margin-left: 5px; */
 
 
 
 
 }
-#new-recipe-page{
+#form-page{
 
     /* border: solid black 1px; */
     display: flex;
     justify-content: space-between;
-
+    /* background-color: silver; */
 }
 
 
@@ -168,6 +165,19 @@ h2{
     margin-top: 20px;
 }
 
+@media(max-width: 1200px) {
+#form-page{
+display: flex;
+flex-direction: column;
 
+}
+
+
+
+#recipe-input, #current-recipe{
+    margin-bottom: 10px;
+    width: 90%;
+
+}}
 
 </style>

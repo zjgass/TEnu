@@ -42,7 +42,8 @@ namespace Capstone.Controllers
         [HttpPost]
         public ActionResult<RecipeController> CreateRecipe(Recipe recipe)
         {
-            Recipe added = recipeDAO.CreateRecipe(recipe);
+            int userId = Int32.Parse(User.FindFirst("sub").Value);
+            Recipe added = recipeDAO.CreateRecipe(recipe, userId);
             return Created($"/recipe/{recipe.RecipeId}", added);
         }
         //UpdateRecipe

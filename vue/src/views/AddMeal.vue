@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Add A New Meal</h1>
+    <h1>Create A New Meal</h1>
     <meal-form />
     
   </div>
