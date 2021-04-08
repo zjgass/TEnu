@@ -18,7 +18,7 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public Recipe CreateRecipe(Recipe recipe)
+        public Recipe CreateRecipe(Recipe recipe, int userId)
         {
             try
             {
@@ -28,10 +28,11 @@ namespace Capstone.DAO
 
                     string sqlText = "insert into recipe (recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url)" +
+                        "utensils, instructions, img_url, submitted_by)" +
                         "values (@recipe_name, @description, @is_public, @rating, @serves, " +
                         "@prep_time, @cook_time, @total_time, " +
-                        "@utensils, @instructions, @img_url);" +
+                        "@utensils, @instructions, @img_url, " +
+                        "(select username from user where user_id = @user_id));" +
                         "select scope_Identity();";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
@@ -45,24 +46,24 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
                     recipe.RecipeId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    sqlText = "insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)" +
+                    sqlText = "insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty) " +
                         "values ";
 
-                    int index = 0;
-                    foreach (Ingredient ingredient in recipe.Ingredients)
+                    for (int i = 0; i < recipe.Ingredients.Count; i++)
                     {
-                        sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{index})," +
-                                    $"(select recipe_id from recipe where recipe_name = @recipe_name{index})," +
-                                    $"(select unit_id from unit where unit_name = @unit_name{index}), @qty{index}), ";
-                        index++;
+                        sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
+                                    $"@recipe_id{i}, " +
+                                    $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i}) " + 
+                                    (i == recipe.Ingredients.Count - 1 ? "" : ",");
                     }
                     cmd = new SqlCommand(sqlText, conn);
                     for (int i = 0; i < recipe.Ingredients.Count; i++)
                     {
                         cmd.Parameters.AddWithValue($"@ingredient_name{i}", recipe.Ingredients[i].Name);
-                        cmd.Parameters.AddWithValue($"@recipe_name{i}", recipe.Name);
+                        cmd.Parameters.AddWithValue($"@recipe_id{i}", recipe.RecipeId);
                         cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
                         cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                     }
@@ -77,9 +78,9 @@ namespace Capstone.DAO
                 }
             }
             //TODO needs better exception handling
-            catch (SqlException)
+            catch (SqlException e)
             {
-                throw;
+                throw e;
             }
             //TODO what should we return here?  revisit when working on front-end
         }
@@ -96,7 +97,7 @@ namespace Capstone.DAO
 
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves," +
                         " prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url " +
+                        "utensils, instructions, img_url, submitted_by " +
                         "from recipe " +
                         "where is_public = 1;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
@@ -110,9 +111,9 @@ namespace Capstone.DAO
                     return recipes;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -126,8 +127,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "where user_id = @user_id;";
@@ -143,10 +144,9 @@ namespace Capstone.DAO
                     return recipes;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                throw e;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
-                        "ingredients, utensils, instructions, img_url " +
+                        "ingredients, utensils, instructions, img_url, submitted_by " +
                         "from recipe ";
 
                     // TODO
@@ -282,9 +282,9 @@ namespace Capstone.DAO
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch(SqlException)
+            catch(SqlException e)
             {
-                throw;
+                throw e;
             }
             return GetRecipe(recipe.RecipeId);
         }
@@ -299,6 +299,8 @@ namespace Capstone.DAO
 
                     string sqlText = "delete from category_recipe " +
                         "where recipe_id = @recipe_id; " +
+                        "delete from ingredient_recipe_unit " +
+                        "where recipe_id = @recipe_id; " +
                         "delete from meal_recipe " +
                         "where recipe_id = @recipe_id; " +
                         "delete from recipe_users " +
@@ -312,10 +314,10 @@ namespace Capstone.DAO
                     return rowsAffected > 0;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                throw e;
             }
         }
 
@@ -336,6 +338,7 @@ namespace Capstone.DAO
                 Utensils = Convert.ToString(reader["utensils"]),
                 Instructions = Convert.ToString(reader["instructions"]),
                 ImgUrl = Convert.ToString(reader["img_url"]),
+                SubmittedBy = Convert.ToString(reader["submitted_by"]),
             };
             return r;
         }

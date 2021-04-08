@@ -66,7 +66,8 @@ CREATE TABLE recipe
 	total_time varchar(20),
 	utensils nvarchar(4000),
 	instructions nvarchar(4000) NOT NULL,
-	img_url varchar(200)
+	img_url varchar(200),
+	submitted_by varchar(50),
 
 	constraint pk_recipe primary key(recipe_id)
 );
