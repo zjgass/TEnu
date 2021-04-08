@@ -299,6 +299,8 @@ namespace Capstone.DAO
 
                     string sqlText = "delete from category_recipe " +
                         "where recipe_id = @recipe_id; " +
+                        "delete from ingredient_recipe_unit " +
+                        "where recipe_id = @recipe_id; " +
                         "delete from meal_recipe " +
                         "where recipe_id = @recipe_id; " +
                         "delete from recipe_users " +
