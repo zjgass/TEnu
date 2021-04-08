@@ -38,6 +38,7 @@ CREATE TABLE recipe
 (
 	recipe_id int IDENTITY(1,1) NOT NULL,
 	recipe_name varchar(50) NOT NULL,
+	description nvarchar(60),
 	is_public bit NOT NULL,
 	serves int NOT NULL,
 	prep_time varchar(20),

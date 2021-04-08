@@ -14,7 +14,7 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-        public Meal CreateMeal(Meal meal)
+        public Meal CreateMeal(Meal meal, int userId)
         {
             try
             {
@@ -22,21 +22,22 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("Insert INTO meal (meal_name) VALUES (@meal_name);" ,conn);
-                    
+                    string sqlText = "insert into meal (meal_name, user_id) " +
+                        "values (@meal_name, @user_id);" +
+                        "select scope_Identity();";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
-                    cmd.ExecuteNonQuery();
-                        
-                        
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (SqlException)
             {
                 throw ;
             }
-            return GetMeal(meal.MealId);
+            return meal;
         }
-        public Meal AddRecipeToMeal(Meal meal,int RecipeId)
+        public Meal AddRecipeToMeal(Meal meal,int recipeId)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace Capstone.DAO
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("Insert INTO meal_recipe(meal_id, recipe_id) Values(@meal_id @recipe_id);", conn);
                     cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
-                    cmd.Parameters.AddWithValue("@recipe_id",RecipeId);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -59,21 +60,26 @@ namespace Capstone.DAO
         public Meal GetMeal(int mealId)
         {
             Meal returnMeal = null;
+
             try
             {
                 using(SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
+                    string sqlText = "select meal.meal_id, meal_name, recipe_name, user_id " +
+                        "from meal " +
+                        "join meal_recipe on meal_recipe.meal_id = meal.meal_id " +
+                        "join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
+                        "where meal.meal_id = @meal_id;";
                     //TODO Complete SELECT and Parameters statement
-                    SqlCommand cmd = new SqlCommand("SELECT meal_name, recipe_name from meal join meal_recipe on meal_recipe.meal_id = meal.meal_id join recipe on recipe.recipe_id = meal_recipe.recipe_id where meal.meal_id = @mealId; ", conn);
-                    cmd.Parameters.AddWithValue("@mealId", mealId);
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if(reader.HasRows&& reader.Read())
                     {
                             returnMeal = GetMealFromReader(reader);
-                              
                     }
                 }
             }
@@ -94,8 +100,15 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                  //TODO Create joint query
-                    SqlCommand cmd = new SqlCommand("select meal_name, recipe_name from meal join meal_recipe on meal_recipe.meal_id = meal.meal_id join recipe on recipe.recipe_id = meal_recipe.recipe_id where user_id = @userId; ", conn);
+
+
+                    string sqlText = "SELECT meal.meal_id, meal_name, recipe_name, user_id " +
+                        "from meal " +
+                        "join meal_recipe on meal_recipe.meal_id = meal.meal_id " +
+                        "join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
+                        "where user_id = @user_id;";
+                    //TODO Create joint query
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if(reader.HasRows)
@@ -121,7 +134,11 @@ namespace Capstone.DAO
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE meal_name SET meal_name = @meal_name WHERE meal_id = @meal_id ", conn);
+
+                string sqlText = "update meal " +
+                    "set meal_name = @meal_name " +
+                    "where meal_id = @meal_id;";
+                SqlCommand cmd = new SqlCommand(sqlText, conn);
                 cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                 cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
                 cmd.ExecuteNonQuery();
@@ -135,8 +152,15 @@ namespace Capstone.DAO
                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("delete from meal_recipe where meal_id = @mealId; delete from meal_mplan where meal_id = @mealId; delete from meal where meal_id = @mealId;");
-                    cmd.Parameters.AddWithValue("@mealId", mealId);
+
+                    string sqlText = "delete from meal_recipe " +
+                        "where meal_id = @meal_id; " +
+                        "delete from meal_mplan " +
+                        "where meal_id = @meal_id; " +
+                        "delete from meal " +
+                        "where meal_id = @meal_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     return rowsAffected > 0;
@@ -155,7 +179,7 @@ namespace Capstone.DAO
             {
                 MealId = Convert.ToInt32(reader["meal_id"]),
                 Name = Convert.ToString(reader["meal_name"]),
-                
+                UserId = Convert.ToInt32(reader["user_id"])
             };
             return m;
         }
