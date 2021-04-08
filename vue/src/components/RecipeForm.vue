@@ -39,7 +39,7 @@
             <p> {{recipe.name}}</p>
             <h2>Required utensils: </h2>
             <ul>
-                <li v-for >list item in equipment list</li>
+                <li >list item in equipment list</li>
             </ul>
             <h2>Required Ingredients: </h2>
             <ul>
