@@ -2,13 +2,13 @@
 <div>
 
 
-  <table>
+  <table class='recipe-list'>
 
     <thead>
       <tr>
-        <th>heading of column 1</th>
-        <th>heading of column 2</th>
-        <th>heading of column 3</th>
+        <th class='icon'>icon</th>
+        <th class='name'>recipe name</th>
+        <th class='rating'>rating</th>
 
       </tr>
     </thead>
@@ -18,6 +18,7 @@
 
         <td>
         </td>
+        
         <router-link v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
         <td class="name">{{ recipe.name }}</td>
         </router-link>
@@ -54,5 +55,16 @@ export default {
 </script>
 
 <style>
+
+.recipe-list{
+    column-width: 100px;
+}
+
+
+.icon, .name, .rating{
+width: 200px;
+
+}
+
 
 </style>

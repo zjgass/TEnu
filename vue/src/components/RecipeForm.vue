@@ -133,7 +133,7 @@ h2{
     border: 1px solid black;
     width: 47%;
     padding: 10px;
-    border-radius: 5px;
+
     min-height: 300px;
     /* margin-right: 5px; */
 
@@ -147,7 +147,7 @@ h2{
     padding: 10px;
     border: solid 1px black;
     /* margin-left: 5px; */
-    border-radius: 5px;
+
 
 
 
