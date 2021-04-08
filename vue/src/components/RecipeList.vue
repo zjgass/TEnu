@@ -1,27 +1,34 @@
 <template>
-  <div class="recipe-list">
-    
-    <recipe-card v-bind:recipe="recipe" v-for="recipe in recipes" v-bind:key="recipe.recipeId"/>
-
+  <div class="flex-list">
+   
+    <recipe-card 
+      v-for="recipe in recipes" 
+      v-bind:key="recipe.recipeId"
+      v-bind:recipe="recipe"
+      />
+ 
   </div>
 
 </template>
 
 <script>
 import RecipeService from "../services/RecipeService";
-import RecipeCard from "../components/RecipeCard.vue";
+import RecipeCard from "../components/RecipeCard";
+
 
 export default {
   name: "recipe-list",
-  components: RecipeCard,
+  components: {
+    RecipeCard
+  } ,
   data() {
     return {
-      Recipes: []
-    };
+      recipes: []
+    }
   },
   created() {
     RecipeService.getRecipes().then((response) => {
-      this.Recipes = response.data;
+      this.recipes = response.data;
     });
   }
 };
@@ -29,15 +36,25 @@ export default {
 
 <style>
 
-.recipe-list{
-    column-width: 100px;
+.flex-list {
+ 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center flex-start;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  width: .5fr;
+  
+  margin: 5px 10px 5px 10px;
+  padding: 0px 0px 0px 0px;
 }
 
 
-.icon, .name, .rating{
-width: 200px;
 
-}
+
+
+
 
 
 

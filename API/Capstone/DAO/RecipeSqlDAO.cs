@@ -126,7 +126,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, serves, prep_time, cook_time, total_time, " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
                         "utensils, instructions, img_url " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
