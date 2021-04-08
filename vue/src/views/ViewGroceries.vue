@@ -7,13 +7,13 @@
 </template>
 
 <script>
-// import GroceryList from "@/components/GroceryList";
+import GroceryList from "@/components/GroceryList";
 
-// export default {
-//   components: {
-//     GroceryList
-//   }
-// };
+export default {
+  components: {
+    GroceryList
+  }
+};
 </script>
 <style scoped>
 
