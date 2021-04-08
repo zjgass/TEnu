@@ -8,9 +8,10 @@
         <h2>prep time: {{recipe.prepTime}}</h2>
         <h2>cook time: {{recipe.cookTime}}</h2>
         <h2>total time: {{recipe.totalTime}}</h2>
-        <h2>ingredients: {{recipe.ingredients}}</h2>
+        <h2>ingredients:</h2>
         <ul>
-            <li v-for="{name} in recipe.ingredients" :key="name" >{{ {qty} }}</li>
+            <li v-for="item in recipe.ingredients" :key="item" >{{ item }}</li>
+            <!-- <li v-for="{id,name} in recipe.ingredients" :key="id" >{{ name }}</li> -->
         </ul>
         <h2>utensils: {{recipe.utensils}}</h2>
         <h2>instructions: {{recipe.instructions}}</h2>
@@ -83,7 +84,7 @@ text-transform: capitalize;
 }
 
 #recipe-box, #image-box{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
     border-radius: 5px;

@@ -18,6 +18,7 @@
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
+      <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
       <p class='spacer'></p>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
@@ -94,7 +95,11 @@ background-color: white;
 }
 
 #banner{
-  background-color: cyan;
+  /* background-color: cyan; */
+  background-image: url("images/banner-image.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -134,6 +139,7 @@ margin-top: 10px;
 
 #app{
   width: 1440px;
+  min-height: 2000px;
   margin: -8px auto;
   border-left: 1px solid black;
   border-right: 1px solid black;
