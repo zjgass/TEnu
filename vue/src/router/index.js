@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
@@ -11,7 +11,7 @@ import AddMeal from '../views/AddMeal.vue'
 import ViewRecipes from '../views/ViewRecipes.vue'
 import Home2 from '../views/Home2.vue'
 import RecipeDetailView from '../views/RecipeDetailView.vue'
-// import ViewGroceries from '../views/ViewGroceries.vue'
+import ViewGroceries from '../views/ViewGroceries.vue'
 
 Vue.use(Router)
 
@@ -28,14 +28,14 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home,
-      meta: {
-        requiresAuth: true
-      }
-    },
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: Home,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // },
     {
       path: "/login",
       name: "login",
@@ -107,14 +107,14 @@ const router = new Router({
         requiresAuth: true
       }
     },
-    // {
-    //   path: '/GroceryList',
-    //   name: 'GroceryList',
-    //   component: GroceryList,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // }
+    {
+      path: '/GroceryList',
+      name: 'GroceryList',
+      component: ViewGroceries,
+      meta: {
+        requiresAuth: true
+      }
+    }
 
 
   ]

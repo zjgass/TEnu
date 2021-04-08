@@ -1,6 +1,6 @@
 <template>
 <div>
-<div id='new-recipe-page'>
+<div id='form-page'>
 
 <form id='recipe-input' action="" method="">
 
@@ -62,8 +62,5 @@ export default {
 <style>
 
 
-#form{
-
-}
 
 </style>

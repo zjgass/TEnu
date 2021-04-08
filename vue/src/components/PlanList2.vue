@@ -23,38 +23,94 @@
 </select>
 </form>
 
-
-
-
-
 </div>
 
 
 <div id='meal-plan'>
-<div class='plan-column' id='monday'>
+
+
+<div class='plan-column' id='monday-meals'>
     <h1 class='day'>Monday</h1>
-    <p>meal card</p>
+    <div class='meal-card'>
+    <h2>Breakfast</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Lunch</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Dinner</h2>
+    <li>v-for li with recipe names</li>
+    </div>
 </div>
 
-<div class='plan-column' id='tuesday'>
-        <h1 class='day'>Tuesday</h1>
+<div class='plan-column' id='tuesday-meals'>
+    <h1 class='day'>Tuesday</h1>
+    <div class='meal-card'>
+    <h2>Breakfast</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Lunch</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Dinner</h2>
+    <li>v-for li with recipe names</li>
+    </div>
 </div>
 
-<div class='plan-column' id='wednesday'>
-        <h1 class='day'>Wednesday</h1>
+<div class='plan-column' id='wednesday-meals'>
+    <h1 class='day'>Wednesday</h1>
+    <div class='meal-card'>
+    <h2>Breakfast</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Lunch</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Dinner</h2>
+    <li>v-for li with recipe names</li>
+    </div>
 </div>
 
-<div class='plan-column' id='thursday'>
-        <h1 class='day'>Thursday</h1>
+<div class='plan-column' id='thursday-meals'>
+    <h1 class='day'>Thursday</h1>
+    <div class='meal-card'>
+    <h2>Breakfast</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Lunch</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Dinner</h2>
+    <li>v-for li with recipe names</li>
+    </div>
 </div>
 
-<div class='plan-column' id='friday'>
-        <h1 class='day'>Friday</h1>
+<div class='plan-column' id='friday-meals'>
+    <h1 class='day'>Friday</h1>
+    <div class='meal-card'>
+    <h2>Breakfast</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Lunch</h2>
+    <li>v-for li with recipe names</li>
+    </div>
+    <div class='meal-card'>
+    <h2>Dinner</h2>
+    <li>v-for li with recipe names</li>
+    </div>
 </div>
 
+
 </div>
-
-
 </div>
 </template>
 
@@ -122,6 +178,7 @@ padding: 20px;
 }
 
 #current-plan, h1{
+
     margin-top: 0px;
 }
 
@@ -152,10 +209,46 @@ padding: 20px;
     margin: 10px;
 }
 
-#select-plan{
-font-size: 36pt;
-background-color:
+
+
+.inner-column{
+    height: auto;
+ 
 }
+
+.meal-card{
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.meal-card h2{
+margin-bottom: 0px;
+
+}
+
+.meal-card h2{
+
+
+}
+
+
+@media(max-width: 1400px) {
+#meal-plan{
+    flex-direction: column;
+    width: 90%;
+}
+
+.plan-column:not(:first-of-type){
+border: none;
+   
+}
+
+}
+
+
+
 
 
 </style>
