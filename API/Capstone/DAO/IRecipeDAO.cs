@@ -8,7 +8,7 @@ namespace Capstone.DAO
 {
     public interface IRecipeDAO
     {
-        Recipe CreateRecipe(Recipe recipe);
+        Recipe CreateRecipe(Recipe recipe, int userId);
 
         List<Recipe> GetPublicRecipes();
 
