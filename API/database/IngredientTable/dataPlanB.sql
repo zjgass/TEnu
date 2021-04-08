@@ -6,6 +6,10 @@ insert into ingredient (ingredient_name)
 values ('banana'), ('flour'), ('zucchini'), ('butter'),
 		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries');
 
+--Insert some units
+insert into unit (unit_name)
+values ('cups'), ('tbs'), ('tsp'), ('oz'), ('qt'), ('g'), ('mg'), ('ml'), ('ea');
+
 --Insert some recipes
 insert into recipe (recipe_name, is_public, serves,
 	utensils, instructions, img_url)
@@ -31,27 +35,27 @@ values ((select recipe_id from recipe where recipe_name = 'zucchini bread'),
 		(select user_id from users where username = 'user'));
 
 --Add ingredients to recipe
-insert into ingredient_recipe (ingredient_id, recipe_id, quantity, unit)
+insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
 values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		4, 'whole'),
+		(select unit_id from unit where unit_name = 'ea'), 4),
 		((select ingredient_id from ingredient where ingredient_name = 'flour'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		4, 'cups'),
+		(select unit_id from unit where unit_name = 'ea'), 1.5),
 		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		1/3, 'cups');
+		(select unit_id from unit where unit_name = 'tbs'), 3);
 
-insert into ingredient_recipe (ingredient_id, recipe_id, quantity, unit)
+insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
 values ((select ingredient_id from ingredient where ingredient_name = 'zucchini'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'),
-		4, 'whole'),
+		(select unit_id from unit where unit_name = 'ea'), 4),
 		((select ingredient_id from ingredient where ingredient_name = 'flour'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'),
-		4, 'cups'),
+		(select unit_id from unit where unit_name = 'ea'), 1.5),
 		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'),
-		1/3, 'cups');
+		(select unit_id from unit where unit_name = 'tbs'), 3);
 
 --Insert some categories
 insert into category (category_name)
@@ -73,11 +77,13 @@ values ((select category_id from category where category_name='quick bread'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'));
 
 --Add a meal
-insert into meal (meal_name)
-values ('breakfast of champions');
+insert into meal (meal_name, user_id)
+values ('breakfast of champions',
+		(select user_id from users where username = 'user'));
 
-insert into meal (meal_name)
-values ('just another lunch');
+insert into meal (meal_name, user_id)
+values ('just another lunch',
+		(select user_id from users where username = 'user'));
 
 --Add a recipe to a meal
 insert into meal_recipe (meal_id, recipe_id)
@@ -89,11 +95,11 @@ values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'));
 
 --Add a meal plan
-insert into meal_plan (meal_plan_name, user_id)
+insert into mplan (mplan_name, user_id)
 values ('empty the freezer of bananas',
 		(select user_id from users where username = 'user'));
 
 --Add meal to meal plan
-insert into meal_meal_plan (meal_id, meal_plan_id)
+insert into meal_mplan (meal_id, mplan_id)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
-		(select meal_plan_id from meal_plan where meal_plan_name like '%bananas%'));
+		(select mplan_id from mplan where mplan_name like '%bananas%'));

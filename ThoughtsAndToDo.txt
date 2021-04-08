@@ -1,0 +1,10 @@
+-- TODO rate recipes
+-- TODO best of the week
+-- TODO for add meal have a list based on search query
+-- TODO short description and categories
+-- TODO button to add from the view page
+-- TODO add background image
+
+-- for fractions, we can do a ceiling so that 1/3 cup + 1/4 cup is about .58 in decimal, we should write a ceiling function to round that up to .66 so that the grocery list show 2/3 cup.
+
+-- this also helps us connect to api perhaps

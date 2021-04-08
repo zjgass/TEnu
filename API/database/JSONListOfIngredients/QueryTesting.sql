@@ -4,12 +4,7 @@ GO
 --Search Recipes for an ingredient
 select recipe_name
 from recipe
-where JSON_Query(ingredients, '$') like '%banana%';
-
---Search for one ingredient
-select ingredients
-from recipe
-where JSON_Query(ingredients, '$') like '%flour%';
+where JSON_Query(ingredients, '$') like '%banana%'
 
 --Select a recipe
 select recipe_name, description, is_public, serves, prep_time, cook_time, total_time,
