@@ -11,16 +11,16 @@ insert into unit (unit_name)
 values ('cups'), ('tbs'), ('tsp'), ('oz'), ('qt'), ('g'), ('mg'), ('ml'), ('ea');
 
 --Insert some recipes
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url)
-values ('banana bread', 1, 8,
+values ('banana bread', 'my mother''s recipe, the best!', 1, 5, 8,
 	'{utensils: ["mixing bowl", "mixer", "bread pan"]}',
 	'{instructions: ["thaw bananas", "mix bananas, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg');
 
-insert into recipe (recipe_name, is_public, serves,
+insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url)
-values ('zucchini bread', 1, 8,
+values ('zucchini bread', 'christina''s recipe, the best!', 1, 5, 8,
 	'{utensils: ["mixing bowl", "mixer", "bread pan"]}',
 	'{instructions: ["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
 	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85');
@@ -41,7 +41,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 		(select unit_id from unit where unit_name = 'ea'), 4),
 		((select ingredient_id from ingredient where ingredient_name = 'flour'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		(select unit_id from unit where unit_name = 'ea'), 1.5),
+		(select unit_id from unit where unit_name = 'cups'), 1.5),
 		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
 		(select unit_id from unit where unit_name = 'tbs'), 3);
@@ -100,6 +100,6 @@ values ('empty the freezer of bananas',
 		(select user_id from users where username = 'user'));
 
 --Add meal to meal plan
-insert into meal_mplan (meal_id, mplan_id)
+insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
-		(select mplan_id from mplan where mplan_name like '%bananas%'));
+		(select mplan_id from mplan where mplan_name like '%bananas%'), 'monday', 'breakfast');

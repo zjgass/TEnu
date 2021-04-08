@@ -38,7 +38,7 @@ GO
 CREATE TABLE ingredient
 (
 	ingredient_id int IDENTITY(1,1) NOT NULL,
-	ingredient_name varchar(25) NOT NULL,
+	ingredient_name varchar(25) NOT NULL UNIQUE,
 
 	constraint pk_ingredient primary key(ingredient_id)
 );
@@ -47,7 +47,7 @@ CREATE TABLE ingredient
 CREATE TABLE unit
 (
 	unit_id int IDENTITY(1,1) NOT NULL,
-	unit_name varchar(25) NOT NULL,
+	unit_name varchar(25) NOT NULL UNIQUE,
 
 	constraint pk_unit primary key(unit_id)
 );
@@ -57,7 +57,9 @@ CREATE TABLE recipe
 (
 	recipe_id int IDENTITY(1,1) NOT NULL,
 	recipe_name varchar(50) NOT NULL,
+	description nvarchar(60) NOT NULL,
 	is_public bit NOT NULL,
+	rating int,
 	serves int NOT NULL,
 	prep_time varchar(20),
 	cook_time varchar(20),
@@ -178,6 +180,8 @@ CREATE TABLE meal_mplan
 (
 	meal_id int NOT NULL,
 	mplan_id int NOT NULL,
+	meal_day varchar(10) NOT NULL,
+	meal_time varchar(10) NOT NULL,
 
 	constraint pk_meal_mplan
 		primary key(meal_id, mplan_id),
