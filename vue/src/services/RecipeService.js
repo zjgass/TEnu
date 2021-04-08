@@ -12,7 +12,13 @@ export default {
 
   getRecipe(recipeId) {
     return http.get(`/recipe/${recipeId}`)
+  },
+
+  addRecipe(recipe) {
+    return http.post('/recipe', recipe);
   }
+
+
 }
 
 
