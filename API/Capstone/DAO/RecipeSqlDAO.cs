@@ -56,7 +56,7 @@ namespace Capstone.DAO
                     {
                         sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
                                     $"@recipe_id{i}, " +
-                                    $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i}) " + 
+                                    $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i})" + 
                                     (i == recipe.Ingredients.Count - 1 ? "; " : ",");
                     }
 
@@ -68,9 +68,12 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
                         cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                     }
+                    cmd.ExecuteNonQuery(); //
 
-                    sqlText += "insert into recipe_users (recipe_id, user_id) " +
-                        "values (@recipe_id, user_id);";
+                    sqlText = "insert into recipe_users (recipe_id, user_id) " +
+                        "values (@recipe_id, @user_id);";
+                    cmd = new SqlCommand(sqlText, conn); //
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                     cmd.Parameters.AddWithValue("@user_id", userId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
