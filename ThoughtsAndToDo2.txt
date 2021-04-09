@@ -1,0 +1,35 @@
+"plan":
+	{
+		"planId": 1,
+		"userId": 1,
+		"name": "breakfast of champions",
+		"monday": {
+			"breakfast_mealId": 1,
+			"lunch_mealId": 2,
+			"dinner_mealId": 1
+		},
+		"tuesday": {
+			"breakfast_mealId": 1,
+			"lunch_mealId": 2,
+			"dinner_mealId": 1
+		},
+		"wednesday": {
+			"breakfast_mealId": 1,
+			"lunch_mealId": 2,
+			"dinner_mealId": 1
+		}
+}
+
+new model Day has properties breakfast, lunch and dinner that has a meal_id. Then plan has a list of days
+
+mealmealplan model:
+int mplan_id
+int meal_id
+string meal_day
+string meal_time
+then return as a list
+
+// nah
+table mplan: fk user_id fk monday_id fk tuesday_id.... 
+table day pk day_id, breakfast, lunch dinner.
+each breackfast, lunch, and dinner would need a meal_id
