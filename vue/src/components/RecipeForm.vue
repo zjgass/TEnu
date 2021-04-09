@@ -7,13 +7,13 @@
             <div class='input-line'>
                 <p class='input-label'>name of new recipe: </p>
                 <input type='text' v-model="recipe.name"  />
-
+                <p>{{this.$store.state.existingIngredients[0]}}</p>
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>equipment needed: </p>
-                <input type='text' name = 'equipment'  />
-                <button>Add Equipment</button>
+                <input type='text' v-model="newUtensil"  />
+                <button v-on:click="addUtensil($event)">Add Equipment</button>
                 <button>Clear Equipment</button>
             </div>
 
@@ -26,12 +26,12 @@
 
             <div class='input-line'>
                 <p class='input-label'>Instructions: </p>
-                <input type='text' name = 'meal-name'  />
-                <button>Add Step</button>
+                <input type='text' v-model="newInstruction"/>
+                <button v-on:click="addInstruction($event)">Add Step</button>
                 <button>Clear Steps</button>
             </div>
 
-            <button  id='submit-button'>Submit Recipe</button>
+            <button v-on:click="save()"  id='submit-button'>Submit Recipe</button>
         </form>
 
             <div id='current-recipe'>
@@ -64,6 +64,10 @@ export default {
     name: "recipe-form",
     data() {
         return {
+            ingredients: [],
+            newIngredient: Object,    
+            newInstruction: "",    
+            newUtensil: "",   
             recipe: {
                // recipeId: 0, 
                 name: "",
@@ -81,19 +85,33 @@ export default {
             }
         };
     },
+    
     created(){
         this.loadIngredients();
+
+        console.log('loaded recipeform');
     },
     methods: {
+        addInstruction(event){
+            this.recipe.instructions.unshift(this.newInstruction);
+            event.preventDefault();
+            this.newInstruction = "";
+         },
+        addUtensil(event){
+            this.recipe.utensils.unshift(this.newUtensil);
+            event.preventDefault();
+            this.newUtensil = "";
+        }, 
         saveRecipe() {
             recipeService.addRecipe(this.recipe)
             .then(response => {
                 if(response.status === 201){
-                    console.Log("Created successfully");
+                    console.log('recipe saved succesfully');
                 }
             })
             .catch(error => {
                 if(error.response) {
+                    console.log('error loading ingredient')
                     this.errorMsg = "Error creating new Recipe. Response received was '" + error.response.statusText + "'.";
                 }
             })
@@ -101,19 +119,23 @@ export default {
         loadIngredients(){
             ingredientService.getIngredients()
             .then(response => {
-                if(response.status == 201){
-                    this.$store.state.ingredients = response.data;
-                    console.log("Ingredients Loaded");
+                console.log(response.status); 
+                    this.ingredients = response.data;
+                    
+                    console.log('Ingredients Loaded');
+                    console.log(this.$store.newIngredients[0]);
                 }
-            })
+            )
             .catch(error => {
                 if(error.response){
                     this.errorMsg = "Error loading all existing recipes.  Response received was '" + error.response.statusTest + "'.";
+                    console.log('load failed');
                 }
             })
 
         }
-    }
+    },
+    
 
 }
 </script>

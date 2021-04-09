@@ -16,6 +16,8 @@ if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
 }
 
+
+
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
@@ -40,11 +42,9 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
-    ADD_INGREDIENT(state, ingredient){
-      state.ingredients.unshift(ingredient);
+    ADD_INGREDIENTS(state, ingredient){
+      state.existingIngredients = ingredient;
     },
-    ADD_NEWINGREDIENT(state, ingredient){
-      state.newIngredients.unshift(ingredient);
-    }
+  
   }
 })
