@@ -13,6 +13,6 @@ namespace Capstone.Models
 
         public String Name { get; set; }
 
-        List<Meal> Meals { get; set; }
+        public List<MealWithRecipe> Meals { get; set; }
     }
 }
