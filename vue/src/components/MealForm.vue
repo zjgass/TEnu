@@ -6,19 +6,19 @@
 
             <div class='input-line'>
                 <p class='input-label'>New Meal Name: </p>
-                <input type='text' v-model="recipe.name"  />
+                <input type='text' v-model="meal.name"  />
 
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>Search Meals: </p>
                 <input type='text' name = 'equipment'  />
-                <button>Add Recipe</button>
+                <button>Add Recipes</button>
                 <button>Clear Recipes</button>
             </div>
 
 
-            <button  id='submit-button'>Add Meal</button>
+            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Add Meal</button>
         </form>
 
             <div id='current-recipe'>
@@ -34,38 +34,32 @@
 
 <script>
 
-import recipeService from "../services/RecipeService";
+import mealService from "../services/MealService";
 
 export default {
-    name: "recipe-form",
+    name: "meal-form",
     data() {
         return {
-            recipe: {
+            meal: {
                // recipeId: 0, 
                 name: "",
-                isPublic: "",
-                serves: "",
-                prepTime: "",
-                cookTime: "",
-                totalTime: "",
-                ingredients: [],
-                utensils: [],
-                instructions: [],
-                imgUrl: ""
+                recipeList: []
             }
         };
     },
     methods: {
-        saveRecipe() {
-            recipeService.addRecipe(this.recipe)
+        saveMeal() {
+
+            this.meal.recipeList = this.$store.state.newMealRecipes;
+            mealService.createMeal(this.meal)
             .then(response => {
                 if(response.status === 201){
-                    console.Log("Created successfully");
+                    console.Log("Created meal successfully");
                 }
             })
             .catch(error => {
                 if(error.response) {
-                    this.errorMsg = "Error creating new Recipe. Response received was '" + error.response.statusText + "'.";
+                    this.errorMsg = "Error creating new meal. Response received was '" + error.response.statusText + "'.";
                 }
             })
         }
