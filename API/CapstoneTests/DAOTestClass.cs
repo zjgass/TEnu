@@ -60,12 +60,12 @@ namespace CapstoneTests
             TestRecipe1.PrepTime = "20 min";
             TestRecipe1.CookTime = "45 min";
             TestRecipe1.TotalTime = "about an hour";
-            TestRecipe1.Ingredients = "[{\"name\": \"banana\", \"qty\": \"4 ea\"}, {\"name\": \"sugar\", \"qty\": \"3/4 cup\"}," +
-                    "{\"name\": \"chia seeds\", \"qty\": \"2tbs\"}, {\"name\": \"flour\", \"qty\": \"1 1/2 cups\"}, " +
-                    "{\"name\": \"coconut oil\", \"qty\": \"3tbs\"}, {\"name\": \"baking soda\", \"qty\": \"1tps\"}, " +
-                    "{\"name\": \"salt\", \"qty\": \"1tsp\"}, {\"name\": \"manderin oranges\", \"qty\": \"1 can\"}, " +
-                    "{\"name\": \"maraschino cherries\", \"qty\": \"to taste\"}," +
-                    "{\"name\": \"semi-sweet chocolate chips\", \"qty\": \"to taste\"}]";
+            //TestRecipe1.Ingredients = "[{\"name\": \"banana\", \"qty\": \"4 ea\"}, {\"name\": \"sugar\", \"qty\": \"3/4 cup\"}," +
+            //        "{\"name\": \"chia seeds\", \"qty\": \"2tbs\"}, {\"name\": \"flour\", \"qty\": \"1 1/2 cups\"}, " +
+            //        "{\"name\": \"coconut oil\", \"qty\": \"3tbs\"}, {\"name\": \"baking soda\", \"qty\": \"1tps\"}, " +
+            //        "{\"name\": \"salt\", \"qty\": \"1tsp\"}, {\"name\": \"manderin oranges\", \"qty\": \"1 can\"}, " +
+            //        "{\"name\": \"maraschino cherries\", \"qty\": \"to taste\"}," +
+            //        "{\"name\": \"semi-sweet chocolate chips\", \"qty\": \"to taste\"}]";
             TestRecipe1.Utensils = "[\"mixing bowl\", \"mixer\", \"bread pan\", \"oven\"]";
             TestRecipe1.Instructions = "[\"thaw bananas\", \"mix all ingredients together\", \"pour in bread pan\", " +
                 "\"bake in oven at 350F, check every half-hour\"]";
@@ -79,13 +79,13 @@ namespace CapstoneTests
             TestRecipe1.PrepTime = "20 min";
             TestRecipe1.CookTime = "1 hour 20 min";
             TestRecipe1.TotalTime = "1 hour 40 min";
-            TestRecipe1.Ingredients = "[{\"name\": \"shredded zucchini\", \"qty\": \"3 cups\"}, {\"name\": \"brown sugar\", \"qty\": \"2 1/3 cup\"}," +
-                    "{\"name\": \"eggs\", \"qty\": \"4\"}, {\"name\": \"flour\", \"qty\": \"3 cups\"}, " +
-                    "{\"name\": \"canola oil\", \"qty\": \"1 1/2 cups\"}, {\"name\": \"baking soda\", \"qty\": \"1tsp\"}, " +
-                    "{\"name\": \"baking powder\", \"qty\": \"1 1/2tsp\"}, {\"name\": \"salt\", \"qty\": \"1 1/4t\"}, " +
-                    "{\"name\": \"melted unsweetened chocolate\", \"qty\": \"2oz\"}, {\"name\": \"semi-sweet chocolate chips\", \"qty\": \"1 cup\"} " +
-                    "{\"name\": \"allspice\", \"qty\": \"1/4tsp\"}, {\"name\": \"cinnamon\", \"qty\": \"1 1/2tsp\"}, " +
-                    "{\"name\": \"cloves\", \"qty\": \"1/4tsp\"}, {\"name\": \"chopped pecans\", \"qty\": \"1 cup\"}]";
+            //TestRecipe1.Ingredients = "[{\"name\": \"shredded zucchini\", \"qty\": \"3 cups\"}, {\"name\": \"brown sugar\", \"qty\": \"2 1/3 cup\"}," +
+            //        "{\"name\": \"eggs\", \"qty\": \"4\"}, {\"name\": \"flour\", \"qty\": \"3 cups\"}, " +
+            //        "{\"name\": \"canola oil\", \"qty\": \"1 1/2 cups\"}, {\"name\": \"baking soda\", \"qty\": \"1tsp\"}, " +
+            //        "{\"name\": \"baking powder\", \"qty\": \"1 1/2tsp\"}, {\"name\": \"salt\", \"qty\": \"1 1/4t\"}, " +
+            //        "{\"name\": \"melted unsweetened chocolate\", \"qty\": \"2oz\"}, {\"name\": \"semi-sweet chocolate chips\", \"qty\": \"1 cup\"} " +
+            //        "{\"name\": \"allspice\", \"qty\": \"1/4tsp\"}, {\"name\": \"cinnamon\", \"qty\": \"1 1/2tsp\"}, " +
+            //        "{\"name\": \"cloves\", \"qty\": \"1/4tsp\"}, {\"name\": \"chopped pecans\", \"qty\": \"1 cup\"}]";
             TestRecipe1.Utensils = "[\"mixing bowl\", \"mixer\", \"2 bread pan\", \"oven\"]";
             TestRecipe1.Instructions = "[\"Preheat oven to 350F\", \"Grease pans\", " +
                 "\"In large bowl, combine flour, baking powder, baking soda, allspice, cinnamon, cloves, and salt. Set aside.\", " +
