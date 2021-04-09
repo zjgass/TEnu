@@ -32,7 +32,7 @@ namespace Capstone.DAO
                         "values (@recipe_name, @description, @is_public, @rating, @serves, " +
                         "@prep_time, @cook_time, @total_time, " +
                         "@utensils, @instructions, @img_url, " +
-                        "(select username from user where user_id = @user_id));" +
+                        "(select username from users where user_id = @user_id));" +
                         "select scope_Identity();";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_name", recipe.Name);
@@ -88,6 +88,9 @@ namespace Capstone.DAO
         public List<Recipe> GetPublicRecipes()
         {
             List<Recipe> recipes = new List<Recipe>() { };
+            Recipe currentRecipe = new Recipe();
+            Recipe previousRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -95,18 +98,42 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves," +
-                        " prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
+                        "prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by," +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "where is_public = 1;";
+                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where is_public = 1 " +
+                        "order by rating, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int previousId = 0;
                     while (reader.Read())
                     {
-                        recipes.Add(GetRecipeFromReader(reader));
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            previousRecipe = currentRecipe;
+                            currentRecipe = GetRecipeFromReader(reader);
+
+                            if (previousRecipe.RecipeId != 0)
+                            {
+                                recipes.Add(previousRecipe);
+                            }
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        currentRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -120,6 +147,9 @@ namespace Capstone.DAO
         public List<Recipe> GetRecipes(int userId)
         {
             List<Recipe> recipes = new List<Recipe>() { };
+            Recipe currentRecipe = new Recipe();
+            Recipe previousRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -127,19 +157,43 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
+                        "prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by," +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
-                        "where user_id = @user_id;";
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where user_id = @user_id " +
+                        "order by rating, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int previousId = 0;
                     while (reader.Read())
                     {
-                        recipes.Add(GetRecipeFromReader(reader));
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            previousRecipe = currentRecipe;
+                            currentRecipe = GetRecipeFromReader(reader);
+
+                            if (previousRecipe.RecipeId != 0)
+                            {
+                                recipes.Add(previousRecipe);
+                            }
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        currentRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -153,6 +207,9 @@ namespace Capstone.DAO
         public List<Recipe> SearchRecipes(string[] args, bool fuzzy)
         {
             List<Recipe> recipes = new List<Recipe>() { };
+            Recipe currentRecipe = new Recipe();
+            Recipe previousRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -160,8 +217,9 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
-                        "ingredients, utensils, instructions, img_url, submitted_by " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
+                        "prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by " +
                         "from recipe ";
 
                     // TODO
@@ -193,10 +251,28 @@ namespace Capstone.DAO
                     }
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int previousId = 0;
                     while (reader.Read())
                     {
-                        recipes.Add(GetRecipeFromReader(reader));
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            previousRecipe = currentRecipe;
+                            currentRecipe = GetRecipeFromReader(reader);
+
+                            if (previousRecipe.RecipeId != 0)
+                            {
+                                recipes.Add(previousRecipe);
+                            }
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        currentRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -210,7 +286,8 @@ namespace Capstone.DAO
 
         public Recipe GetRecipe(int recipeId)
         {
-            Recipe returnRecipe = null;
+            Recipe returnRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -218,26 +295,45 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
+                        "prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by," +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "where recipe_id = @recipe_id";
+                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where recipe.recipe_id = @recipe_id " +
+                        "order by recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if(reader.HasRows && reader.Read())
+                    int previousId = 0;
+                    while (reader.Read())
                     {
-                        returnRecipe = GetRecipeFromReader(reader);
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            returnRecipe = GetRecipeFromReader(reader);
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        returnRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
                 }
+
+                return returnRecipe;
             }
             //TODO implement better exception handling
             catch (SqlException)
             {
                 throw;
             }
-            return returnRecipe;     
         }
 
         //TODO needs implemented
@@ -343,5 +439,17 @@ namespace Capstone.DAO
             return r;
         }
 
+        private Ingredient GetIngredientFromReader(SqlDataReader reader)
+        {
+            Ingredient i = new Ingredient()
+            {
+                IngredientId = Convert.ToInt32(reader["ingredient_id"]),
+                Name = Convert.ToString(reader["ingredient_name"]),
+                Qty = Convert.ToDouble(reader["qty"]),
+                Unit = Convert.ToString(reader["unit_name"]),
+            };
+
+            return i;
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Capstone.Models
 
         public string TotalTime { get; set; }
         //JSON string
-        public List<Ingredient> Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         //JSON string
         public string Utensils { get; set; }
         //JSON string
