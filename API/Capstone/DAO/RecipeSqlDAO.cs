@@ -101,7 +101,7 @@ namespace Capstone.DAO
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
                         "utensils, instructions, img_url, submitted_by," +
-                        "ingredient. ingredient_id, ingredient_name, qty, unit_name " +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
@@ -119,6 +119,7 @@ namespace Capstone.DAO
 
                         if (currentId != previousId)
                         {
+                            previousRecipe = currentRecipe;
                             currentRecipe = GetRecipeFromReader(reader);
 
                             if (previousRecipe.RecipeId != 0)
@@ -132,6 +133,7 @@ namespace Capstone.DAO
 
                         previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -145,6 +147,9 @@ namespace Capstone.DAO
         public List<Recipe> GetRecipes(int userId)
         {
             List<Recipe> recipes = new List<Recipe>() { };
+            Recipe currentRecipe = new Recipe();
+            Recipe previousRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -152,19 +157,43 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by " +
+                    string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
+                        "prep_time, cook_time, total_time, " +
+                        "utensils, instructions, img_url, submitted_by," +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
-                        "where user_id = @user_id;";
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where user_id = @user_id " +
+                        "order by rating, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int previousId = 0;
                     while (reader.Read())
                     {
-                        recipes.Add(GetRecipeFromReader(reader));
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            previousRecipe = currentRecipe;
+                            currentRecipe = GetRecipeFromReader(reader);
+
+                            if (previousRecipe.RecipeId != 0)
+                            {
+                                recipes.Add(previousRecipe);
+                            }
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        currentRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -178,6 +207,9 @@ namespace Capstone.DAO
         public List<Recipe> SearchRecipes(string[] args, bool fuzzy)
         {
             List<Recipe> recipes = new List<Recipe>() { };
+            Recipe currentRecipe = new Recipe();
+            Recipe previousRecipe = new Recipe();
+            Ingredient ingredient = new Ingredient();
 
             try
             {
@@ -219,10 +251,28 @@ namespace Capstone.DAO
                     }
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int previousId = 0;
                     while (reader.Read())
                     {
-                        recipes.Add(GetRecipeFromReader(reader));
+                        int currentId = Convert.ToInt32(reader["recipe_id"]);
+
+                        if (currentId != previousId)
+                        {
+                            previousRecipe = currentRecipe;
+                            currentRecipe = GetRecipeFromReader(reader);
+
+                            if (previousRecipe.RecipeId != 0)
+                            {
+                                recipes.Add(previousRecipe);
+                            }
+                        }
+
+                        ingredient = GetIngredientFromReader(reader);
+                        currentRecipe.Ingredients.Add(ingredient);
+
+                        previousId = currentId;
                     }
+                    recipes.Add(currentRecipe);
 
                     return recipes;
                 }
@@ -248,7 +298,7 @@ namespace Capstone.DAO
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
                         "utensils, instructions, img_url, submitted_by," +
-                        "ingredient. ingredient_id, ingredient_name, qty, unit_name " +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
