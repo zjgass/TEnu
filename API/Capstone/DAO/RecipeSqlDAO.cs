@@ -225,7 +225,7 @@ namespace Capstone.DAO
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
-                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id "
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id ";
 
                     // TODO
                     // Trying to implement the ability to search for multiple ingredients, and fuzzy searching.

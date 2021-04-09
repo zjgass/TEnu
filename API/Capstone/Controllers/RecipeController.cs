@@ -80,12 +80,26 @@ namespace Capstone.Controllers
 
         //Get recipes by search
         [HttpGet("search")]
-        public ActionResult<List<Recipe>> SearchRecipes(HttpContext context)
+        public ActionResult<List<Recipe>> SearchRecipes(string queries)
         {
-            string requestBody = context.Request.Body.ToString();
-            string[] searchArgs = JsonConvert.DeserializeObject<string[]>(requestBody);
+            //string requestBody = context.Request.Body.ToString();
+            //string[] searchArgs = JsonConvert.DeserializeObject<string[]>(requestBody);
 
-            return Ok(recipeDAO.SearchRecipes(searchArgs, true));
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+            List<Recipe> recipes = new List<Recipe>();
+
+            if (queries != null)
+            {
+                string[] searchArgs = queries.Split(delimiterChars);
+                recipes = recipeDAO.SearchRecipes(searchArgs, true);
+            }
+            else
+            {
+                recipes = recipeDAO.GetPublicRecipes();
+            }
+            
+
+            return Ok(recipes);
         }
         
     }
