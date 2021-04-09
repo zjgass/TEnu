@@ -50,7 +50,8 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlText = "select ingredient.ingredient_id, ingredient_name " +
-                        "from ingredient;";
+                        "from ingredient " +
+                        "order by ingredient_name;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 

@@ -79,8 +79,9 @@ namespace Capstone.Controllers
         }
 
         //Get recipes by search
+        /*
         [HttpGet("search")]
-        public ActionResult<List<Recipe>> SearchRecipes(string queries)
+        public ActionResult<List<Recipe>> SearchRecipes(HttpRequestBase queries)
         {
             //string requestBody = context.Request.Body.ToString();
             //string[] searchArgs = JsonConvert.DeserializeObject<string[]>(requestBody);
@@ -101,6 +102,6 @@ namespace Capstone.Controllers
 
             return Ok(recipes);
         }
-        
+        */
     }
 }

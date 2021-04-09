@@ -204,7 +204,7 @@ namespace Capstone.DAO
             }
         }
 
-        public List<Recipe> SearchRecipes(string[] args, bool fuzzy)
+        public List<Recipe> SearchRecipes(Query args)
         {
             List<Recipe> recipes = new List<Recipe>() { };
             Recipe currentRecipe = new Recipe();
@@ -233,10 +233,10 @@ namespace Capstone.DAO
                     // https://www.svenbit.com/2014/08/using-sqlparameter-with-sqls-in-clause-in-csharp/
                     List<string> ParamList = new List<string>();
                     int index = 0;
-                    foreach (string query in args)
+                    foreach (string query in args.Queries)
                     {
                         string paramName = "@queryParam" + index;
-                        if (fuzzy)
+                        if (args.Fuzzy)
                         {
                             sqlText += $"where ingredient_name like '%@{paramName}%' ";
                         }
@@ -250,9 +250,9 @@ namespace Capstone.DAO
                     }
                                             
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    for (int i = 0; i < args.Length; i++)
+                    for (int i = 0; i < args.Queries.Count(); i++)
                     {
-                        cmd.Parameters.AddWithValue(ParamList[i], args[i]);
+                        cmd.Parameters.AddWithValue(ParamList[i], args.Queries[i]);
                     }
                     SqlDataReader reader = cmd.ExecuteReader();
 
