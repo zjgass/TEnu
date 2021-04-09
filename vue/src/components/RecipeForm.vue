@@ -13,7 +13,7 @@
             <div class='input-line'>
                 <p class='input-label'>equipment needed: </p>
                 <input type='text' v-model="newUtensil"  />
-                <button v-on:click="addUtensil($event)">Add Equipment</button>
+                <button v-on:click="addUtensil().prevent()">Add Equipment</button>
                 <button>Clear Equipment</button>
             </div>
 
@@ -27,11 +27,11 @@
             <div class='input-line'>
                 <p class='input-label'>Instructions: </p>
                 <input type='text' v-model="newInstruction"/>
-                <button v-on:click="addInstruction($event)">Add Step</button>
+                <button v-on:click="addInstruction().prevent()">Add Step</button>
                 <button>Clear Steps</button>
             </div>
 
-            <button v-on:click="save()"  id='submit-button'>Submit Recipe</button>
+            <button v-on:click="save().prevent()"  id='submit-button'>Submit Recipe</button>
         </form>
 
             <div id='current-recipe'>
@@ -64,8 +64,7 @@ export default {
     name: "recipe-form",
     data() {
         return {
-            ingredients: [],
-            newIngredient: Object,    
+            ingredients: [],   
             newInstruction: "",    
             newUtensil: "",   
             recipe: {
@@ -85,6 +84,11 @@ export default {
             }
         };
     },
+    save(){
+     
+      
+        this.$store.commit("ADD_INGREDIENTS", this.ingredients);
+    },
     
     created(){
         this.loadIngredients();
@@ -92,14 +96,12 @@ export default {
         console.log('loaded recipeform');
     },
     methods: {
-        addInstruction(event){
+        addInstruction(){
             this.recipe.instructions.unshift(this.newInstruction);
-            event.preventDefault();
             this.newInstruction = "";
          },
-        addUtensil(event){
+        addUtensil(){
             this.recipe.utensils.unshift(this.newUtensil);
-            event.preventDefault();
             this.newUtensil = "";
         }, 
         saveRecipe() {
@@ -120,10 +122,9 @@ export default {
             ingredientService.getIngredients()
             .then(response => {
                 console.log(response.status); 
-                    this.ingredients = response.data;
-                    
+                    this.ingredients = response.data;       
                     console.log('Ingredients Loaded');
-                    console.log(this.$store.newIngredients[0]);
+                    console.log(this.$store.state.newIngredients[0]);
                 }
             )
             .catch(error => {

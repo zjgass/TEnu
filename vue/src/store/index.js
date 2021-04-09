@@ -45,6 +45,8 @@ export default new Vuex.Store({
     ADD_INGREDIENTS(state, ingredient){
       state.existingIngredients = ingredient;
     },
-  
-  }
+   
+  },
+  actions: {},
+  modules: {}
 })
