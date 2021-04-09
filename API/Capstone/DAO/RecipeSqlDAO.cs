@@ -219,13 +219,14 @@ namespace Capstone.DAO
 
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by," +
+                        "utensils, instructions, img_url, submitted_by, " +
                         "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
                         "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
-                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id ";
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where ";
 
                     // TODO
                     // Trying to implement the ability to search for multiple ingredients, and fuzzy searching.
@@ -233,21 +234,25 @@ namespace Capstone.DAO
                     // https://www.svenbit.com/2014/08/using-sqlparameter-with-sqls-in-clause-in-csharp/
                     List<string> ParamList = new List<string>();
                     int index = 0;
-                    foreach (string query in args.Queries)
+                    for (int i = 0; i < args.Queries.Count(); i++)
                     {
                         string paramName = "@queryParam" + index;
+
+                        sqlText += i > 0 && i < args.Queries.Count() ? " or " : "";
+
                         if (args.Fuzzy)
                         {
-                            sqlText += $"where ingredient_name like '%@{paramName}%' ";
+                            sqlText += $"ingredient_name like '%' + {paramName} + '%' ";
                         }
                         else
                         {
-                            sqlText += $"where ingredient_name = @{paramName} ";
+                            sqlText += $"ingredient_name = {paramName} ";
                         }
                         ParamList.Add(paramName);
                         
                         index++;
                     }
+                    sqlText += "order by recipe.rating, recipe.recipe_name;";
                                             
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     for (int i = 0; i < args.Queries.Count(); i++)
