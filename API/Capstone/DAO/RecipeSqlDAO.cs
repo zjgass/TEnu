@@ -57,8 +57,9 @@ namespace Capstone.DAO
                         sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
                                     $"@recipe_id{i}, " +
                                     $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i}) " + 
-                                    (i == recipe.Ingredients.Count - 1 ? "" : ",");
+                                    (i == recipe.Ingredients.Count - 1 ? "; " : ",");
                     }
+
                     cmd = new SqlCommand(sqlText, conn);
                     for (int i = 0; i < recipe.Ingredients.Count; i++)
                     {
@@ -67,6 +68,11 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
                         cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                     }
+
+                    sqlText += "insert into recipe_users (recipe_id, user_id) " +
+                        "values (@recipe_id, user_id);";
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
@@ -103,12 +109,12 @@ namespace Capstone.DAO
                         "utensils, instructions, img_url, submitted_by," +
                         "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "left join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
                         "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
                         "where is_public = 1 " +
-                        "order by rating, recipe.recipe_id;";
+                        "order by rating desc, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -162,12 +168,12 @@ namespace Capstone.DAO
                         "utensils, instructions, img_url, submitted_by," +
                         "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "left join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
                         "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
                         "where user_id = @user_id " +
-                        "order by rating, recipe.recipe_id;";
+                        "order by rating desc, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
