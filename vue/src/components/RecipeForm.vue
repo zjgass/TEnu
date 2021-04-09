@@ -58,6 +58,7 @@
 <script>
 
 import recipeService from "../services/RecipeService";
+import ingredientService from "../services/IngredientService";
 
 export default {
     name: "recipe-form",
@@ -67,6 +68,7 @@ export default {
                // recipeId: 0, 
                 name: "",
                 isPublic: "",
+                description: "",
                 serves: "",
                 prepTime: "",
                 cookTime: "",
@@ -74,9 +76,13 @@ export default {
                 ingredients: [],
                 utensils: [],
                 instructions: [],
-                imgUrl: ""
+                imgUrl: "",
+                submittedBy: ""
             }
         };
+    },
+    created(){
+        this.loadIngredients();
     },
     methods: {
         saveRecipe() {
@@ -91,6 +97,21 @@ export default {
                     this.errorMsg = "Error creating new Recipe. Response received was '" + error.response.statusText + "'.";
                 }
             })
+        },
+        loadIngredients(){
+            ingredientService.getIngredients()
+            .then(response => {
+                if(response.status == 201){
+                    this.$store.state.ingredients = response.data;
+                    console.log("Ingredients Loaded");
+                }
+            })
+            .catch(error => {
+                if(error.response){
+                    this.errorMsg = "Error loading all existing recipes.  Response received was '" + error.response.statusTest + "'.";
+                }
+            })
+
         }
     }
 

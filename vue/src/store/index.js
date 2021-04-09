@@ -19,7 +19,9 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    existingIngredients: [],
+    newIngredients: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +39,12 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    ADD_INGREDIENT(state, ingredient){
+      state.ingredients.unshift(ingredient);
+    },
+    ADD_NEWINGREDIENT(state, ingredient){
+      state.newIngredients.unshift(ingredient);
     }
   }
 })
