@@ -10,7 +10,7 @@ export default {
     return http.get('/meal');
   },
 
-  getMeals(boardID) {
-    return http.get(`/meal/${mealId}`)
+  getMeal(mealID) {
+    return http.get(`/meal/${mealID}`)
   }
 }

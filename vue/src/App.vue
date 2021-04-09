@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div id="banner">
+
+
       <div id='title-and-sub'>
         <h1 id='site-title'>TEnue</h1>
         <p id='subtitle'>A meal planner by Tech Elevator</p>
@@ -29,14 +31,6 @@
 
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
-
-// export default defineComponent({
-//   setup() {
-    
-
-//   },
-// })
 
 
 
@@ -104,6 +98,7 @@ background-color: white;
   flex-direction: row;
   justify-content: space-between;
 
+
 }
 #banner-image{
 justify-self: flex-end;
@@ -169,6 +164,9 @@ margin: auto;
 #router{}
 
 
+
+
+
 @media(max-width: 1400px) {
 #app{
 width: 90%}
@@ -209,6 +207,11 @@ background-size: 100% 100%;
 #router{
   width: 100%;
 }
+
+
+
+
+
 }
 
 </style>

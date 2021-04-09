@@ -8,6 +8,7 @@
 <div id='current-plan'>
     <h1>Your Meal Plan</h1>
     <h2>*name of current selected plan</h2>
+    <h2>this.Plans: {{this.Plans}}</h2>
 
     </div>
 
@@ -33,6 +34,9 @@
     <h1 class='day'>Monday</h1>
     <div class='meal-card'>
     <h2>Breakfast</h2>
+
+                <meal-card />
+
     <li>v-for li with recipe names</li>
     </div>
     <div class='meal-card'>
@@ -115,26 +119,32 @@
 </template>
 
 <script>
-// import docsService from "../services/DocsService";
 
-// export default {
-//   name: "meal-plan-list",
-//   data() {
-//     return {
-//       allPlans: []
-//     };
-//   },
-//   methods: {
-//     viewDocument(id) {
-//       this.$router.push(`/plans/${planId}`);
-//     }
-//   },
-//   created() {
-//     docsService.list().then((response) => {
-//       this.allPlans = response.data;
-//     });
-//   }
-// };
+import PlanService from "../services/PlanService";
+import MealCard from "../components/MealCard";
+
+export default {
+  name: "meal-plan",
+  components:{
+      MealCard
+  },
+  data() {
+    return {
+      Plans: []
+    };
+  },
+  methods: {
+    viewPlan(planId) {
+      this.$router.push(`/plans/${planId}`);
+    }
+  },
+  created() {
+    PlanService.getPlans().then((response) => {
+      this.Plans = response.data;
+    });
+  }
+};
+
 </script>
 
 <style>

@@ -96,6 +96,7 @@ export default {
 
 
 <style scoped>
+
 #login{
   border: 1px solid black;
   margin: 0px auto;
