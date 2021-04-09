@@ -24,10 +24,12 @@ namespace Capstone.Models
         public string CookTime { get; set; }
 
         public string TotalTime { get; set; }
-        //JSON string
+
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+
         //JSON string
         public string Utensils { get; set; }
+
         //JSON string
         public string Instructions { get; set; }
 
