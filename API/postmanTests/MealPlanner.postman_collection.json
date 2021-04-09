@@ -88,7 +88,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44315/api/recipe/1",
+							"raw": "https://localhost:44315/api/recipe/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -97,7 +97,7 @@
 							"path": [
 								"api",
 								"recipe",
-								"1"
+								"2"
 							]
 						},
 						"description": "Gets a recipe by its id."
@@ -161,7 +161,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"banana pound cake\",\r\n    \"description\": \"delisious, zesty pound cake. great for a spring day.\",\r\n    \"isPublic\": true,\r\n    \"Rating\": 4,\r\n    \"Serves\": 8,\r\n    \"prepTime\": \"20 mins\",\r\n    \"cookTime\": \"30 mins\",\r\n    \"totalTime\": \"1 hour\",\r\n    \"Ingredients\": [\r\n        {\r\n            \"Name\": \"maraschino cherries\",\r\n            \"Qty\": 1,\r\n            \"Unit\": \"cups\"\r\n        },\r\n        {\r\n            \"Name\": \"chia seeds\",\r\n            \"Qty\": 1,\r\n            \"Unit\": \"tbs\"\r\n        }\r\n    ],\r\n    \"utensils\": \"[\\\"mixing bowl\\\", \\\"mixer\\\", \\\"bread pan\\\"]\",\r\n    \"instructions\": \"[\\\"juice and zext lemons\\\", \\\"mix lemon zest, lemon juice, butter, and flour\\\", \\\"pour in bread pan\\\", \\\"bake in oven at 350, for one hour\\\"]\",\r\n    \"imgUrl\": \"https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2020%2F06%2F02%2F4188464.jpg&q=85\"\r\n}",
+							"raw": "{\r\n    \"name\": \"lemon pound cake\",\r\n    \"description\": \"delisious, zesty pound cake. great for a spring day.\",\r\n    \"isPublic\": true,\r\n    \"Rating\": 4,\r\n    \"Serves\": 8,\r\n    \"prepTime\": \"20 mins\",\r\n    \"cookTime\": \"30 mins\",\r\n    \"totalTime\": \"1 hour\",\r\n    \"Ingredients\": [\r\n        {\r\n            \"Name\": \"maraschino cherries\",\r\n            \"Qty\": 1,\r\n            \"Unit\": \"cups\"\r\n        },\r\n        {\r\n            \"Name\": \"chia seeds\",\r\n            \"Qty\": 1,\r\n            \"Unit\": \"tbs\"\r\n        }\r\n    ],\r\n    \"utensils\": \"[\\\"mixing bowl\\\", \\\"mixer\\\", \\\"bread pan\\\"]\",\r\n    \"instructions\": \"[\\\"juice and zext lemons\\\", \\\"mix lemon zest, lemon juice, butter, and flour\\\", \\\"pour in bread pan\\\", \\\"bake in oven at 350, for one hour\\\"]\",\r\n    \"imgUrl\": \"https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2020%2F06%2F02%2F4188464.jpg&q=85\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -288,6 +288,106 @@
 								"api",
 								"meal",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ingredient",
+			"item": [
+				{
+					"name": "GetIngredients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6InVzZXIiLCJyb2xlIjoidXNlciIsIm5iZiI6MTYxNzgwNzYxMCwiZXhwIjoxNjE4NDEyNDEwLCJpYXQiOjE2MTc4MDc2MTB9.TAnJfFA5sv7hfoN4O27RF8fv9upbGnnuLYd5d_VYLaY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44315/api/ingredient",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44315",
+							"path": [
+								"api",
+								"ingredient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateIngredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6InVzZXIiLCJyb2xlIjoidXNlciIsIm5iZiI6MTYxNzgwNzYxMCwiZXhwIjoxNjE4NDEyNDEwLCJpYXQiOjE2MTc4MDc2MTB9.TAnJfFA5sv7hfoN4O27RF8fv9upbGnnuLYd5d_VYLaY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"papreika\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44315/api/ingredient",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44315",
+							"path": [
+								"api",
+								"ingredient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plan",
+			"item": [
+				{
+					"name": "GetPlan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44315/api/plan/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44315",
+							"path": [
+								"api",
+								"plan",
+								"1"
 							]
 						}
 					},

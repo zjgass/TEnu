@@ -105,6 +105,11 @@ namespace Capstone.DAO
                     int previousRecipeId = 0;
                     while (reader.Read())
                     {
+                        if (previousMealId == 0)
+                        {
+                            plan = GetPlanFromReader(reader);
+                        }
+
                         int currentMealId = Convert.ToInt32(reader["meal_id"]);
                         int currentRecipeId = Convert.ToInt32(reader["recipe_id"]);
 
