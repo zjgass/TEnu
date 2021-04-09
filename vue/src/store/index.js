@@ -23,7 +23,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     existingIngredients: [],
-    newIngredients: []
+    newIngredients: [],
+    utensilTest: ""
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     ADD_INGREDIENTS(state, ingredient){
       state.existingIngredients = ingredient;
     },
+    ADD_UTENSIL(state, utensil){
+      state.utensilTest = utensil;
+    }
    
   },
   actions: {},

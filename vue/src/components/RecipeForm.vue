@@ -5,51 +5,86 @@
         <form id='recipe-input' action="" method="">
 
             <div class='input-line'>
-                <p class='input-label'>name of new recipe: </p>
-                <input type='text' v-model="recipe.name"  />
-                <p>{{this.$store.state.existingIngredients[0]}}</p>
+                <p class='input-label'>Recipe Name: </p>
+                <input class="input-short-text" type='text' v-model="recipe.name"  />              
+            </div>
+            
+            <div class='input-line'>
+                <p class='input-label'>Description: </p>
+                <input class="input-description-text" type='text' v-model="recipe.description" />
             </div>
 
             <div class='input-line'>
-                <p class='input-label'>equipment needed: </p>
+                <p class='input-label'>Serves: </p>
+                <input class="input-integer-text" type='text' v-model="recipe.serves" />
+           
+                <p class='input-label'>Prep Time:  </p>
+                <input class="input-integer-text" type='text' v-model="recipe.prepTime" />
+           
+                <p class='input-label'>Cook Time: </p>
+                <input class="input-integer-text" type='text' v-model="recipe.cookTime" />
+            </div>
+
+            <div class='input-line'>
+                <p class='input-label'>Utensils Needed: </p>
                 <input type='text' v-model="newUtensil"  />
-                <button v-on:click="addUtensil().prevent()">Add Equipment</button>
-                <button>Clear Equipment</button>
-            </div>
-
-            <div class='input-line'>
-                <p class='input-label'>ingredients: </p>
-                <input type='text' name = 'meal-name'  />
-                <button>Add Ingredient</button>
-                <button>Clear Ingredients</button>
+                <button v-on:click.prevent="addUtensil()">Add Utensil</button>
+                <button v-on:click.prevent="clearUtensils()">Clear Utensils</button>
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>Instructions: </p>
                 <input type='text' v-model="newInstruction"/>
-                <button v-on:click="addInstruction().prevent()">Add Step</button>
-                <button>Clear Steps</button>
+                <button v-on:click.prevent="addInstruction()">Add Step</button>
+                <button v-on:click.prevent="clearInstructions()">Clear Steps</button>
             </div>
 
-            <button v-on:click="save().prevent()"  id='submit-button'>Submit Recipe</button>
+            <div class='input-line'>
+                <button v-on:click.prevent="showIngredients()">Add Ingredient</button>
+                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
+            </div>
+
+            <button id='submit-button' v-on:click.prevent='saveRecipe()'>Submit Recipe</button>
         </form>
 
-            <div id='current-recipe'>
-                <h2>Recipe Name: </h2>
-            <p> {{recipe.name}}</p>
-            <h2>Required utensils: </h2>
-            <ul>
-                <li >list item in equipment list</li>
-            </ul>
-            <h2>Required Ingredients: </h2>
-            <ul>
-                <li>list of ingredients</li>
-            </ul>
-            <h2>Instructions: </h2>
-            <ul>
-                <li>list item in instructions list</li>
-            </ul>
+
+        <!--Use v-if here to display current details entered or if
+        user has clicked add ingredient button display AddIngredientComponent -->
+
+        <div class="show-recipe-details" v-if="showDetails">
+            <div class="instruction-list">
+                
+            </div>
         </div>
+
+
+
+        <div class="show-add-ingredient" v-if="!showDetails">
+             <div class="ingredient-list" v-for="ingredient in this.$store.state.existingIngredients"                    
+                v-bind:key="ingredient.ingredientId"
+                v-bind:ingredient="ingredient"
+                >
+                <h3>{{ingredient.name}}  Quantity: </h3>
+                <input class="input-integer-text" type='text' v-model="ingredient.qty" />
+                <h3>  Measurement: </h3>
+                <select v-model="ingredient.unit">
+                    <option value="cups"> cups </option>
+                    <option value="ea"> ea </option>
+                    <option value="g"> g </option>
+                    <option value="mg"> mg </option>
+                    <option value="ml"> ml </option>
+                    <option value="oz"> oz </option>
+                    <option value="qt"> qt </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="tsp"> tsp </option>
+                </select>
+
+                <button id='add-this-ingredient' v-on:click.prevent="addIngredient(ingredient)">Add </button>
+
+            </div>  
+        </div>
+
+
 
     </div>
 </div>
@@ -64,44 +99,41 @@ export default {
     name: "recipe-form",
     data() {
         return {
+            showDetails: true,
+            storeLoaded: false,
             ingredients: [],   
             newInstruction: "",    
             newUtensil: "",   
             recipe: {
                // recipeId: 0, 
                 name: "",
-                isPublic: "",
+                isPublic: true,
                 description: "",
                 serves: "",
                 prepTime: "",
                 cookTime: "",
                 totalTime: "",
                 ingredients: [],
-                utensils: [],
-                instructions: [],
+                utensils: "",
+                instructions: "",
                 imgUrl: "",
-                submittedBy: ""
+                submittedBy: "",
+                rating: 0
             }
         };
-    },
-    save(){
-     
-      
-        this.$store.commit("ADD_INGREDIENTS", this.ingredients);
     },
     
     created(){
         this.loadIngredients();
-
-        console.log('loaded recipeform');
+        console.log('loaded recipeform');   
     },
     methods: {
         addInstruction(){
-            this.recipe.instructions.unshift(this.newInstruction);
+            this.recipe.instructions += this.newInstruction + ",";
             this.newInstruction = "";
          },
         addUtensil(){
-            this.recipe.utensils.unshift(this.newUtensil);
+            this.recipe.utensils += this.newUtensil + ",";
             this.newUtensil = "";
         }, 
         saveRecipe() {
@@ -113,7 +145,7 @@ export default {
             })
             .catch(error => {
                 if(error.response) {
-                    console.log('error loading ingredient')
+                    console.log('error saving recipe')
                     this.errorMsg = "Error creating new Recipe. Response received was '" + error.response.statusText + "'.";
                 }
             })
@@ -124,7 +156,6 @@ export default {
                 console.log(response.status); 
                     this.ingredients = response.data;       
                     console.log('Ingredients Loaded');
-                    console.log(this.$store.state.newIngredients[0]);
                 }
             )
             .catch(error => {
@@ -134,7 +165,30 @@ export default {
                 }
             })
 
+        },
+        showIngredients(){
+            this.showDetails = false;
+            if(this.storeLoaded === false){
+                  this.$store.commit("ADD_INGREDIENTS", this.ingredients);
+                  console.log('test method commit ingredients');
+                  this.storeLoaded = true;
+            }     
+        },
+        addIngredient(ingredient){
+            this.showDetails = true;
+            this.recipe.ingredients.push(ingredient);
+        },
+        clearIngredients(){
+            this.recipe.ingredients = [];
+        },
+        clearUtensils(){
+            this.recipe.utensils = "";
+        },
+        clearInstructions() {
+            this.recipe.instructions = "";
         }
+        
+        
     },
     
 
@@ -157,6 +211,7 @@ h2{
 
 .input-line{
     
+    display: flex;
 
 
     /* border: 1px solid black; */
@@ -165,8 +220,34 @@ h2{
     margin-bottom: 10px;
 }
 .input-label{
+    font-size: 1rem;
     margin-top: 0px;
     
+}
+
+.input-short-text {
+    width: 200px;
+    height: 20px;
+}
+
+.input-description-text {
+    width: 300px;
+    height: 40px;
+}
+
+.input-integer-text {
+    width:20px;
+    height: 20px;
+    margin: 0px 5px 0px 5px;
+}
+
+.ingredient-list{
+    display: flex;
+}
+
+.ingredient-list>h3{
+
+    font-size: .75rem;
 }
 
 #recipe-input{
@@ -179,6 +260,24 @@ h2{
 
 
 }
+
+.show-add-ingredient{
+    width: 47%;
+    min-height: 300px;
+    height: auto;
+    padding: 10px;
+    border: solid 1px black;
+}
+
+.show-recipe-details{
+    width: 47%;
+    min-height: 300px;
+    height: auto;
+    padding: 10px;
+    border: solid 1px black;
+}
+
+
 #current-recipe{
 
     width: 47%;
@@ -188,9 +287,6 @@ h2{
     border: solid 1px black;
 
     /* margin-left: 5px; */
-
-
-
 
 }
 #form-page{
