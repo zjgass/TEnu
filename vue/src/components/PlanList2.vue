@@ -7,20 +7,23 @@
 
 <div id='current-plan'>
     <h1>Your Meal Plan</h1>
-    <h2>*name of current selected plan</h2>
-    <h2>this.Plans: {{this.Plans}}</h2>
+    <h2 id='current-plan-name'>{{Plans[currentPlan].name}}</h2>
+
+
 
     </div>
 
 
 <form id='choose-plan' action="" method="">
 <p> View A Different Meal Plan: </p>
-<select name="select-plan">
-<option value=""> select plan </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
+<select name="select-plan"  id='plan-select-dropdown'>
+
+<option value=""
+v-for="plan in Plans"
+v-bind:key="plan.name"
+
+>{{plan.name}}</option>
+
 </select>
 </form>
 
@@ -112,9 +115,10 @@
     <li>v-for li with recipe names</li>
     </div>
 </div>
-
-
 </div>
+        <h2>{{Plans}}</h2>
+        <h2>currentPlan: {{currentPlan}}</h2>
+
 </div>
 </template>
 
@@ -124,13 +128,16 @@ import PlanService from "../services/PlanService";
 import MealCard from "../components/MealCard";
 
 export default {
+    // props: currentPlan,    
+
   name: "meal-plan",
   components:{
       MealCard
   },
   data() {
     return {
-      Plans: []
+      Plans: [],
+    currentPlan: 0
     };
   },
   methods: {
@@ -192,6 +199,14 @@ padding: 20px;
     margin-top: 0px;
 }
 
+#plan-select-dropdown{
+    width: 100%;
+    font-size: 20pt;
+    text-transform: capitalize;
+}
+
+
+
 .plan-column h1{
     margin-top: 0px;
     text-decoration: underline;
@@ -214,11 +229,21 @@ padding: 20px;
     height: 100px;
 }
 
+#current-plan-name{
+    text-transform: capitalize;
+    font-size: 20pt;
+}
+
 
 #choose-plan, #current-plan{
     margin: 10px;
+    
+    
 }
 
+#choose-plan p{
+        font-size: 20pt;
+}
 
 
 .inner-column{
@@ -242,6 +267,7 @@ margin-bottom: 0px;
 
 
 }
+
 
 
 @media(max-width: 1400px) {

@@ -166,7 +166,6 @@ margin: auto;
 
 
 
-
 @media(max-width: 1400px) {
 #app{
 width: 90%}

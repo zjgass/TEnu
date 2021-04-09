@@ -1,8 +1,7 @@
 <template>
-    <div class="meal-card">
+    <div class="meal-card-component">
         
-            <p>this text is in meal card component</p>
-            <p>this.Meals: {{this.Meal.name}}</p>
+            <p>{{this.Meals.name}}</p>
 
 
 
