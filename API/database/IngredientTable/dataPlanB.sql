@@ -4,7 +4,7 @@ GO
 --Insert some ingredients
 insert into ingredient (ingredient_name)
 values ('banana'), ('flour'), ('zucchini'), ('butter'),
-		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries');
+		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries'), ('salt'), ('pepper');
 
 --Insert some units
 insert into unit (unit_name)
@@ -21,6 +21,13 @@ values ('banana bread', 'my mother''s recipe, the best!', 1, 5, 8,
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url)
 values ('zucchini bread', 'christina''s recipe, the best!', 1, 5, 8,
+	'{utensils: ["mixing bowl", "mixer", "bread pan"]}',
+	'{instructions: ["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
+	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85');
+
+insert into recipe (recipe_name, description, is_public, rating, serves, prep_time,cook_time,total_time,
+	utensils, instructions, img_url)
+values ('zucchini bread', 'christina''s recipe, the best!', 1, 5, 8, '10 min', '1 hour', '1hour 10 min',
 	'{utensils: ["mixing bowl", "mixer", "bread pan"]}',
 	'{instructions: ["slice zucchini", "mix zucchini, butter, and flour", "pour in bread pan", "bake in oven at 350, for one hour"]}',
 	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85');
@@ -56,6 +63,18 @@ values ((select ingredient_id from ingredient where ingredient_name = 'zucchini'
 		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
 		(select recipe_id from recipe where recipe_name = 'zucchini bread'),
 		(select unit_id from unit where unit_name = 'tbs'), 3);
+
+insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
+values ((select ingredient_id from ingredient where ingredient_name = 'salt'),
+		(select recipe_id from recipe where recipe_name = 'banana bread'),
+		(select unit_id from unit where unit_name = 'ea'), 4),
+		((select ingredient_id from ingredient where ingredient_name = 'flour'),
+		(select recipe_id from recipe where recipe_name = 'banana bread'),
+		(select unit_id from unit where unit_name = 'cups'), 1.5),
+		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
+		(select recipe_id from recipe where recipe_name = 'banana bread'),
+		(select unit_id from unit where unit_name = 'tbs'), 3);
+
 
 --Insert some categories
 insert into category (category_name)
