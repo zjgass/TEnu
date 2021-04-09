@@ -13,5 +13,9 @@ namespace Capstone.Models
         public string Name { get; set; }
 
         public int UserId { get; set; }
+
+        public string MealDay { get; set; }
+
+        public string MealTime { get; set; }
     }
 }
