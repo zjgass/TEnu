@@ -24,7 +24,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     existingIngredients: [],
     newIngredients: [],
-    utensilTest: ""
+    newMealRecipes: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -46,8 +46,8 @@ export default new Vuex.Store({
     ADD_INGREDIENTS(state, ingredient){
       state.existingIngredients = ingredient;
     },
-    ADD_UTENSIL(state, utensil){
-      state.utensilTest = utensil;
+    ADD_RECIPE_TO_MEAL(state, recipeId){
+      state.newMealRecipes.unshift(recipeId);
     }
    
   },
