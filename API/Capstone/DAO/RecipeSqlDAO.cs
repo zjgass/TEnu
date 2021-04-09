@@ -57,8 +57,9 @@ namespace Capstone.DAO
                         sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
                                     $"@recipe_id{i}, " +
                                     $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i}) " + 
-                                    (i == recipe.Ingredients.Count - 1 ? "" : ",");
+                                    (i == recipe.Ingredients.Count - 1 ? "; " : ",");
                     }
+
                     cmd = new SqlCommand(sqlText, conn);
                     for (int i = 0; i < recipe.Ingredients.Count; i++)
                     {
@@ -67,6 +68,11 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
                         cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                     }
+
+                    sqlText += "insert into recipe_users (recipe_id, user_id) " +
+                        "values (@recipe_id, user_id);";
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
@@ -103,12 +109,12 @@ namespace Capstone.DAO
                         "utensils, instructions, img_url, submitted_by," +
                         "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "left join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
                         "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
                         "where is_public = 1 " +
-                        "order by rating, recipe.recipe_id;";
+                        "order by rating desc, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -162,12 +168,12 @@ namespace Capstone.DAO
                         "utensils, instructions, img_url, submitted_by," +
                         "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from recipe " +
-                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "left join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
                         "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
                         "where user_id = @user_id " +
-                        "order by rating, recipe.recipe_id;";
+                        "order by rating desc, recipe.recipe_id;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -204,7 +210,7 @@ namespace Capstone.DAO
             }
         }
 
-        public List<Recipe> SearchRecipes(string[] args, bool fuzzy)
+        public List<Recipe> SearchRecipes(Query args)
         {
             List<Recipe> recipes = new List<Recipe>() { };
             Recipe currentRecipe = new Recipe();
@@ -219,8 +225,14 @@ namespace Capstone.DAO
 
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by " +
-                        "from recipe ";
+                        "utensils, instructions, img_url, submitted_by, " +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
+                        "from recipe " +
+                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where ";
 
                     // TODO
                     // Trying to implement the ability to search for multiple ingredients, and fuzzy searching.
@@ -228,26 +240,30 @@ namespace Capstone.DAO
                     // https://www.svenbit.com/2014/08/using-sqlparameter-with-sqls-in-clause-in-csharp/
                     List<string> ParamList = new List<string>();
                     int index = 0;
-                    foreach (string query in args)
+                    for (int i = 0; i < args.Queries.Count(); i++)
                     {
                         string paramName = "@queryParam" + index;
-                        if (fuzzy)
+
+                        sqlText += i > 0 && i < args.Queries.Count() ? " or " : "";
+
+                        if (args.Fuzzy)
                         {
-                            sqlText += $"where JSON_Query(ingredients, '$') like '%@{paramName}%' ";
+                            sqlText += $"ingredient_name like '%' + {paramName} + '%' ";
                         }
                         else
                         {
-                            sqlText += $"where JSON_Query(ingredients, '$') = @{paramName} ";
+                            sqlText += $"ingredient_name = {paramName} ";
                         }
                         ParamList.Add(paramName);
                         
                         index++;
                     }
+                    sqlText += "order by recipe.rating, recipe.recipe_name;";
                                             
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    for (int i = 0; i < args.Length; i++)
+                    for (int i = 0; i < args.Queries.Count(); i++)
                     {
-                        cmd.Parameters.AddWithValue(ParamList[i], args[i]);
+                        cmd.Parameters.AddWithValue(ParamList[i], args.Queries[i]);
                     }
                     SqlDataReader reader = cmd.ExecuteReader();
 

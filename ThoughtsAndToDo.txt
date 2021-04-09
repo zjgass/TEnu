@@ -21,3 +21,7 @@ https://www.red-gate.com/hub/product-learning/sql-prompt/consider-using-not-exis
 
 !! meal_mplan table, we might need to extend the primary key to the meal_day, and meal_time.
 if a user wanted the same breakfast everyday, the meal_id, to mplan_id would already be in the system and a duplicate would probably not be allowed.
+
+
+VS CODE how to jump from one merge conflict to another:
+https://stackoverflow.com/questions/46125244/isnt-there-a-way-to-jump-between-conflicts-in-vscode

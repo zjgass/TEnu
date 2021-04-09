@@ -20,6 +20,6 @@ namespace Capstone.DAO
 
         bool DeleteRecipe(int recipeId);
 
-        List<Recipe> SearchRecipes(string[] args, bool fuzzy);
+        List<Recipe> SearchRecipes(Query args);
     }
 }
