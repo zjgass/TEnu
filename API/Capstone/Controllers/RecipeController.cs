@@ -23,7 +23,6 @@ namespace Capstone.Controllers
         }
 
         //GetAllRecipes of current user
-        //TODO needs completed, grab userId from jwt 
         [HttpGet]
         [Authorize]
         public ActionResult<List<Recipe>> GetUserRecipes()

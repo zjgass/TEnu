@@ -36,7 +36,6 @@ namespace Capstone.DAO
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -51,8 +50,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlText = "select ingredient.ingredient_id, ingredient_name " +
-                        "from ingredient " +
-                        "join ingredient_recipe_unit on ingredient_recipe_unit.ingredient_id = ingredient.ingredient_id;";
+                        "from ingredient;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -66,7 +64,6 @@ namespace Capstone.DAO
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

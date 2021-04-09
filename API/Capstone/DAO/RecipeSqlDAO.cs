@@ -219,8 +219,13 @@ namespace Capstone.DAO
 
                     string sqlText = "select recipe.recipe_id, recipe_name, description, is_public, rating, serves, " +
                         "prep_time, cook_time, total_time, " +
-                        "utensils, instructions, img_url, submitted_by " +
-                        "from recipe ";
+                        "utensils, instructions, img_url, submitted_by," +
+                        "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
+                        "from recipe " +
+                        "join recipe_users on recipe_users.recipe_id = recipe.recipe_id " +
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id "
 
                     // TODO
                     // Trying to implement the ability to search for multiple ingredients, and fuzzy searching.
@@ -233,11 +238,11 @@ namespace Capstone.DAO
                         string paramName = "@queryParam" + index;
                         if (fuzzy)
                         {
-                            sqlText += $"where JSON_Query(ingredients, '$') like '%@{paramName}%' ";
+                            sqlText += $"where ingredient_name like '%@{paramName}%' ";
                         }
                         else
                         {
-                            sqlText += $"where JSON_Query(ingredients, '$') = @{paramName} ";
+                            sqlText += $"where ingredient_name = @{paramName} ";
                         }
                         ParamList.Add(paramName);
                         
