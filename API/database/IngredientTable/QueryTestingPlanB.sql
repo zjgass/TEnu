@@ -152,7 +152,7 @@ join recipe on recipe.recipe_id = meal_recipe.recipe_id
 join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
 join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
 join unit on unit.unit_id = ingredient_recipe_unit.unit_id
-where mplan.mplan_id = 1
+where mplan.mplan_id = 2
 order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;
 
 --Get all ids for one meal plan
@@ -169,3 +169,4 @@ join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_
 join unit on unit.unit_id = ingredient_recipe_unit.unit_id
 where mplan.mplan_id = 1
 order by meal.meal_id, recipe.recipe_id, ingredient.ingredient_name;
+

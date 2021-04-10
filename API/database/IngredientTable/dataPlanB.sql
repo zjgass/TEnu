@@ -5,20 +5,19 @@ GO
 insert into ingredient (ingredient_name)
 values ('banana'), ('flour'), ('zucchini'), ('butter'),
 		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries'),
-
 		('sugar'), ('coconut oil'), ('baking soda'), ('baking powder'),
 		('mandarin oranges'), ('semi-sweet chocolate chips'), ('canola oil'),
-		('zucchini'), ('brown sugar'), ('cinnamon'), ('nutmeg'),
+		('brown sugar'), ('cinnamon'), ('nutmeg'), ('salt'), ('chopped pecans'),
 		('unsweetened chocolate'), ('allspice'), ('cloves'), ('ginger'),
 		('croissant'), ('apples'), ('peanut butter'), ('romain lettuce head'), ('balsamic vinegar'),
 		('chopped walnuts'), ('raisins'), ('sunflower seeds'), ('feta cheese'), ('french onions'),
 		('pepitas'), ('tomato'), ('strawberries'), ('blueberries'),('almond milk'), ('protein powder'),
-		('red pitaya powder'), ('spinach');
+		('red pitaya powder'), ('spinach'), ('raisin bran cereal');
 
 --Insert some units
 insert into unit (unit_name)
-values ('cups'), ('tbs'), ('tsp'), ('oz'), ('fl oz'), ('qt'), ('pt'), ('qt'), ('gal'), 
-('g'), ('mg'), ('ml'),
+values ('pinch'), ('tsp'), ('tbs'), ('cups'), ('oz'), ('fl oz'), ('pt'), ('qt'), ('gal'), 
+('mg'), ('g'), ('ml'), ('l'),
 ('ea'), ('to taste');
 
 --Insert some recipes
@@ -30,7 +29,7 @@ values ('banana bread', 'my mother''s recipe, the best!', 1, 5, 8,
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg', 1);
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
-	utensils, instructions, img_url)
+	utensils, instructions, img_url, submitted_by)
 values ('chocolate zucchini bread', 'christina''s recipe, the best!', 1, 5, 8,
 	'{utensils: ["mixing bowl", "mixer", "2 bread pan", "oven"]}',
 	'{instructions: ["Preheat oven to 350F.", "Grease pans.",
@@ -80,6 +79,24 @@ values ('rockin'' fruit soothie', 'full of pink goodness (and protein)!', 1, 5, 
 	"enjoy"]}',
 	'https://i.pinimg.com/originals/c7/53/8f/c7538fb4223d92523f190220bfe5513b.jpg', 1);
 
+insert into recipe (recipe_name, description, is_public, rating, serves,
+	utensils, instructions, img_url, submitted_by)
+values ('bananas in cereal', 'a way to add bananas to breakfast!', 1, 5, 2,
+	'{utensils: ["knife", "bowl", "spoons"]}',
+	'{instructions: ["cut up the bananas into slices",
+	"put banana slices along with cereal and milk into a bowl",
+	"enjoy"]}',
+	'https://i0.wp.com/www.theimpulsivebuy.com/wordpress/wp-content/uploads/2018/06/Kelloggs-Raisin-Bran-with-Bananas-2.jpg?resize=550%2C550&ssl=1', 1);
+
+insert into recipe (recipe_name, description, is_public, rating, serves,
+	utensils, instructions, img_url, submitted_by)
+values ('bananas with peanut butter', 'A nice simple meal!', 1, 5, 2,
+	'{utensils: ["knife", "bowl", "spoons"]}',
+	'{instructions: ["cut up the banana into slices",
+	"slather the peanut butter on each slice with a spoon",
+	"enjoy"]}',
+	'https://www.parentaljourney.com/wp-content/uploads/2016/02/2-bananas-with-peanut-butter.jpg', 1);
+
 --Add the recipes to user
 insert into recipe_users (recipe_id, user_id)
 values ((select recipe_id from recipe where recipe_name = 'banana bread'),
@@ -108,11 +125,11 @@ values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 		(select unit_id from unit where unit_name = 'tbs'), 3),
 		((select ingredient_id from ingredient where ingredient_name = 'baking soda'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		(select unit_id from unit where unit_name = 'tps'), 1),
+		(select unit_id from unit where unit_name = 'tsp'), 1),
 		((select ingredient_id from ingredient where ingredient_name = 'salt'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
-		(select unit_id from unit where unit_name = 'tps'), 1),
-		((select ingredient_id from ingredient where ingredient_name = 'manderin oranges'),
+		(select unit_id from unit where unit_name = 'tsp'), 1),
+		((select ingredient_id from ingredient where ingredient_name = 'mandarin oranges'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
 		(select unit_id from unit where unit_name = 'cups'), 1),
 		((select ingredient_id from ingredient where ingredient_name = 'maraschino cherries'),
@@ -127,7 +144,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'zucchini'
 		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
 		(select unit_id from unit where unit_name = 'cups'), 3),
 		((select ingredient_id from ingredient where ingredient_name = 'brown sugar'),
-		(select recipe_id from recipe where recipe_name = 'zucchini bread'),
+		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
 		(select unit_id from unit where unit_name = 'cups'), 2.33),
 		((select ingredient_id from ingredient where ingredient_name = 'eggs'),
 		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
@@ -152,10 +169,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'zucchini'
 		(select unit_id from unit where unit_name = 'oz'), 2),
 		((select ingredient_id from ingredient where ingredient_name = 'semi-sweet chocolate chips'),
 		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
-		(select unit_id from unit where unit_name = 'cup'), 1),
-		((select ingredient_id from ingredient where ingredient_name = 'allspice'),
-		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
-		(select unit_id from unit where unit_name = 'tsp'), 0.25),
+		(select unit_id from unit where unit_name = 'cups'), 1),
 		((select ingredient_id from ingredient where ingredient_name = 'allspice'),
 		(select recipe_id from recipe where recipe_name = 'chocolate zucchini bread'),
 		(select unit_id from unit where unit_name = 'tsp'), 0.25),
@@ -168,14 +182,14 @@ values ((select ingredient_id from ingredient where ingredient_name = 'zucchini'
 
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
 values ((select ingredient_id from ingredient where ingredient_name = 'eggs'),
-		(select recipe_id from recipe where recipe_name = 'egg on croissant'),
+		(select recipe_id from recipe where recipe_name = 'egg on a croissant'),
 		(select unit_id from unit where unit_name = 'ea'), 6),
 		((select ingredient_id from ingredient where ingredient_name = 'croissant'),
-		(select recipe_id from recipe where recipe_name = 'egg on croissant'),
+		(select recipe_id from recipe where recipe_name = 'egg on a croissant'),
 		(select unit_id from unit where unit_name = 'ea'), 3);
 
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
-values ((select ingredient_id from ingredient where ingredient_name = 'appless'),
+values ((select ingredient_id from ingredient where ingredient_name = 'apples'),
 		(select recipe_id from recipe where recipe_name = 'apples with peanut butter'),
 		(select unit_id from unit where unit_name = 'ea'), 2),
 		((select ingredient_id from ingredient where ingredient_name = 'peanut butter'),
@@ -197,7 +211,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'romain le
 		(select unit_id from unit where unit_name = 'cups'), 2/3),
 		((select ingredient_id from ingredient where ingredient_name = 'raisins'),
 		(select recipe_id from recipe where recipe_name = 'super salad'),
-		(select unit_id from unit where unit_name = 'cup'), 2),
+		(select unit_id from unit where unit_name = 'cups'), 2),
 		((select ingredient_id from ingredient where ingredient_name = 'chopped walnuts'),
 		(select recipe_id from recipe where recipe_name = 'super salad'),
 		(select unit_id from unit where unit_name = 'cups'), 2),
@@ -234,6 +248,25 @@ values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 		(select recipe_id from recipe where recipe_name = 'rockin'' fruit soothie'),
 		(select unit_id from unit where unit_name = 'cups'), 1);
 
+insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
+values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
+		(select recipe_id from recipe where recipe_name = 'bananas in cereal'),
+		(select unit_id from unit where unit_name = 'ea'), 2),
+		((select ingredient_id from ingredient where ingredient_name = 'raisin bran cereal'),
+		(select recipe_id from recipe where recipe_name = 'bananas in cereal'),
+		(select unit_id from unit where unit_name = 'ea'), 2),
+		((select ingredient_id from ingredient where ingredient_name = 'almond milk'),
+		(select recipe_id from recipe where recipe_name = 'apples with peanut butter'),
+		(select unit_id from unit where unit_name = 'cups'), 3);
+
+insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
+values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
+		(select recipe_id from recipe where recipe_name = 'bananas with peanut butter'),
+		(select unit_id from unit where unit_name = 'ea'), 2),
+		((select ingredient_id from ingredient where ingredient_name = 'peanut butter'),
+		(select recipe_id from recipe where recipe_name = 'bananas with peanut butter'),
+		(select unit_id from unit where unit_name = 'cups'), 4);
+
 --Insert some categories
 insert into category (category_name)
 values ('quick bread');
@@ -269,7 +302,11 @@ values ((select category_id from category where category_name='dinner'),
 
 insert into category_recipe (category_id, recipe_id)
 values ((select category_id from category where category_name='breakfast'),
-		(select recipe_id from recipe where recipe_name = 'egg on croissant'));
+		(select recipe_id from recipe where recipe_name = 'egg on a croissant'));
+
+insert into category_recipe (category_id, recipe_id)
+values ((select category_id from category where category_name='breakfast'),
+		(select recipe_id from recipe where recipe_name = 'bananas in cereal'));
 
 --Add a meal
 insert into meal (meal_name, user_id)
@@ -284,10 +321,22 @@ insert into meal (meal_name, user_id)
 values ('nice dinner at the end of a long day',
 		(select user_id from users where username = 'user'));
 
+insert into meal (meal_name, user_id)
+values ('pink pick me up',
+		(select user_id from users where username = 'user'));
+
+insert into meal (meal_name, user_id)
+values ('bananas for breakfast',
+		(select user_id from users where username = 'user'));
+
+insert into meal (meal_name, user_id)
+values ('bananas for lunch',
+		(select user_id from users where username = 'user'));
+
 --Add a recipe to a meal
 insert into meal_recipe (meal_id, recipe_id)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
-		(select recipe_id from recipe where recipe_name = 'egg on croissant'));
+		(select recipe_id from recipe where recipe_name = 'egg on a croissant'));
 
 insert into meal_recipe (meal_id, recipe_id)
 values ((select meal_id from meal where meal_name = 'just another lunch, out in the park'),
@@ -305,6 +354,14 @@ insert into meal_recipe (meal_id, recipe_id)
 values ((select meal_id from meal where meal_name = 'pink pick me up'),
 		(select recipe_id from recipe where recipe_name = 'rockin'' fruit soothie'));
 
+insert into meal_recipe (meal_id, recipe_id)
+values ((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select recipe_id from recipe where recipe_name = 'bananas in cereal'));
+
+insert into meal_recipe (meal_id, recipe_id)
+values ((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select recipe_id from recipe where recipe_name = 'bananas with peanut butter'));
+
 --Add a meal plan
 insert into mplan (mplan_name, user_id)
 values ('empty the freezer of bananas',
@@ -315,6 +372,38 @@ values ('the average week',
 		(select user_id from users where username = 'user'));
 
 --Add meal to meal plan
+insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
+values ((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'monday', 'breakfast'),
+		((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'monday', 'lunch'),
+		((select meal_id from meal where meal_name = 'pink pick me up'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'monday', 'dinner'),
+		((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'tuesday', 'breakfast'),
+		((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'tuesday', 'lunch'),
+		((select meal_id from meal where meal_name = 'pink pick me up'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'tuesday', 'dinner'),
+		((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'wednesday', 'breakfast'),
+		((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'wednesday', 'lunch'),
+		((select meal_id from meal where meal_name = 'pink pick me up'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'wednesday', 'dinner'),
+		((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'thursday', 'breakfast'),
+		((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'thrusday', 'lunch'),
+		((select meal_id from meal where meal_name = 'pink pick me up'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'thursday', 'dinner'),
+		((select meal_id from meal where meal_name = 'bananas for breakfast'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'friday', 'breakfast'),
+		((select meal_id from meal where meal_name = 'bananas for lunch'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'friday', 'lunch'),
+		((select meal_id from meal where meal_name = 'pink pick me up'),
+		(select mplan_id from mplan where mplan_name = 'empty the freezer of bananas'), 'friday', 'dinner');
+
 insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select mplan_id from mplan where mplan_name = 'the average week'), 'monday', 'breakfast'),

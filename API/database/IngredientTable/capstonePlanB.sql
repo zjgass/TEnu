@@ -38,7 +38,7 @@ GO
 CREATE TABLE ingredient
 (
 	ingredient_id int IDENTITY(1,1) NOT NULL,
-	ingredient_name varchar(25) NOT NULL UNIQUE,
+	ingredient_name varchar(30) NOT NULL UNIQUE,
 
 	constraint pk_ingredient primary key(ingredient_id)
 );
@@ -185,7 +185,8 @@ CREATE TABLE meal_mplan
 	meal_time varchar(10) NOT NULL,
 
 	constraint pk_meal_mplan
-		primary key(meal_id, mplan_id),
+		primary key(meal_id, mplan_id,
+		meal_day, meal_time),
 	constraint fk_meal_mplan_meal
 		foreign key(meal_id)
 		references meal(meal_id),
