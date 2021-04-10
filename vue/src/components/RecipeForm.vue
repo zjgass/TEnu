@@ -214,7 +214,7 @@ h2{
     display: flex;
 
 
-    /* border: 1px solid black; */
+
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -256,7 +256,8 @@ h2{
     padding: 10px;
 
     min-height: 300px;
-    /* margin-right: 5px; */
+    margin-left: 10px;
+    margin: auto;
 
 
 }
@@ -275,6 +276,7 @@ h2{
     height: auto;
     padding: 10px;
     border: solid 1px black;
+
 }
 
 
@@ -285,16 +287,17 @@ h2{
     height: auto;
     padding: 10px;
     border: solid 1px black;
+    margin-right: 10px;
+        margin: auto;
 
-    /* margin-left: 5px; */
 
 }
 #form-page{
 
-    /* border: solid black 1px; */
     display: flex;
     justify-content: space-between;
     /* background-color: silver; */
+    
 }
 
 
@@ -305,7 +308,7 @@ h2{
     margin-top: 20px;
 }
 
-@media(max-width: 1200px) {
+@media(max-width: 1400px) {
 #form-page{
 display: flex;
 flex-direction: column;

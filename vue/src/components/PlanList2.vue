@@ -7,24 +7,28 @@
 
 <div id='current-plan'>
     <h1>Your Meal Plan</h1>
-    <h2 id='current-plan-name'>{{Plans[currentPlan].name}}</h2>
-
-
+    <h2 id='current-plan-name'>{{Plans[dropDown-1].name}}</h2>
+        <h2>current value of dropDown:  {{dropDown}}</h2>
 
     </div>
 
 
 <form id='choose-plan' action="" method="">
 <p> View A Different Meal Plan: </p>
-<select name="select-plan"  id='plan-select-dropdown'>
+<select name="select-plan"  v-model="dropDown" id='plan-select-dropdown'>
 
-<option value=""
+<option  class='plan-dropdown-item'
 v-for="plan in Plans"
 v-bind:key="plan.name"
-
+v-bind:value='plan.planId'
 >{{plan.name}}</option>
 
+
+
+
+
 </select>
+
 </form>
 
 </div>
@@ -115,9 +119,18 @@ v-bind:key="plan.name"
     <li>v-for li with recipe names</li>
     </div>
 </div>
+
+      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
+
+
 </div>
-        <h2>{{Plans}}</h2>
-        <h2>currentPlan: {{currentPlan}}</h2>
+
+<router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
+       
+        <!-- <h2>{{Plans}}</h2>
+        <h2>currentPlan: {{currentPlan}}</h2> -->
+
+
 
 </div>
 </template>
@@ -135,10 +148,16 @@ export default {
       MealCard
   },
   data() {
+
     return {
       Plans: [],
-    currentPlan: 0
+    currentPlan: 0,
+    dropDown: null
     };
+  },
+  mounted: function(){
+        this.dropDown = 1;
+      
   },
   methods: {
     viewPlan(planId) {
@@ -203,6 +222,7 @@ padding: 20px;
     width: 100%;
     font-size: 20pt;
     text-transform: capitalize;
+            cursor: pointer;
 }
 
 
@@ -243,6 +263,7 @@ padding: 20px;
 
 #choose-plan p{
         font-size: 20pt;
+
 }
 
 
@@ -263,10 +284,17 @@ margin-bottom: 0px;
 
 }
 
-.meal-card h2{
 
 
+#show-grocery-list{
+    font-size: 20pt;
+    margin-top: 50px;
+    cursor: pointer;
+    margin-left: 20px;
 }
+
+
+
 
 
 
@@ -282,7 +310,6 @@ border: none;
 }
 
 }
-
 
 
 
