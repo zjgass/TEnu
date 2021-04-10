@@ -24,18 +24,42 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO mplan (mplan_name, user_id) VALUES (@mplan_name, @user_id)", conn);
+
+                    string sqlText = "insert into mplan (mplan_name, user_id) " +
+                        "values (@mplan_name, @user_id); " +
+                        "select scope_Identity();";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
                     cmd.Parameters.AddWithValue("@user_id", plan.UserId);
+                    plan.PlanId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    sqlText = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time) " +
+                        "values ";
+
+                    for (int i = 0; i < plan.Meals.Count; i++)
+                    {
+                        sqlText += $"(@meal_id{i}, @mplan_id{i}, @meal_day{i}, @meal_time{i}) " +
+                                    (i == plan.Meals.Count - 1 ? "; " : ",");
+                    }
+
+                    cmd = new SqlCommand(sqlText, conn);
+                    for (int i = 0; i < plan.Meals.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue($"@meal_id{i}", plan.Meals[i].MealId);
+                        cmd.Parameters.AddWithValue($"@mplan_id{i}", plan.PlanId);
+                        cmd.Parameters.AddWithValue($"@meal_day{i}", plan.Meals[i].MealDay);
+                        cmd.Parameters.AddWithValue($"@meal_time{i}", plan.Meals[i].MealTime);
+                    }
                     cmd.ExecuteNonQuery();
                 }
+
+                return plan;
             }
             //TODO Implement better exception handling
             catch (SqlException)
             {
                 throw;
             }
-            return GetPlan(plan.PlanId);
         }
 
         //public Plan GetPlan()
@@ -225,15 +249,41 @@ namespace Capstone.DAO
 
         public Plan UpdatePlan(Plan plan)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE meal_plan SET meal_plan_name = @meal_plan_name WHERE meal_plan_id = @meal_plan_id ", conn);
-                cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
-                cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "update mplan " +
+                        "set mplan_name = @mplan_name " +
+                        "where mplan_id = @mplan_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
+                    cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
+                    cmd.ExecuteNonQuery();
+
+                    foreach (MealWithRecipe meal in plan.Meals)
+                    {
+                        sqlText = "update meal_mplan " +
+                            "set meal_id = @meal_id, " +
+                                "meal_day = @meal_day, " +
+                                "meal_time = @meal_time " +
+                            "where mplan_id = @mplan_id;";
+                        cmd = new SqlCommand(sqlText, conn);
+                        cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                        cmd.Parameters.AddWithValue("@meal_day", meal.MealDay);
+                        cmd.Parameters.AddWithValue("@meal_time", meal.MealTime);
+                    }
+                }
+
+                return plan; //TODO We should probably get the new plan here
             }
-            return GetPlan(plan.PlanId);
+            //TODO Implement better exception handling
+            catch (SqlException)
+            {
+                throw;
+            }
         }
 
         public bool DeletePlan(int PlanId)
@@ -243,6 +293,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
+
                     string sqlText = "delete from meal_mplan " +
                                         "where mplan_id = @mplan_id; " +
                                         "delete from mplan " +

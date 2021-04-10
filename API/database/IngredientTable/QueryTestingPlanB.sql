@@ -170,3 +170,26 @@ join unit on unit.unit_id = ingredient_recipe_unit.unit_id
 where mplan.mplan_id = 1
 order by meal.meal_id, recipe.recipe_id, ingredient.ingredient_name;
 
+select * from mplan;
+
+--Insert Meal Plan
+insert into mplan (mplan_name, user_id)
+values ('something new this week',
+		(select user_id from users where username = 'user'));
+
+insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
+values ((select meal_id from meal where meal_name = 'breakfast of champions'),
+		(select mplan_id from mplan where mplan_name = 'something new this week'), 'monday', 'breakfast');
+
+--Update Meal Plan
+update mplan
+set mplan_name = 'something old this week'
+where mplan_id = 
+(select mplan_id from mplan where mplan_name = 'something new this week');
+
+update meal_mplan
+set meal_id = (select meal_id from meal where meal_name = 'bananas for breakfast'),
+	meal_day = 'tuesday',
+	meal_time = 'lunch'
+where mplan_id = 
+(select mplan_id from mplan where mplan_name = 'something old this week');
