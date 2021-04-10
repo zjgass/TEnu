@@ -3,16 +3,16 @@
 <div>
 
 
-<div id='top-of-component'>
+<!-- <div id='top-of-component'> -->
 
-<div id='current-plan'>
+<!-- <div id='current-plan'>
     <h1>Your Meal Plan</h1>
     <h2 id='current-plan-name'>{{Plans[dropDown-1].name}}</h2>
         <h2>current value of dropDown:  {{dropDown}}</h2>
 
-    </div>
+    </div> -->
 
-
+<!-- 
 <form id='choose-plan' action="" method="">
 <p> View A Different Meal Plan: </p>
 <select name="select-plan"  v-model="dropDown" id='plan-select-dropdown'>
@@ -21,17 +21,17 @@
 v-for="plan in Plans"
 v-bind:key="plan.name"
 v-bind:value='plan.planId'
->{{plan.name}}</option>
+>{{plan.name}}</option> -->
 
 
 
 
 
-</select>
+<!-- </select>
 
-</form>
+</form> -->
 
-</div>
+<!-- </div> -->
 
 
 <div id='meal-plan'>
@@ -118,59 +118,32 @@ v-bind:value='plan.planId'
 </template>
 
 <script>
-<<<<<<< HEAD
 
-import PlanService from "../services/PlanService";
+//import PlanService from "../services/PlanService";
 import MealCard from "../components/MealCard";
 
 export default {
-    // props: currentPlan,    
 
-  name: "meal-plan",
-  components:{
-      MealCard
-  },
-  data() {
-
-    return {
-      Plans: [],
-    currentPlan: 0,
-    dropDown: null
-    };
-  },
-  mounted: function(){
-        this.dropDown = 1;
-      
-  },
-  methods: {
-    viewPlan(planId) {
-      this.$router.push(`/plans/${planId}`);
-    }
-  },
-  created() {
-    PlanService.getPlans().then((response) => {
-      this.Plans = response.data;
-    });
-  }
-};
-
-=======
-import MealCard from './MealCard.vue';
-
-
-export default {
   name: "plan-list-2",
   components: {
       MealCard
    
   },
   data() {
+
     return {
-   
+   // Plans: [],
+   // currentPlan: 0,
+   // dropDown: null
     };
   },
+  //mounted: function(){
+ //       this.dropDown = 1;
+      
+ // },
   methods: {
-      getMealIndex(day, time){
+   
+     getMealIndex(day, time){
           let found = this.$store.state.currentPlan.meals.findIndex(element => {
               if(element.mealDay == day && element.mealTime == time){
                   return element;
@@ -182,10 +155,11 @@ export default {
       }
   },
   created() {
-      this.$store.dispatch('loadPlan');
+     this.$store.dispatch('loadPlan');
   }
 };
->>>>>>> e6bb8b2e2c1e0829f8e5a17d62899245fb4589fe
+
+
 </script>
 
 <style>
