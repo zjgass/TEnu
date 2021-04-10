@@ -1,6 +1,43 @@
 USE final_capstone
 GO
 
+--in CRUD, Create, Read, Update, Delete oreder, starting from Plan
+
+--================
+--===   Plan   === 
+--================
+--CreatePlan
+begin transaction;
+
+insert into mplan (mplan_name, user_id)
+values ('test plan', 1); --(@mplan_name, @user_id);
+select scope_Identity();
+
+insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
+values (1, SCOPE_IDENTITY(), 'monday', 'breakfast'); --(@meal_id{i}, @mplan_id{i}, @meal_day{i}, @meal_time{i})
+
+rollback transaction;
+
+--GetMealPlan
+select mplan.mplan_id, mplan_name, mplan.user_id,
+	meal.meal_id, meal_name, meal_day, meal_time,
+	recipe.recipe_id, recipe_name, description, is_public, rating,
+		serves, prep_time, cook_time, total_time, utensils,
+		instructions, img_url, submitted_by,
+	ingredient.ingredient_id, ingredient_name, qty, unit_name
+from mplan
+join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
+join meal on meal.meal_id = meal_mplan.meal_id
+join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id
+join recipe on recipe.recipe_id = meal_recipe.recipe_id
+join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
+join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
+join unit on unit.unit_id = ingredient_recipe_unit.unit_id
+where mplan.mplan_id = 2
+order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;
+
+
+
 select recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	utensils, instructions, img_url
 from recipe
