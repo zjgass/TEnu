@@ -4,25 +4,29 @@ GO
 --Insert some ingredients
 insert into ingredient (ingredient_name)
 values ('banana'), ('flour'), ('zucchini'), ('butter'),
-		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries'),
+
+		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries'), ('salt'), ('pepper'),
+		('ground beef'), ('bell pepper'), ('onion'), ('garlic'), ('tomato sauce'), ('tomato paste'), ('crushed tomato'), ('fresh oregano'), ('fresh parsery'), ('italian seasoning'), ('garlic salt'), ('lasgna noodles'), ('ricotta cheese'), ('mozzarella cheese'), ('parmesan cheese'),
+		('cherry tomatos'), ('couscous'), ('chickpea'), ('lemon juice'), ('fresh herb'), ('cucumber'), ('feta cheese');
+--Insert some units
+insert into unit (unit_name)
+values ('cups'), ('tbs'), ('tsp'), ('oz'), ('qt'), ('g'), ('mg'), ('ml'), ('ea'), ('pound'), ('can'), ('cloves'), ('pinch') ;
+		('eggs'), ('olive oil'), ('chia seeds'), ('maraschino cherries'), ('pepper'),
 		('sugar'), ('coconut oil'), ('baking soda'), ('baking powder'),
 		('mandarin oranges'), ('semi-sweet chocolate chips'), ('canola oil'),
-		('brown sugar'), ('cinnamon'), ('nutmeg'), ('salt'), ('chopped pecans'), ('wine vinegar'),
+		('brown sugar'), ('cinnamon'), ('nutmeg'), ('salt'), ('chopped pecans'),
 		('unsweetened chocolate'), ('allspice'), ('cloves'), ('ginger'),
 		('croissant'), ('apples'), ('peanut butter'), ('romain lettuce head'), ('balsamic vinegar'),
 		('chopped walnuts'), ('raisins'), ('sunflower seeds'), ('feta cheese'), ('french onions'),
 		('pepitas'), ('tomato'), ('strawberries'), ('blueberries'),('almond milk'), ('protein powder'),
-		('red pitaya powder'), ('spinach'), ('raisin bran cereal'), ('pepper'),
-		('ground beef'), ('bell pepper'), ('onion'), ('garlic'), ('tomato sauce'), ('tomato paste'),
-		('crushed tomato'), ('fresh oregano'), ('fresh parsery'), ('italian seasoning'), ('garlic salt'),
-		('lasagna noodles'), ('ricotta cheese'), ('mozzarella cheese'), ('parmesan cheese'),
-		('cherry tomatos'), ('couscous'), ('chickpea'), ('lemon juice'), ('fresh herb'), ('cucumber');
+		('red pitaya powder'), ('spinach'), ('raisin bran cereal');
 
 --Insert some units
 insert into unit (unit_name)
-values ('pinch'), ('tsp'), ('tbs'), ('cups'), ('oz'), ('lb'), ('fl oz'), ('pt'), ('qt'), ('gal'), 
+values ('pinch'), ('tsp'), ('tbs'), ('cups'), ('oz'), ('fl oz'), ('pt'), ('qt'), ('gal'), 
 ('mg'), ('g'), ('ml'), ('l'),
-('ea'), ('to taste'), ('cloves'), ('can');
+('ea'), ('to taste');
+
 
 --Insert some recipes
 insert into recipe (recipe_name, description, is_public, rating, serves,
@@ -296,7 +300,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
 values ((select ingredient_id from ingredient where ingredient_name = 'ground beef'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
-		(select unit_id from unit where unit_name = 'lb'), 1),
+		(select unit_id from unit where unit_name = 'pound'), 1),
 		((select ingredient_id from ingredient where ingredient_name = 'onion'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
 		(select unit_id from unit where unit_name = 'cups'), 0.5),
@@ -335,7 +339,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'ground be
 		(select unit_id from unit where unit_name = 'tbs'), 1),
         ((select ingredient_id from ingredient where ingredient_name = 'lasagna noodles'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
-		(select unit_id from unit where unit_name = 'lb'), 0.5),
+		(select unit_id from unit where unit_name = 'pound'), 0.5),
         ((select ingredient_id from ingredient where ingredient_name = 'ricotta cheese'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
 		(select unit_id from unit where unit_name = 'oz'), 15),
@@ -353,7 +357,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'cherry to
 		((select ingredient_id from ingredient where ingredient_name = 'couscous'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'),
 		(select unit_id from unit where unit_name = 'cups'), 2),
-		((select ingredient_id from ingredient where ingredient_name = 'chickpea'),
+		((select ingredient_id from ingredient where ingredient_name = 'chick pea'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'),
 		(select unit_id from unit where unit_name = 'cups'), 1.5),
 		((select ingredient_id from ingredient where ingredient_name = 'cucumber'),
@@ -362,7 +366,7 @@ values ((select ingredient_id from ingredient where ingredient_name = 'cherry to
 		((select ingredient_id from ingredient where ingredient_name = 'olive oil'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'),
 		(select unit_id from unit where unit_name = 'tbs'), 1.5),
-		((select ingredient_id from ingredient where ingredient_name = 'lemon juice'),
+		((select ingredient_id from ingredient where ingredient_name = 'lemonjuice'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'),
 		(select unit_id from unit where unit_name = 'tbs'), 3),
 		((select ingredient_id from ingredient where ingredient_name = 'feta cheese'),
@@ -374,7 +378,6 @@ values ((select ingredient_id from ingredient where ingredient_name = 'cherry to
         ((select ingredient_id from ingredient where ingredient_name = 'garlic'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'),
 		(select unit_id from unit where unit_name = 'tbs'), 1.5);
-
 
 --Insert some categories
 insert into category (category_name)
@@ -391,6 +394,9 @@ values ('dinner');
 
 insert into category (category_name)
 values ('snack');
+
+insert into category (category_name)
+values ('lunch');
 
 --Add the categories to the recipes
 insert into category_recipe (category_id, recipe_id)
@@ -424,7 +430,6 @@ values ((select category_id from category where category_name='dinner'),
 insert into category_recipe (category_id, recipe_id)
 values ((select category_id from category where category_name='lunch'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'));
-
 
 --Add a meal
 insert into meal (meal_name, user_id)
@@ -495,7 +500,6 @@ values ((select meal_id from meal where meal_name = 'best lasagna in the world')
 insert into meal_recipe (meal_id, recipe_id)
 values ((select meal_id from meal where meal_name = 'perfect for lunch'),
 		(select recipe_id from recipe where recipe_name = 'couscous salad'));
-
 
 --Add a meal plan
 insert into mplan (mplan_name, user_id)
