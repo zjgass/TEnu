@@ -14,7 +14,7 @@ values ('banana'), ('flour'), ('zucchini'), ('butter'),
 		('pepitas'), ('tomato'), ('strawberries'), ('blueberries'),('almond milk'), ('protein powder'),
 		('red pitaya powder'), ('spinach'), ('raisin bran cereal'), ('pepper'),
 		('ground beef'), ('bell pepper'), ('onion'), ('garlic'), ('tomato sauce'), ('tomato paste'),
-		('crushed tomato'), ('fresh oregano'), ('fresh parsery'), ('italian seasoning'), ('garlic salt'),
+		('crushed tomato'), ('fresh oregano'), ('fresh parsley'), ('italian seasoning'), ('garlic salt'),
 		('lasagna noodles'), ('ricotta cheese'), ('mozzarella cheese'), ('parmesan cheese'),
 		('cherry tomatos'), ('couscous'), ('chickpea'), ('lemon juice'), ('fresh herb'), ('cucumber');
 
@@ -30,7 +30,7 @@ insert into recipe (recipe_name, description, is_public, rating, serves,
 values ('banana bread', 'my mother''s recipe, the best!', 1, 5, 8,
 	'{utensils: ["mixing bowl", "mixer", "bread pan", "oven"]}',
 	'{instructions: ["thaw bananas", "mix all ingredients together", "pour in bread pan", "bake in oven at 350F, check every half-hour"]}',
-	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg', 1);
+	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -46,7 +46,7 @@ values ('chocolate zucchini bread', 'christina''s recipe, the best!', 1, 5, 8,
 	"Pour into greased and floured pan.",
 	"Bake for 1 hour and 20 minuted or until toothpick comes out clean.",
 	"Cool in pan for 20 minutes before removing.",]}',
-	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85', 1);
+	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1181288.jpg&w=1200&h=678&c=sc&poi=face&q=85', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -55,7 +55,7 @@ values ('egg on a croissant', 'A nice simple meal!', 1, 5, 2,
 	'{instructions: ["butter the croissants and put them in the oven to melt the butter",
 	"fry an egg in the skillet till done the way you like", "put the egg on the croissant",
 	"enjoy"]}',
-	'https://www.thehopelesshousewife.com/wp-content/uploads/2012/05/Croissant-Eggs-Benedict2.jpg', 1);
+	'https://www.thehopelesshousewife.com/wp-content/uploads/2012/05/Croissant-Eggs-Benedict2.jpg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -64,7 +64,7 @@ values ('apples with peanut butter', 'A nice simple meal!', 1, 5, 2,
 	'{instructions: ["cut up the apple into slices",
 	"slather the peanut butter on each slice with a spoon",
 	"enjoy"]}',
-	'https://stellar.ie/wp-content/uploads/2015/07/Apple-slices-and-peanut-butter.jpg', 1);
+	'https://stellar.ie/wp-content/uploads/2015/07/Apple-slices-and-peanut-butter.jpg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -73,7 +73,7 @@ values ('super salad', 'full of green goodness (and protein)!', 1, 5, 2,
 	'{instructions: ["chop the romain into thin strips", "wash the lettuce in the salad spinner",
 	"put chopped lettuce in the bowls", "chop the tomato and add to lettuce", "add all the toppings",
 	"enjoy"]}',
-	'https://stellar.ie/wp-content/uploads/2015/07/Apple-slices-and-peanut-butter.jpg', 1);
+	'https://stellar.ie/wp-content/uploads/2015/07/Apple-slices-and-peanut-butter.jpg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -81,7 +81,7 @@ values ('rockin'' fruit soothie', 'full of pink goodness (and protein)!', 1, 5, 
 	'{utensils: ["blender", "2 large cups", "spoons"]}',
 	'{instructions: ["blend it all", "pour into cups",
 	"enjoy"]}',
-	'https://i.pinimg.com/originals/c7/53/8f/c7538fb4223d92523f190220bfe5513b.jpg', 1);
+	'https://i.pinimg.com/originals/c7/53/8f/c7538fb4223d92523f190220bfe5513b.jpg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -90,7 +90,7 @@ values ('bananas in cereal', 'a way to add bananas to breakfast!', 1, 5, 2,
 	'{instructions: ["cut up the bananas into slices",
 	"put banana slices along with cereal and milk into a bowl",
 	"enjoy"]}',
-	'https://i0.wp.com/www.theimpulsivebuy.com/wordpress/wp-content/uploads/2018/06/Kelloggs-Raisin-Bran-with-Bananas-2.jpg?resize=550%2C550&ssl=1', 1);
+	'https://i0.wp.com/www.theimpulsivebuy.com/wordpress/wp-content/uploads/2018/06/Kelloggs-Raisin-Bran-with-Bananas-2.jpg?resize=550%2C550&ssl=1', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
@@ -99,21 +99,24 @@ values ('bananas with peanut butter', 'A nice simple meal!', 1, 5, 2,
 	'{instructions: ["cut up the banana into slices",
 	"slather the peanut butter on each slice with a spoon",
 	"enjoy"]}',
-	'https://www.parentaljourney.com/wp-content/uploads/2016/02/2-bananas-with-peanut-butter.jpg', 1);
+	'https://www.parentaljourney.com/wp-content/uploads/2016/02/2-bananas-with-peanut-butter.jpg', 'zach');
 
 insert into recipe (recipe_name, description, is_public, rating, serves, prep_time,cook_time,total_time,
-	utensils, instructions, img_url)
+	utensils, instructions, img_url, submitted_by)
 values ('lasagna', 'best lasagna in the world', 1, 5, 8, '15 mins', '90 mins', '105 mins',
 	'{utensils: ["skillet", "midium sized pot", "9 x 13-inch casserole dish"]}',
-	'{instructions: ["brown the ground beef, set aside", "cook bell pepper, onoions, garlic, add back the beef", "transfer to medium sized pot, add tomatos, tomato sauce, tomato paste, parsrly, oregano, italian seasoning, sprinkle with garlic salt, sprinkle with red or white wine vinegar, bring to simmer and lower the heat, cook for 15 to 45 mins", "boil and drain the lasagna noodles", "assemble the lasagna with sauce, cheese, pasta in a casserole dish", "bake at 375F for 45 mins"  ]}',
-	'https://www.simplyrecipes.com/thmb/dWEVorTSuZUmOYPr6pxk4SnK_F8=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2004__12__lasagna-horiz-a-2000-a4631232672d4609b12b94da7a20ef90.jpg');
+	'{instructions: ["brown the ground beef, set aside", "cook bell pepper, onoions, garlic, add back the beef",
+	"transfer to medium sized pot, add tomatos, tomato sauce, tomato paste, parsrly, oregano, italian seasoning, sprinkle with garlic salt, sprinkle with red or white wine vinegar, bring to simmer and lower the heat, cook for 15 to 45 mins",
+	"boil and drain the lasagna noodles", "assemble the lasagna with sauce, cheese, pasta in a casserole dish", "bake at 375F for 45 mins"  ]}',
+	'https://www.simplyrecipes.com/thmb/dWEVorTSuZUmOYPr6pxk4SnK_F8=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2004__12__lasagna-horiz-a-2000-a4631232672d4609b12b94da7a20ef90.jpg', 'Michiyo');
 
 insert into recipe (recipe_name, description, is_public, rating, serves, prep_time,cook_time,total_time,
-	utensils, instructions, img_url)
+	utensils, instructions, img_url, submitted_by)
 values ('Couscous Salad', 'perfect for lunch', 1, 5, 8, '20 mins', '20mins', '40 mins',
 	'{utensils: ["mixing bowl"]}',
-	'{instructions: ["roast half of tomatos", "cook pearl couscous", "make roasted chickpeas", "mix fresh tomato, roasted tomato, couscous, chickpeas, olive oil, lemon juice, garlic, fresh hearbs, cucumbers, feta cheese"]}',
-	'https://www.wellplated.com/wp-content/uploads/2016/07/Israeli-Couscous-Salad-Feta.jpg');
+	'{instructions: ["roast half of tomatos", "cook pearl couscous", "make roasted chickpeas",
+	"mix fresh tomato, roasted tomato, couscous, chickpeas, olive oil, lemon juice, garlic, fresh hearbs, cucumbers, feta cheese"]}',
+	'https://www.wellplated.com/wp-content/uploads/2016/07/Israeli-Couscous-Salad-Feta.jpg', 'Michiyo');
 
 --Add the recipes to user
 insert into recipe_users (recipe_id, user_id)
@@ -321,9 +324,9 @@ values ((select ingredient_id from ingredient where ingredient_name = 'ground be
 		((select ingredient_id from ingredient where ingredient_name = 'fresh oregano'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
 		(select unit_id from unit where unit_name = 'tbs'), 2),
-		((select ingredient_id from ingredient where ingredient_name = 'fresh parsely'),
+		((select ingredient_id from ingredient where ingredient_name = 'fresh parsley'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
-		(select unit_id from unit where unit_name = 'cup'), 0.75),
+		(select unit_id from unit where unit_name = 'cups'), 0.75),
 		((select ingredient_id from ingredient where ingredient_name = 'italian seasoning'),
 		(select recipe_id from recipe where recipe_name = 'lasagna'),
 		(select unit_id from unit where unit_name = 'tbs'), 1),

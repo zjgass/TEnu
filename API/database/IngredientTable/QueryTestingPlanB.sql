@@ -42,14 +42,17 @@ where ingredient_name not in('cherries');
 select ingredient_name
 from ingredient
 
+begin transaction;
 --Insert ingredients into recipes
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
-values ((select ingredient_id from ingredient where ingredient_name = 'maraschino cherries'),
+values ((select ingredient_id from ingredient where ingredient_name = 'unsweetened chocolate'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
 		(select unit_id from unit where unit_name = 'cups'), 1),
-		((select ingredient_id from ingredient where ingredient_name = 'chia seeds'),
+		((select ingredient_id from ingredient where ingredient_name = 'raisins'),
 		(select recipe_id from recipe where recipe_name = 'banana bread'),
 		(select unit_id from unit where unit_name = 'tbs'), 2);
+
+rollback transaction;
 
 --Selects recipes for a given user
 select recipe.recipe_id, recipe_name, description, is_public, rating, serves, prep_time, cook_time, total_time,
@@ -182,6 +185,8 @@ values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select mplan_id from mplan where mplan_name = 'something new this week'), 'monday', 'breakfast');
 
 --Update Meal Plan
+begin transaction;
+
 update mplan
 set mplan_name = 'something old this week'
 where mplan_id = 
@@ -193,3 +198,5 @@ set meal_id = (select meal_id from meal where meal_name = 'bananas for breakfast
 	meal_time = 'lunch'
 where mplan_id = 
 (select mplan_id from mplan where mplan_name = 'something old this week');
+
+rollback transaction;
