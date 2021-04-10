@@ -40,9 +40,28 @@
             </div>
 
             <div class='input-line'>
-                <button v-on:click.prevent="showIngredients()">Add Ingredient</button>
+                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
                 <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
             </div>
+            <div class='input-line'>
+                <h3 >{{newIngredient.name}}</h3>
+                <h3 class="input-label">  Quantity: </h3>
+                <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
+                <h3 class="input-label">  Measurement: </h3>
+                <select class="input-select-dropdown" v-model="newIngredient.unit">
+                    <option value="cups"> cups </option>
+                    <option value="ea"> ea </option>
+                    <option value="g"> g </option>
+                    <option value="mg"> mg </option>
+                    <option value="ml"> ml </option>
+                    <option value="oz"> oz </option>
+                    <option value="qt"> qt </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="tsp"> tsp </option>
+                </select>
+                <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
+            </div>
+            
 
             <button id='submit-button' v-on:click.prevent='saveRecipe()'>Submit Recipe</button>
         </form>
@@ -64,23 +83,8 @@
                 v-bind:key="ingredient.ingredientId"
                 v-bind:ingredient="ingredient"
                 >
-                <h3>{{ingredient.name}}  Quantity: </h3>
-                <input class="input-integer-text" type='text' v-model="ingredient.qty" />
-                <h3>  Measurement: </h3>
-                <select v-model="ingredient.unit">
-                    <option value="cups"> cups </option>
-                    <option value="ea"> ea </option>
-                    <option value="g"> g </option>
-                    <option value="mg"> mg </option>
-                    <option value="ml"> ml </option>
-                    <option value="oz"> oz </option>
-                    <option value="qt"> qt </option>
-                    <option value="tbs"> tbs </option>
-                    <option value="tsp"> tsp </option>
-                </select>
-
-                <button id='add-this-ingredient' v-on:click.prevent="addIngredient(ingredient)">Add </button>
-
+                <h3 v-on:click.prevent="selectedIngredient(ingredient)">{{ingredient.name}}  </h3>
+        
             </div>  
         </div>
 
@@ -104,6 +108,7 @@ export default {
             ingredients: [],   
             newInstruction: "",    
             newUtensil: "",   
+            newIngredient: [],
             recipe: {
                // recipeId: 0, 
                 name: "",
@@ -174,9 +179,10 @@ export default {
                   this.storeLoaded = true;
             }     
         },
-        addIngredient(ingredient){
+        addIngredient(){
             this.showDetails = true;
-            this.recipe.ingredients.push(ingredient);
+            this.recipe.ingredients.push(this.newIngredient);
+            this.recipe.newIngredient = [];
         },
         clearIngredients(){
             this.recipe.ingredients = [];
@@ -186,6 +192,11 @@ export default {
         },
         clearInstructions() {
             this.recipe.instructions = "";
+        },
+        selectedIngredient(ingredient) {
+            this.newIngredient = ingredient;
+            this.showDetails = true;
+            
         }
         
         
@@ -249,6 +260,8 @@ h2{
 
     font-size: .75rem;
 }
+
+
 
 #recipe-input{
     border: 1px solid black;
