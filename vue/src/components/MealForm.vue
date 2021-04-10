@@ -54,7 +54,7 @@ export default {
             mealService.createMeal(this.meal)
             .then(response => {
                 if(response.status === 201){
-                    console.Log("Created meal successfully");
+                    console.log("Created meal successfully");
                 }
             })
             .catch(error => {

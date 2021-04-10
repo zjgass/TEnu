@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const http = axios.create({
-  baseURL: VUE_APP_REMOTE_API
+  baseURL: 'https://localhost:44315/api'
 });
 
 export default {
@@ -12,5 +12,8 @@ export default {
 
   getPlan(planId) {
     return http.get(`/plan/${planId}`)
+  },
+  getGroceries(planId){
+    return http.get(`/plan/${planId}/groceryList`)
   }
 }

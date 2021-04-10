@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div id="banner">
+
+
       <div id='title-and-sub'>
         <h1 id='site-title'>TEnue</h1>
         <p id='subtitle'>A meal planner by Tech Elevator</p>
@@ -22,21 +24,17 @@
       <p class='spacer'></p>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
+    
+    <div id='router-wrapper'>
     <router-view id='router' />
+    </div>
+
 
   </div>
 </template>
 
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
-
-// export default defineComponent({
-//   setup() {
-    
-
-//   },
-// })
 
 
 
@@ -47,15 +45,17 @@
 <style scoped>
 #nav{
 
-background-color: lightgrey;
-  height: 20px;
+background-color: darkcyan;
+  height: 60px;
   border-top: black 1px solid;
+  border-bottom: black 1px solid;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   font-family: arial;
-
+  width: 1440px;
+  margin: auto;
 
 
 
@@ -75,13 +75,14 @@ background-color: lightgrey;
   color: white;
   background-color: darkcyan;
   min-width: 140px;
-  border-left: 2px solid black;
+
+
 
   
 }
 
 #logout-button{
-    border-right: 2px solid black;
+
 }
 
 .nav-button:hover{
@@ -96,13 +97,16 @@ background-color: white;
 
 #banner{
   /* background-color: cyan; */
+
   background-image: url("images/banner-image.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  
+
+  padding: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 
 }
 #banner-image{
@@ -152,21 +156,25 @@ height: auto;
 
 
 
-#nav, #banner, #router{
-/* width: 97.5%; */
-width: 1400px;
-padding: 20px;
-margin: auto;
-
+#banner, #router{
+margin:auto;
 
 }
+
+#router-wrapper{
+  padding: 40px;
+}
+
+
 
 #spacer{
   width: 50px;
 }
 
 
-#router{}
+
+
+
 
 
 @media(max-width: 1400px) {
@@ -175,7 +183,7 @@ width: 90%}
 
 #nav, #banner, #router{
 /* width: 97.5%; */
-width: 100%;
+
 
 margin: auto;
 background-size: 100% 100%;
@@ -187,14 +195,13 @@ background-size: 100% 100%;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border-bottom: solid black 1px;
+
   height: auto;
   padding: 0px;
   width: 100%;
 
 }
 #banner{
-  /* background-color: red; */
  padding: 0px;
 }
 
@@ -202,13 +209,21 @@ background-size: 100% 100%;
 
 .nav-button{
   margin-top: 0px;
-  border-bottom: 1px solid black;
+  width: 100%;
+
 }
 
 
 #router{
   width: 100%;
+  height: auto;
+
 }
+
+
+
+
+
 }
 
 </style>

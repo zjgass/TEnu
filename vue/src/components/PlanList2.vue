@@ -3,27 +3,35 @@
 <div>
 
 
-<div id='top-of-component'>
+<!-- <div id='top-of-component'> -->
 
-<div id='current-plan'>
+<!-- <div id='current-plan'>
     <h1>Your Meal Plan</h1>
-    <h2>*name of current selected plan</h2>
+    <h2 id='current-plan-name'>{{Plans[dropDown-1].name}}</h2>
+        <h2>current value of dropDown:  {{dropDown}}</h2>
 
-    </div>
+    </div> -->
 
-
+<!-- 
 <form id='choose-plan' action="" method="">
 <p> View A Different Meal Plan: </p>
-<select name="select-plan">
-<option value=""> select plan </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-</select>
-</form>
+<select name="select-plan"  v-model="dropDown" id='plan-select-dropdown'>
 
-</div>
+<option  class='plan-dropdown-item'
+v-for="plan in Plans"
+v-bind:key="plan.name"
+v-bind:value='plan.planId'
+>{{plan.name}}</option> -->
+
+
+
+
+
+<!-- </select>
+
+</form> -->
+
+<!-- </div> -->
 
 
 <div id='meal-plan'>
@@ -32,109 +40,126 @@
 <div class='plan-column' id='monday-meals'>
     <h1 class='day'>Monday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='tuesday-meals'>
     <h1 class='day'>Tuesday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='wednesday-meals'>
     <h1 class='day'>Wednesday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='thursday-meals'>
     <h1 class='day'>Thursday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='friday-meals'>
     <h1 class='day'>Friday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'dinner')]"/>
     </div>
 </div>
 
+      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
+
 
 </div>
+
+<router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
+       
+        <!-- <h2>{{Plans}}</h2>
+        <h2>currentPlan: {{currentPlan}}</h2> -->
+
+
+
 </div>
 </template>
 
 <script>
-// import docsService from "../services/DocsService";
 
-// export default {
-//   name: "meal-plan-list",
-//   data() {
-//     return {
-//       allPlans: []
-//     };
-//   },
-//   methods: {
-//     viewDocument(id) {
-//       this.$router.push(`/plans/${planId}`);
-//     }
-//   },
-//   created() {
-//     docsService.list().then((response) => {
-//       this.allPlans = response.data;
-//     });
-//   }
-// };
+//import PlanService from "../services/PlanService";
+import MealCard from "../components/MealCard";
+
+export default {
+
+  name: "plan-list-2",
+  components: {
+      MealCard
+   
+  },
+  data() {
+
+    return {
+   // Plans: [],
+   // currentPlan: 0,
+   // dropDown: null
+    };
+  },
+  //mounted: function(){
+ //       this.dropDown = 1;
+      
+ // },
+  methods: {
+   
+     getMealIndex(day, time){
+          let found = this.$store.state.currentPlan.meals.findIndex(element => {
+              if(element.mealDay == day && element.mealTime == time){
+                  return element;
+              }
+              return false;
+          })
+
+          return found;
+      }
+  },
+  created() {
+     this.$store.dispatch('loadPlan');
+  }
+};
+
+
 </script>
 
 <style>
@@ -182,6 +207,15 @@ padding: 20px;
     margin-top: 0px;
 }
 
+#plan-select-dropdown{
+    width: 100%;
+    font-size: 20pt;
+    text-transform: capitalize;
+            cursor: pointer;
+}
+
+
+
 .plan-column h1{
     margin-top: 0px;
     text-decoration: underline;
@@ -204,11 +238,22 @@ padding: 20px;
     height: 100px;
 }
 
+#current-plan-name{
+    text-transform: capitalize;
+    font-size: 20pt;
+}
+
 
 #choose-plan, #current-plan{
     margin: 10px;
+    
+    
 }
 
+#choose-plan p{
+        font-size: 20pt;
+
+}
 
 
 .inner-column{
@@ -217,10 +262,8 @@ padding: 20px;
 }
 
 .meal-card{
-    border: 1px solid black;
     margin-top: 5px;
     margin-bottom: 10px;
-    border-radius: 5px;
 }
 
 .meal-card h2{
@@ -228,10 +271,18 @@ margin-bottom: 0px;
 
 }
 
-.meal-card h2{
 
 
+#show-grocery-list{
+    font-size: 20pt;
+    margin-top: 50px;
+    cursor: pointer;
+    margin-left: 20px;
 }
+
+
+
+
 
 
 @media(max-width: 1400px) {
@@ -246,7 +297,6 @@ border: none;
 }
 
 }
-
 
 
 
