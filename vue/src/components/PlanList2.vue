@@ -111,18 +111,7 @@ export default {
   },
   data() {
     return {
-
-        mealSchedule: {
-            monday: 
-                {breakfast: 1,
-                 lunch: 2,
-                 dinner: 3},
-            tuesday: {},
-            wednesday: {},
-            thursday: {},
-            friday: {}
-        }
-      
+   
     };
   },
   methods: {
