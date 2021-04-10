@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    
-    public class Meal
+    public class MealWithRecipe
     {
         public int MealId { get; set; }
 
@@ -14,7 +13,7 @@ namespace Capstone.Models
 
         public int UserId { get; set; }
 
-        public List<int> RecipeList { get; set; } = new List<int>();
+        public List<Recipe> RecipeList { get; set; } = new List<Recipe>();
 
         public string MealDay { get; set; }
 

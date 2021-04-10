@@ -457,6 +457,7 @@ namespace Capstone.DAO
                 ImgUrl = Convert.ToString(reader["img_url"]),
                 SubmittedBy = Convert.ToString(reader["submitted_by"]),
             };
+
             return r;
         }
 
