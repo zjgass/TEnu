@@ -12,5 +12,8 @@ export default {
 
   getPlan(planId) {
     return http.get(`/plan/${planId}`)
+  },
+  getGroceries(planId){
+    return http.get(`/plan/${planId}/groceryList`)
   }
 }

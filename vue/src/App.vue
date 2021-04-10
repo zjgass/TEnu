@@ -20,13 +20,15 @@
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
-      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
+      <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
       <p class='spacer'></p>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
     
-    
+    <div id='router-wrapper'>
     <router-view id='router' />
+    </div>
+
 
   </div>
 </template>
@@ -159,7 +161,9 @@ margin:auto;
 
 }
 
-
+#router-wrapper{
+  padding: 40px;
+}
 
 
 
