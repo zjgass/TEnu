@@ -16,6 +16,7 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
+
         public Plan CreatePlan(Plan plan)
         {
             try
@@ -37,34 +38,34 @@ namespace Capstone.DAO
             return GetPlan(plan.PlanId);
         }
 
-        public Plan GetPlan()
-        {
+        //public Plan GetPlan()
+        //{
 
-            Plan returnPlan = null;
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
+        //    Plan returnPlan = null;
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan WHERE mplan_id = @mplan_id ", conn);
-                    cmd.Parameters.AddWithValue("@mplan_id", 1); // change to planId
-                    SqlDataReader reader = cmd.ExecuteReader();
+        //            SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan WHERE mplan_id = @mplan_id ", conn);
+        //            cmd.Parameters.AddWithValue("@mplan_id", 1); // change to planId
+        //            SqlDataReader reader = cmd.ExecuteReader();
 
-                    if(reader.HasRows && reader.Read())
-                    {
-                        returnPlan = GetPlanFromReader(reader);
-                    }
-                }
-            }
-            //TODO Implement better error catching
-            catch(SqlException)
-            {
-                throw;
-            }
+        //            if(reader.HasRows && reader.Read())
+        //            {
+        //                returnPlan = GetPlanFromReader(reader);
+        //            }
+        //        }
+        //    }
+        //    //TODO Implement better error catching
+        //    catch(SqlException)
+        //    {
+        //        throw;
+        //    }
 
-            return returnPlan;
-        }
+        //    return returnPlan;
+        //}
 
         public Plan GetPlan(int planId)
         {
@@ -181,6 +182,45 @@ namespace Capstone.DAO
                 throw;
             }
             return returnPlans;
+        }
+
+        public List<Ingredient> GetGroceryList(int planId)
+        {
+            List<Ingredient> ingredients = new List<Ingredient>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select mplan.mplan_id, mplan_name, " +
+                        "ingredient.ingredient_id, ingredient_name, Sum(qty) as qty, unit_name " +
+                        "from mplan " +
+                        "join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
+                        "join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
+                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where mplan.mplan_id = @mplan_id " +
+                        "group by mplan.mplan_id, mplan_name, ingredient.ingredient_id, ingredient_name, unit_name " +
+                        "order by ingredient.ingredient_name;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@mplan_id", planId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        ingredients.Add(GetIngredientFromReader(reader));
+                    }
+                }
+
+                return ingredients;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public Plan UpdatePlan(Plan plan)

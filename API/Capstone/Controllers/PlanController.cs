@@ -34,6 +34,13 @@ namespace Capstone.Controllers
             return Ok(planDAO.GetPlan(planId));
         }
 
+        //GetGroceryList
+        [HttpGet("{planId}/groceryList")]
+        public ActionResult<List<Ingredient>> GetGroceryList(int planId)
+        {
+            return Ok(planDAO.GetGroceryList(planId));
+        }
+
         //CreatePlan
         [HttpPost]
         public ActionResult<Plan> AddPlan(Plan plan)

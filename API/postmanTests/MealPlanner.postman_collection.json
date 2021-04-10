@@ -378,7 +378,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44315/api/plan/1",
+							"raw": "https://localhost:44315/api/plan/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -387,7 +387,29 @@
 							"path": [
 								"api",
 								"plan",
-								"1"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroceryList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44315/api/plan/1/groceryList",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44315",
+							"path": [
+								"api",
+								"plan",
+								"1",
+								"groceryList"
 							]
 						}
 					},
