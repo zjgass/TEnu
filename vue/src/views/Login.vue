@@ -45,9 +45,10 @@
 </div>
 
 
-
+<div id='alernate-options'>
       <router-link id='new-account' :to="{ name: 'register' }">Need an account?</router-link>
             <button id='submit' type="submit">Sign in as guest</button>
+            </div>
     </form>
 
 
@@ -96,6 +97,7 @@ export default {
 
 
 <style scoped>
+
 #login{
   border: 1px solid black;
   margin: 0px auto;
@@ -106,7 +108,7 @@ export default {
 #login-box{
   border: 1px black solid;
   height: 100px;
-  width: 400px;
+  width: 40%;
   margin: 0px auto;
   padding: 10px;
 
@@ -124,11 +126,26 @@ export default {
 #username-box, #password-box, button{
   margin-top: 10px;
 
+
 }
 
 label{
   width: 250px;
 }
+
+#alernate-options{
+  /* background-color: red; */
+  width: 40%;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px;
+  height: 60px;
+}
+
+
 
 
 #new-account, #submit{

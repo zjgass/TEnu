@@ -7,20 +7,28 @@
 
 <div id='current-plan'>
     <h1>Your Meal Plan</h1>
-    <h2>*name of current selected plan</h2>
+    <h2 id='current-plan-name'>{{Plans[dropDown-1].name}}</h2>
+        <h2>current value of dropDown:  {{dropDown}}</h2>
 
     </div>
 
 
 <form id='choose-plan' action="" method="">
 <p> View A Different Meal Plan: </p>
-<select name="select-plan">
-<option value=""> select plan </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
-<option value=""> plan name </option>
+<select name="select-plan"  v-model="dropDown" id='plan-select-dropdown'>
+
+<option  class='plan-dropdown-item'
+v-for="plan in Plans"
+v-bind:key="plan.name"
+v-bind:value='plan.planId'
+>{{plan.name}}</option>
+
+
+
+
+
 </select>
+
 </form>
 
 </div>
@@ -94,12 +102,59 @@
     </div>
 </div>
 
+      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
+
 
 </div>
+
+<router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
+       
+        <!-- <h2>{{Plans}}</h2>
+        <h2>currentPlan: {{currentPlan}}</h2> -->
+
+
+
 </div>
 </template>
 
 <script>
+<<<<<<< HEAD
+
+import PlanService from "../services/PlanService";
+import MealCard from "../components/MealCard";
+
+export default {
+    // props: currentPlan,    
+
+  name: "meal-plan",
+  components:{
+      MealCard
+  },
+  data() {
+
+    return {
+      Plans: [],
+    currentPlan: 0,
+    dropDown: null
+    };
+  },
+  mounted: function(){
+        this.dropDown = 1;
+      
+  },
+  methods: {
+    viewPlan(planId) {
+      this.$router.push(`/plans/${planId}`);
+    }
+  },
+  created() {
+    PlanService.getPlans().then((response) => {
+      this.Plans = response.data;
+    });
+  }
+};
+
+=======
 import MealCard from './MealCard.vue';
 
 
@@ -130,6 +185,7 @@ export default {
       this.$store.dispatch('loadPlan');
   }
 };
+>>>>>>> e6bb8b2e2c1e0829f8e5a17d62899245fb4589fe
 </script>
 
 <style>
@@ -177,6 +233,15 @@ padding: 20px;
     margin-top: 0px;
 }
 
+#plan-select-dropdown{
+    width: 100%;
+    font-size: 20pt;
+    text-transform: capitalize;
+            cursor: pointer;
+}
+
+
+
 .plan-column h1{
     margin-top: 0px;
     text-decoration: underline;
@@ -199,11 +264,22 @@ padding: 20px;
     height: 100px;
 }
 
+#current-plan-name{
+    text-transform: capitalize;
+    font-size: 20pt;
+}
+
 
 #choose-plan, #current-plan{
     margin: 10px;
+    
+    
 }
 
+#choose-plan p{
+        font-size: 20pt;
+
+}
 
 
 .inner-column{
@@ -221,10 +297,18 @@ margin-bottom: 0px;
 
 }
 
-.meal-card h2{
 
 
+#show-grocery-list{
+    font-size: 20pt;
+    margin-top: 50px;
+    cursor: pointer;
+    margin-left: 20px;
 }
+
+
+
+
 
 
 @media(max-width: 1400px) {
@@ -239,7 +323,6 @@ border: none;
 }
 
 }
-
 
 
 

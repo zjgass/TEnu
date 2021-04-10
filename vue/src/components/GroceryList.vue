@@ -1,27 +1,49 @@
 <template>
 <div>
 
-<p>text in grocery list component</p>
+<h1>Grocery list for</h1>
 
-<li>v-for list items of ingredients</li>
+
+<table>
+  <!-- <tr>
+    <th class='table-heading'>Item</th>
+    <th class='table-heading'>Column 2</th>
+        <th class='table-heading'>Column 3</th>
+  </tr> -->
+  <tr v-for='item in Groceries' 
+v-bind:key='item.name'>
+    <td>{{item.name}}</td>
+    <td>{{item.qty}}</td>
+      <td>{{item.unit}}</td>
+  </tr>
+</table>
+
+
+
+<!-- <h1>Groceries: {{Groceries}}</h1> -->
+
+
+
 
 </div>
 
 </template>
 
 <script>
-import RecipeService from "../services/RecipeService";
+import PlanService from "../services/PlanService";
 
 export default {
-  name: "recipe-list",
+  name: "grocery-list",
   data() {
     return {
-      Recipes: []
+      Groceries: []
     };
   },
   created() {
-    RecipeService.getRecipes().then((response) => {
-      this.Recipes = response.data;
+    PlanService.getGroceries(1).then((response) => {
+      this.Groceries = response.data;
+
+
     });
   }
 };
@@ -29,15 +51,12 @@ export default {
 
 <style>
 
-.recipe-list{
-    column-width: 100px;
+
+.table-heading{
+  text-decoration: underline;
+  
 }
 
-
-.icon, .name, .rating{
-width: 200px;
-
-}
 
 
 </style>

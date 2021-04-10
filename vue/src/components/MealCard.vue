@@ -53,6 +53,36 @@ export default {
 </script>
 
 
+<script>
+import MealService from "../services/MealService";
+
+
+
+export default {
+  name: "meal-card",
+  components: {
+
+  } ,
+  data() {
+    return {
+      Meals: []
+    }
+  },
+  created() {
+    MealService.getMeal(1).then((response) => {
+      this.Meals = response.data;
+    });
+  }
+};
+
+</script>
+
+
+
+
+
+
+
 <style scoped>
 
 

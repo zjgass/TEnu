@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Create An Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -46,9 +46,9 @@
       </button>
 
 </div>
-
+  <div id='alternate-options'>
       <router-link :to="{ name: 'login' }">Have an account?</router-link>
-
+</div>
     </form>
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
 #register-box{
   border: 1px black solid;
   height: 100px;
-  width: 400px;
+  width: 40%;
   margin: 0px auto;
   padding: 10px;
   /* display: flex; */
@@ -133,6 +133,22 @@ export default {
 
 .sr-only{
   width: 200px;
+}
+
+
+#username-box, #password-box{
+  margin-top: 10px;
+}
+
+button{
+  margin-top: 10px;
+}
+
+#alternate-options{
+  /* background-color: red; */
+  width: 40%;
+  margin: 0px auto;
+  padding: 10px;
 }
 
 </style>
