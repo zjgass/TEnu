@@ -186,19 +186,19 @@ namespace Capstone.DAO
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    //TODO needs completed
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan", conn);
+
+                    string sqlText = "select mplan_id, mplan_name, user_id " +
+                        "from mplan;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        while(reader.Read())
+
+                    while(reader.Read())
                         {
                             Plan u = GetPlanFromReader(reader);
                             returnPlans.Add(u);
                         }
-                    }
                 }
             }
             catch (SqlException)
