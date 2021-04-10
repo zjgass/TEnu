@@ -12,6 +12,7 @@ import ViewRecipes from '../views/ViewRecipes.vue'
 import Home2 from '../views/Home2.vue'
 import RecipeDetailView from '../views/RecipeDetailView.vue'
 import ViewGroceries from '../views/ViewGroceries.vue'
+import ViewMeal from '../views/ViewMeal.vue'
 
 Vue.use(Router)
 
@@ -73,6 +74,14 @@ const router = new Router({
       path: "/AddRecipe",
       name: "AddRecipe",
       component: AddRecipe,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/Meal",
+      name: "ViewMeal",
+      component: ViewMeal,
       meta: {
         requiresAuth: true
       }

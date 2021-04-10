@@ -40,83 +40,65 @@ v-bind:value='plan.planId'
 <div class='plan-column' id='monday-meals'>
     <h1 class='day'>Monday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-
-                <meal-card />
-
-    <li>v-for li with recipe names</li>
+        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='tuesday-meals'>
     <h1 class='day'>Tuesday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='wednesday-meals'>
     <h1 class='day'>Wednesday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='thursday-meals'>
     <h1 class='day'>Thursday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'dinner')]"/>
     </div>
 </div>
 
 <div class='plan-column' id='friday-meals'>
     <h1 class='day'>Friday</h1>
     <div class='meal-card'>
-    <h2>Breakfast</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'breakfast')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Lunch</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'lunch')]"/>
     </div>
     <div class='meal-card'>
-    <h2>Dinner</h2>
-    <li>v-for li with recipe names</li>
+    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'dinner')]"/>
     </div>
 </div>
 
@@ -136,6 +118,7 @@ v-bind:value='plan.planId'
 </template>
 
 <script>
+<<<<<<< HEAD
 
 import PlanService from "../services/PlanService";
 import MealCard from "../components/MealCard";
@@ -171,6 +154,38 @@ export default {
   }
 };
 
+=======
+import MealCard from './MealCard.vue';
+
+
+export default {
+  name: "plan-list-2",
+  components: {
+      MealCard
+   
+  },
+  data() {
+    return {
+   
+    };
+  },
+  methods: {
+      getMealIndex(day, time){
+          let found = this.$store.state.currentPlan.meals.findIndex(element => {
+              if(element.mealDay == day && element.mealTime == time){
+                  return element;
+              }
+              return false;
+          })
+
+          return found;
+      }
+  },
+  created() {
+      this.$store.dispatch('loadPlan');
+  }
+};
+>>>>>>> e6bb8b2e2c1e0829f8e5a17d62899245fb4589fe
 </script>
 
 <style>
@@ -273,10 +288,8 @@ padding: 20px;
 }
 
 .meal-card{
-    border: 1px solid black;
     margin-top: 5px;
     margin-bottom: 10px;
-    border-radius: 5px;
 }
 
 .meal-card h2{

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
 Vue.use(Vuex)
 
 /*
@@ -16,7 +17,7 @@ if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
 }
 
-
+import planService from "../services/PlanService";
 
 export default new Vuex.Store({
   state: {
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     existingIngredients: [],
     newIngredients: [],
-    newMealRecipes: []
+    newMealRecipes: [],
+    currentPlan: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -36,6 +38,9 @@ export default new Vuex.Store({
       state.user = user;
       localStorage.setItem('user',JSON.stringify(user));
     },
+    SET_CURRENT_PLAN(state, plan){
+      state.currentPlan = plan;
+    }, 
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -51,6 +56,28 @@ export default new Vuex.Store({
     }
    
   },
-  actions: {},
+  actions: {
+        loadPlan (context) {
+          //hard coded to load plan 1 for now
+          let planId = 1;
+          planService.getPlan(planId)
+          .then(response => {
+              context.commit("SET_CURRENT_PLAN", response.data)
+              if(response.status === 200){
+                  console.log('plan loaded');
+              }
+          })
+          .catch(error => {
+              if(error.response) {
+                  this.errorMsg = "Error loading plan. Response received was '" + error.response.statusText + "'.";
+              }
+          })
+
+
+          context.commit()
+        }
+
+
+  },
   modules: {}
 })

@@ -29,12 +29,6 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
-                    
-                }
-                    
-                foreach(int recipeId in meal.RecipeList)
-                {
-                    AddRecipeToMeal(meal, recipeId);
                 }
             }
             catch (SqlException)
@@ -50,7 +44,7 @@ namespace Capstone.DAO
              using(SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("Insert INTO meal_recipe(meal_id, recipe_id) Values(@meal_id, @recipe_id);", conn);
+                    SqlCommand cmd = new SqlCommand("Insert INTO meal_recipe(meal_id, recipe_id) Values(@meal_id @recipe_id);", conn);
                     cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
                     cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     cmd.ExecuteNonQuery();
@@ -145,7 +139,7 @@ namespace Capstone.DAO
                     "set meal_name = @meal_name " +
                     "where meal_id = @meal_id;";
                 SqlCommand cmd = new SqlCommand(sqlText, conn);
-                cmd.Parameters.AddWithValue("@meal_name", meal.Name);
+                cmd.Parameters.AddWithValue(           "@meal_name", meal.Name);
                 cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
                 cmd.ExecuteNonQuery();
             }
