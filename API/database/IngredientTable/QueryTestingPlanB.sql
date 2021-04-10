@@ -18,7 +18,11 @@ values (1, SCOPE_IDENTITY(), 'monday', 'breakfast'); --(@meal_id{i}, @mplan_id{i
 
 rollback transaction;
 
---GetMealPlan
+--GetPlans
+select mplan_id, mplan_name, user_id
+from mplan;
+
+--GetPlan
 select mplan.mplan_id, mplan_name, mplan.user_id,
 	meal.meal_id, meal_name, meal_day, meal_time,
 	recipe.recipe_id, recipe_name, description, is_public, rating,

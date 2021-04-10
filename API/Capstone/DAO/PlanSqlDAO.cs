@@ -62,34 +62,34 @@ namespace Capstone.DAO
             }
         }
 
-        //public Plan GetPlan()
-        //{
+        public List<Plan> GetPlans(int userId)
+        {
+            List<Plan> returnPlans = new List<Plan>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
-        //    Plan returnPlan = null;
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            conn.Open();
+                    string sqlText = "select mplan_id, mplan_name, user_id " +
+                        "from mplan;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-        //            SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan WHERE mplan_id = @mplan_id ", conn);
-        //            cmd.Parameters.AddWithValue("@mplan_id", 1); // change to planId
-        //            SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        returnPlans.Add(GetPlanFromReader(reader));
+                    }
+                }
 
-        //            if(reader.HasRows && reader.Read())
-        //            {
-        //                returnPlan = GetPlanFromReader(reader);
-        //            }
-        //        }
-        //    }
-        //    //TODO Implement better error catching
-        //    catch(SqlException)
-        //    {
-        //        throw;
-        //    }
-
-        //    return returnPlan;
-        //}
+                return returnPlans;
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
 
         public Plan GetPlan(int planId)
         {
@@ -177,35 +177,6 @@ namespace Capstone.DAO
 
                 throw e;
             }
-        }
-
-        public List<Plan> GetPlans(int userId)
-        {
-            List<Plan> returnPlans = new List<Plan>();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string sqlText = "select mplan_id, mplan_name, user_id " +
-                        "from mplan;";
-                    SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    cmd.Parameters.AddWithValue("", userId);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while(reader.Read())
-                        {
-                            Plan u = GetPlanFromReader(reader);
-                            returnPlans.Add(u);
-                        }
-                }
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
-            return returnPlans;
         }
 
         public List<Ingredient> GetGroceryList(int planId)
