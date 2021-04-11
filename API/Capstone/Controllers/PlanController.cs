@@ -58,10 +58,10 @@ namespace Capstone.Controllers
         }
 
         //DeleteMealFromPlan
-        [HttpPut("{planId}/removemeal")]
-        public ActionResult<bool> DeleteMealFromPlan(MealWithRecipe meal, int planId)
+        [HttpDelete("{planId}/delete/{mealDay}/{mealTime}/{mealId}")]
+        public ActionResult<bool> DeleteMealFromPlan(int planId, string mealDay, string mealTime, int mealId)
         {
-            return Ok(planDAO.DeleteMealFromPlan(meal, planId));
+            return Ok(planDAO.DeleteMealFromPlan(planId, mealDay, mealTime, mealId));
         }
 
         //DeletePlan

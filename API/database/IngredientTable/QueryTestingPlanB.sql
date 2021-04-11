@@ -23,6 +23,8 @@ select mplan_id, mplan_name, user_id
 from mplan;
 
 --GetPlan
+select * from meal_mplan where mplan_id = 3;
+
 select mplan.mplan_id, mplan_name, mplan.user_id,
 	meal.meal_id, meal_name, meal_day, meal_time,
 	recipe.recipe_id, recipe_name, description, is_public, rating,
@@ -30,14 +32,14 @@ select mplan.mplan_id, mplan_name, mplan.user_id,
 		instructions, img_url, submitted_by,
 	ingredient.ingredient_id, ingredient_name, qty, unit_name
 from mplan
-join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
-join meal on meal.meal_id = meal_mplan.meal_id
-join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id
+left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
+left join meal on meal.meal_id = meal_mplan.meal_id
+left join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id
 join recipe on recipe.recipe_id = meal_recipe.recipe_id
 join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
 join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
 join unit on unit.unit_id = ingredient_recipe_unit.unit_id
-where mplan.mplan_id = 2
+where mplan.mplan_id = 3
 order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;
 
 --GetGroceryList
@@ -64,12 +66,18 @@ set mplan_name = 'something old this week'
 where mplan_id = 
 (select mplan_id from mplan where mplan_name = 'something new this week');
 
+select * from meal_mplan
+order by mplan_id, meal_day, meal_time;
+
 update meal_mplan
 set meal_id = (select meal_id from meal where meal_name = 'bananas for breakfast'),
 	meal_day = 'tuesday',
 	meal_time = 'lunch'
 where mplan_id = 
 (select mplan_id from mplan where mplan_name = 'something old this week');
+
+select * from meal_mplan
+order by mplan_id, meal_day, meal_time;
 
 rollback transaction;
 
@@ -261,3 +269,17 @@ insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)
 values ((select meal_id from meal where meal_name = 'breakfast of champions'),
 		(select mplan_id from mplan where mplan_name = 'something new this week'), 'monday', 'breakfast');
 
+--DeleteRecipeFromMeal
+begin transaction;
+
+select *
+from meal_recipe;
+
+delete from meal_recipe
+where meal_id = 1 and
+recipe_id = 3;
+
+select *
+from meal_recipe;
+
+rollback transaction;
