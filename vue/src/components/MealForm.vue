@@ -1,11 +1,13 @@
 <template>
     <div>
         <div id='form-page'>
-
+            
         <form id='recipe-input' action="" method="">
-
+            <div class='meal-card-test'>
+                <h3>Editing {{meal.mealDay}} {{meal.mealTime}} in {{this.$store.state.currentPlan.name}} plan </h3>
+            </div>
             <div class='input-line'>
-                <p class='input-label'>New Meal Name: </p>
+                <p class='input-label' >Meal Name: </p>
                 <input type='text' v-model="meal.name"  />
 
             </div>
@@ -18,7 +20,7 @@
             </div>
 
 
-            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Add Meal</button>
+            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Save Meal</button>
         </form>
 
             <div id='current-recipe'>
@@ -38,20 +40,43 @@ import mealService from "../services/MealService";
 
 export default {
     name: "meal-form",
+   
     data() {
         return {
-            meal: {
-               // recipeId: 0, 
-                name: "",
-                recipeList: []
-            }
+           
         };
+    },
+    computed: {
+        meal() {
+                if(this.$store.state.currentPlan.meals.find((meal) => {
+                return meal.mealId == this.$route.params.id}) != undefined)
+                {
+                    return this.$store.state.currentPlan.meals.find((meal) => {
+                    return meal.mealId == this.$route.params.id
+                    })
+                }
+                else{
+                    let meal = {
+                        name: "",
+                        recipeList: [],
+                        mealDay: this.$route.params.mealDay,
+                        mealTime: this.$route.params.mealTime
+                    }
+                    return meal;
+                }
+
+
+
+            //  return this.$store.state.currentPlan.meals.find((meal) => {
+            //     return meal.mealId == this.$route.params.id
+            //});
+        },
     },
     methods: {
         saveMeal() {
 
-            this.meal.recipeList = this.$store.state.newMealRecipes;
-            mealService.createMeal(this.meal)
+            this.newMeal.recipeList = this.$store.state.newMealRecipes;
+            mealService.createMeal(this.newMeal)
             .then(response => {
                 if(response.status === 201){
                     console.log("Created meal successfully");

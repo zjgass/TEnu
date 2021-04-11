@@ -1,9 +1,9 @@
 <template>
     <div class="meal-card">
-
+       
          
         <div v-if='hasMeal'>
-            <router-link v-bind:to="{ name: 'ViewMeal', params: {id : meal.mealId} }">
+            <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId} }">
             <div class="meal-body">  
               <h3 id='meal-name'>{{meal.name}}</h3> 
               <div class="recipe-list">
@@ -13,9 +13,9 @@
             </div>
             </router-link>
         </div>
-        <router-link v-bind:to="{ name: 'AddMeal' }">
+        <router-link v-bind:to="{ name: 'AddMeal', params: {mealTime: mealTime, mealDay: mealDay } }">
         <div class="empty-meal" v-if='!hasMeal'>
-            <p>HELLO GIVE ME MEAL</p>
+            <p>ADD {{mealDay}} {{mealTime}}</p>
         </div>
         </router-link>
 
@@ -31,7 +31,12 @@
 
 export default {
     name: 'meal-card',
-    props: ["meal"],
+    props: {
+        meal : Object,
+        mealTime : String,
+        mealDay : String
+        },
+    
     data() {
 
         return{
@@ -65,19 +70,27 @@ export default {
   justify-content: center flex-start;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
-  
+  text-decoration-line: none !important;
  
   margin: 5px 10px 5px 10px;
   padding: 0px 0px 0px 0px;
 }
 .recipe-list>h3{
     font-size: 1rem;
+    text-decoration-line: none;
+    text-decoration: none;
 }
 
 #meal-name{
     font-size: 1rem;
 }
 
+/*override vues crummy formatting for router links with this */
+a:-webkit-any-link{
+    text-decoration-color: black;
+    text-decoration: none;
+    color: black;
+}
 
 
 </style>
