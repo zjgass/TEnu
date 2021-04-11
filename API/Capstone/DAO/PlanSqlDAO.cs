@@ -113,9 +113,9 @@ namespace Capstone.DAO
                                 "instructions, img_url, submitted_by, " +
                             "ingredient.ingredient_id, ingredient_name, qty, unit_name " +
                         "from mplan " +
-                        "join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
-                        "join meal on meal.meal_id = meal_mplan.meal_id " +
-                        "join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
+                        "left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
+                        "left join meal on meal.meal_id = meal_mplan.meal_id " +
+                        "left join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
                         "join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
                         "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id " +
                         "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
@@ -220,6 +220,10 @@ namespace Capstone.DAO
 
         public Plan UpdatePlan(Plan plan)
         {
+            List<MealWithRecipe> currentMeals = new List<MealWithRecipe>();
+            MealWithRecipe currentMeal = new MealWithRecipe();
+            MealWithRecipe previousMeal = new MealWithRecipe();
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -234,17 +238,67 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
                     cmd.ExecuteNonQuery();
 
-                    foreach (MealWithRecipe meal in plan.Meals)
+                    sqlText = "select meal.meal_id, meal_name, user_id, mplan_id, meal_day, meal_time " +
+                        "from meal_mplan " +
+                        "join meal on meal.meal_id = meal_mplan.meal_id " +
+                        "where mplan_id = @mplan_id;";
+                    cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    int previousMealId = 0;
+                    while (reader.Read())
                     {
-                        sqlText = "update meal_mplan " +
+                        int currentMealId = Convert.ToInt32(reader["meal_id"]);
+
+                        if (currentMealId != previousMealId)
+                        {
+                            previousMeal = currentMeal;
+                            currentMeal = GetMealFromReader(reader);
+
+                            if (previousMeal.MealId != 0)
+                            {
+                                currentMeals.Add(previousMeal);
+                            }
+                        }
+                    }
+                    currentMeals.Add(currentMeal);
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "";
+                    SqlCommand cmd = new SqlCommand();
+
+                    for (int i =0; i < plan.Meals.Count; i++)
+                    {
+                        if (currentMeals.Contains(plan.Meals[i]))
+                        {
+                            sqlText = "update meal_mplan " +
                             "set meal_id = @meal_id, " +
                                 "meal_day = @meal_day, " +
                                 "meal_time = @meal_time " +
                             "where mplan_id = @mplan_id;";
-                        cmd = new SqlCommand(sqlText, conn);
-                        cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
-                        cmd.Parameters.AddWithValue("@meal_day", meal.MealDay);
-                        cmd.Parameters.AddWithValue("@meal_time", meal.MealTime);
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@meal_id", plan.Meals[i].MealId);
+                            cmd.Parameters.AddWithValue("@meal_day", plan.Meals[i].MealDay);
+                            cmd.Parameters.AddWithValue("@meal_time", plan.Meals[i].MealTime);
+                            cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            sqlText = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time) " +
+                                "values (@meal_id, @mplan_id, @meal_day, @meal_time);";
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@meal_id", plan.Meals[i].MealId);
+                            cmd.Parameters.AddWithValue("@mplan_id", plan.PlanId);
+                            cmd.Parameters.AddWithValue("@meal_day", plan.Meals[i].MealDay);
+                            cmd.Parameters.AddWithValue("@meal_time", plan.Meals[i].MealTime);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
 
@@ -257,7 +311,7 @@ namespace Capstone.DAO
             }
         }
 
-        public bool DeleteMealFromPlan(MealWithRecipe meal, int planId)
+        public bool DeleteMealFromPlan(int planId, string mealDay, string mealTime, int mealId)
         {
             try
             {
@@ -271,10 +325,10 @@ namespace Capstone.DAO
                         "meal_day = @meal_day and " +
                         "meal_time = @meal_time;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
                     cmd.Parameters.AddWithValue("@mplan_id", planId);
-                    cmd.Parameters.AddWithValue("@meal_day", meal.MealDay);
-                    cmd.Parameters.AddWithValue("@meal_time", meal.MealTime);
+                    cmd.Parameters.AddWithValue("@meal_day", mealDay);
+                    cmd.Parameters.AddWithValue("@meal_time", mealTime);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 

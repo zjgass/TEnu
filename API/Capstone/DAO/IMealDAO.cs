@@ -16,6 +16,8 @@ namespace Capstone.DAO
 
         Meal UpdateMeal(Meal meal);
 
+        bool DeleteRecipeFromMeal(int recipeId, int mealId);
+
         bool DeleteMeal(int mealId);
     }
 }
