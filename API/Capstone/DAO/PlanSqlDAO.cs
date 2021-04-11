@@ -62,34 +62,34 @@ namespace Capstone.DAO
             }
         }
 
-        //public Plan GetPlan()
-        //{
+        public List<Plan> GetPlans(int userId)
+        {
+            List<Plan> returnPlans = new List<Plan>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
-        //    Plan returnPlan = null;
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            conn.Open();
+                    string sqlText = "select mplan_id, mplan_name, user_id " +
+                        "from mplan;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-        //            SqlCommand cmd = new SqlCommand("SELECT mplan_id, mplan_name, user_id FROM mplan WHERE mplan_id = @mplan_id ", conn);
-        //            cmd.Parameters.AddWithValue("@mplan_id", 1); // change to planId
-        //            SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        returnPlans.Add(GetPlanFromReader(reader));
+                    }
+                }
 
-        //            if(reader.HasRows && reader.Read())
-        //            {
-        //                returnPlan = GetPlanFromReader(reader);
-        //            }
-        //        }
-        //    }
-        //    //TODO Implement better error catching
-        //    catch(SqlException)
-        //    {
-        //        throw;
-        //    }
-
-        //    return returnPlan;
-        //}
+                return returnPlans;
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
 
         public Plan GetPlan(int planId)
         {
@@ -179,35 +179,6 @@ namespace Capstone.DAO
             }
         }
 
-        public List<Plan> GetPlans(int userId)
-        {
-            List<Plan> returnPlans = new List<Plan>();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string sqlText = "select mplan_id, mplan_name, user_id " +
-                        "from mplan;";
-                    SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    cmd.Parameters.AddWithValue("", userId);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while(reader.Read())
-                        {
-                            Plan u = GetPlanFromReader(reader);
-                            returnPlans.Add(u);
-                        }
-                }
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
-            return returnPlans;
-        }
-
         public List<Ingredient> GetGroceryList(int planId)
         {
             List<Ingredient> ingredients = new List<Ingredient>();
@@ -282,6 +253,37 @@ namespace Capstone.DAO
             //TODO Implement better exception handling
             catch (SqlException)
             {
+                throw;
+            }
+        }
+
+        public bool DeleteMealFromPlan(MealWithRecipe meal, int planId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "delete from meal_mplan " +
+                        "where meal_id = @meal_id and " +
+                        "mplan_id = @mplan_id and " +
+                        "meal_day = @meal_day and " +
+                        "meal_time = @meal_time;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.Parameters.AddWithValue("@mplan_id", planId);
+                    cmd.Parameters.AddWithValue("@meal_day", meal.MealDay);
+                    cmd.Parameters.AddWithValue("@meal_time", meal.MealTime);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
