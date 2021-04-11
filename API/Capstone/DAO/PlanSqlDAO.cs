@@ -257,6 +257,37 @@ namespace Capstone.DAO
             }
         }
 
+        public bool DeleteMealFromPlan(MealWithRecipe meal, int planId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "delete from meal_mplan " +
+                        "where meal_id = @meal_id and " +
+                        "mplan_id = @mplan_id and " +
+                        "meal_day = @meal_day and " +
+                        "meal_time = @meal_time;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.Parameters.AddWithValue("@mplan_id", planId);
+                    cmd.Parameters.AddWithValue("@meal_day", meal.MealDay);
+                    cmd.Parameters.AddWithValue("@meal_time", meal.MealTime);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool DeletePlan(int PlanId)
         {
             try
