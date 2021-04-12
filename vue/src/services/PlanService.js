@@ -1,28 +1,26 @@
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: 'https://localhost:44315/api'
-});
+let planPath = '/api/plan';
 
 export default {
 
   getPlans() {
-    return http.get('/plan');
+    return axios.get(planPath);
   },
 
   getPlan(planId) {
-    return http.get(`/plan/${planId}`)
+    return axios.get(planPath + `/${planId}`)
   },
   getGroceries(planId){
-    return http.get(`/plan/${planId}/groceryList`)
+    return axios.get(planPath + `/${planId}/groceryList`)
   },
   removeMeal(planId, mealId, mealDay, mealTime){
-    return http.delete(`/plan/${planId}/delete/${mealDay}/${mealTime}/${mealId}`)
+    return axios.delete(planPath + `/${planId}/delete/${mealDay}/${mealTime}/${mealId}`)
   },
   createPlan(plan){
-    return http.post(`/plan`, plan)
+    return axios.post(planPath, plan)
   },
   addMeal(planId, mealDay, mealTime, mealId){
-    return http.post(`/plan/${planId}/add/${mealDay}/${mealTime}/${mealId}`)
+    return axios.post(planPath + `/${planId}/add/${mealDay}/${mealTime}/${mealId}`)
   }
 }

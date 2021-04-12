@@ -1,27 +1,23 @@
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: 'https://localhost:44315/api'
-});
+let recipePath = '/api/recipe';
 
 export default {
 
   getRecipes() {
-    return http.get('/recipe');
+    return axios.get(recipePath);
   },
 
   getRecipe(recipeId) {
-    return http.get(`/recipe/${recipeId}`)
+    return axios.get(recipePath + `/${recipeId}`)
   },
 
   addRecipe(recipe) {
-    return http.post('/recipe', recipe);
+    return axios.post(recipePath, recipe);
   },
 
   deleteRecipe(recipeId){
-    return http.delete(`/recipe/${recipeId}`);
+    return axios.delete(recipePath + `/${recipeId}`);
   }
-
-
 }
 
