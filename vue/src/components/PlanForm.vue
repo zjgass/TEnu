@@ -2,7 +2,7 @@
 <div>
 <div id='form-page'>
 
-<form id='recipe-input' action="" method="">
+<form id='plan-input' action="" method="">
 
 <p> Add a meal to which day: </p>
 <select name="">
@@ -33,7 +33,7 @@
         <button  id='submit-button'>Submit Plan</button>
 </form>
 
-<div id='current-recipe'>
+<div id='current-plan'>
 <h2>Meal Plan Name: </h2>
 <p> bind plan name </p>
 
@@ -42,7 +42,7 @@
 <ul>
 
 
-<li>list item in meal list</li>
+<li></li>
 
 </ul>
 
@@ -61,6 +61,32 @@ export default {
 
 <style>
 
+
+
+#plan-input, #current-plan{
+
+width: 45%;
+min-height: 600px;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  padding: 20px;
+
+}
+
+@media(max-width: 1400px) {
+
+#plan-input, #current-plan{
+
+width: 95%;
+width: 95%;
+
+}
+#form-page{
+    display:flex;
+    flex-direction: column;
+}
+
+}
 
 
 </style>
