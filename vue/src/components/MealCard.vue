@@ -6,10 +6,19 @@
             <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId} }">
             <div class="meal-body">  
               <h3 id='meal-name'>{{meal.name}}</h3> 
-              <div class="recipe-list">
+              <h3 id='total-time'> Total Time: {{meal.totalTime}}</h3> 
+
+              
+              <!-- <div class="recipe-list">
                     <h3>Includes these recipes: </h3>
                     <h3 v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId">{{recipe.name}}</h3>   
               </div>
+
+              -->
+
+
+  
+
               <div class='delete-prompt' v-show='deletePromptDiv'>
                     <h3>Do you wish to remove this meal?</h3>
                     <button v-on:click.prevent='deleteThisMeal()'>Yes</button>
@@ -29,6 +38,8 @@
             <p>ADD {{mealDay}} {{mealTime}}</p>
         </div>
         </router-link>
+
+
 
     </div>
    
@@ -124,7 +135,23 @@ export default {
 }
 
 #meal-name{
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    margin-top: 10px;
+
+}
+
+#total-time{
     font-size: 1rem;
+
+}
+
+
+#meal-card-router-link, #add-meal-router-link{
+            text-decoration: none;
+            color: black;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
 }
 
 .meal-body{

@@ -72,7 +72,7 @@
 
         <div class="show-recipe-details" v-if="showDetails">
             <div class="instruction-list">
-                
+
             </div>
         </div>
 
@@ -259,6 +259,8 @@ h2{
 .ingredient-list>h3{
 
     font-size: .75rem;
+    cursor: pointer;
+    text-transform: capitalize;
 }
 
 
@@ -268,7 +270,7 @@ h2{
     width: 47%;
     padding: 10px;
 
-    min-height: 300px;
+    min-height: 600px;
     margin-left: 10px;
     margin: auto;
 
@@ -277,10 +279,16 @@ h2{
 
 .show-add-ingredient{
     width: 47%;
-    min-height: 300px;
+    min-height: 600px;
     height: auto;
     padding: 10px;
     border: solid 1px black;
+    overflow: scroll;
+    max-height: 500px;
+
+
+    
+
 }
 
 .show-recipe-details{
@@ -289,6 +297,8 @@ h2{
     height: auto;
     padding: 10px;
     border: solid 1px black;
+
+
 
 }
 
@@ -325,15 +335,30 @@ h2{
 #form-page{
 display: flex;
 flex-direction: column;
+align-content: center;
+
 
 }
 
 
 
-#recipe-input, #current-recipe{
+#recipe-input, #current-recipe, .show-recipe-details{
     margin-bottom: 10px;
     width: 90%;
 
-}}
+    
+
+}
+
+#router-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+
+
+
+}
 
 </style>
