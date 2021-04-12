@@ -36,7 +36,7 @@
 
 <script>
 
-import mealService from "../services/MealService";
+//import mealService from "../services/MealService";
 
 export default {
     name: "meal-form",
@@ -58,9 +58,11 @@ export default {
                 else{
                     let meal = {
                         name: "",
+                        mealId: "",
                         recipeList: [],
                         mealDay: this.$route.params.mealDay,
-                        mealTime: this.$route.params.mealTime
+                        mealTime: this.$route.params.mealTime,
+                        userId: ""
                     }
                     return meal;
                 }
@@ -74,9 +76,16 @@ export default {
     },
     methods: {
         saveMeal() {
+            console.log('executing saveMeal')
+            this.meal.recipeList = this.$store.state.newMealRecipes;
+            this.$store.commit('ADD_MEAL_TO_CURRENT_PLAN', this.meal)
 
-            this.newMeal.recipeList = this.$store.state.newMealRecipes;
-            mealService.createMeal(this.newMeal)
+            this.$router.push('home2');
+
+
+            /*
+           
+            mealService.createMeal(this.meal)
             .then(response => {
                 if(response.status === 201){
                     console.log("Created meal successfully");
@@ -87,6 +96,7 @@ export default {
                     this.errorMsg = "Error creating new meal. Response received was '" + error.response.statusText + "'.";
                 }
             })
+            */
         }
     }
 

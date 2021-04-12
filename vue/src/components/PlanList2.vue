@@ -142,7 +142,7 @@ export default {
       },
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
-          this.$store.dispatch('loadPlan', this.currentPlanId)
+          this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
       }
   },
   created() {
