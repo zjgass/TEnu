@@ -311,6 +311,34 @@ namespace Capstone.DAO
             }
         }
 
+        public bool AddMealToPlan(int planId, string mealDay, string mealTime, int mealId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlTest = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time)" +
+                        "values (@meal_id, @mplan_id, @meal_day, @meal_time);";
+                    SqlCommand cmd = new SqlCommand(sqlTest, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
+                    cmd.Parameters.AddWithValue("@mplan_id", planId);
+                    cmd.Parameters.AddWithValue("@meal_day", mealDay);
+                    cmd.Parameters.AddWithValue("@meal_time", mealTime);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool DeleteMealFromPlan(int planId, string mealDay, string mealTime, int mealId)
         {
             try
