@@ -21,11 +21,10 @@
             </select>
 
             <div v-if="enterNewPlanName">
-                <p> Name for the new Plan </p>
-                <input name="new-plan-name" type="text" v-model="plan.name"/>
-                <button name="save-new-plan-name" v-on:click='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
+                <input class="new-plan" name="new-plan-name" type="text" v-model="plan.name" placeholder="Name for the new Plan" id='new-plan-name'/>
+                <button class="new-plan" name="save-new-plan-name" v-on:click='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
             </div>
-            <button v-else name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
+            <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
         </div>
 
 
@@ -232,8 +231,11 @@ padding: 20px;
             cursor: pointer;
 }
 
-#new-plan-button{
-    margin: 20px;
+.new-plan{
+    margin-top: 20px;
+    margin-left: 10px;
+    height: 30px;
+    font-size: 1.2rem;
 }
 
 .select-plan-container{
