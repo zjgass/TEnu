@@ -82,8 +82,6 @@ namespace Capstone.Controllers
         [HttpGet("search")]
         public ActionResult<List<Recipe>> SearchRecipes(Query queries)
         {
-            //string requestBody = context.Request.Body.ToString();
-            //string[] searchArgs = JsonConvert.DeserializeObject<string[]>(requestBody);
             List<Recipe> recipes = new List<Recipe>();
 
             if (queries != null)
