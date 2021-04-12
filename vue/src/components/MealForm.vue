@@ -1,11 +1,13 @@
 <template>
     <div>
         <div id='form-page'>
-
+            
         <form id='recipe-input' action="" method="">
-
+            <div class='meal-card-test'>
+                <h3>Editing {{meal.mealDay}} {{meal.mealTime}} in {{this.$store.state.currentPlan.name}} plan </h3>
+            </div>
             <div class='input-line'>
-                <p class='input-label'>New Meal Name: </p>
+                <p class='input-label' >Meal Name: </p>
                 <input type='text' v-model="meal.name"  />
 
             </div>
@@ -18,7 +20,7 @@
             </div>
 
 
-            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Add Meal</button>
+            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Save Meal</button>
         </form>
 
             <div id='current-recipe'>
@@ -34,23 +36,55 @@
 
 <script>
 
-import mealService from "../services/MealService";
+//import mealService from "../services/MealService";
 
 export default {
     name: "meal-form",
+   
     data() {
         return {
-            meal: {
-               // recipeId: 0, 
-                name: "",
-                recipeList: []
-            }
+           
         };
+    },
+    computed: {
+        meal() {
+                if(this.$store.state.currentPlan.meals.find((meal) => {
+                return meal.mealId == this.$route.params.id}) != undefined)
+                {
+                    return this.$store.state.currentPlan.meals.find((meal) => {
+                    return meal.mealId == this.$route.params.id
+                    })
+                }
+                else{
+                    let meal = {
+                        name: "",
+                        mealId: "",
+                        recipeList: [],
+                        mealDay: this.$route.params.mealDay,
+                        mealTime: this.$route.params.mealTime,
+                        userId: ""
+                    }
+                    return meal;
+                }
+
+
+
+            //  return this.$store.state.currentPlan.meals.find((meal) => {
+            //     return meal.mealId == this.$route.params.id
+            //});
+        },
     },
     methods: {
         saveMeal() {
-
+            console.log('executing saveMeal')
             this.meal.recipeList = this.$store.state.newMealRecipes;
+            this.$store.commit('ADD_MEAL_TO_CURRENT_PLAN', this.meal)
+
+            this.$router.push('home2');
+
+
+            /*
+           
             mealService.createMeal(this.meal)
             .then(response => {
                 if(response.status === 201){
@@ -62,6 +96,7 @@ export default {
                     this.errorMsg = "Error creating new meal. Response received was '" + error.response.statusText + "'.";
                 }
             })
+            */
         }
     }
 

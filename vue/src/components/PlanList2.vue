@@ -1,121 +1,107 @@
 
 <template>
-<div>
+
+    <div id='top-of-component'> 
+
+        <div id='current-plan'>
+            <h1>Your Meal Plan</h1>
+        </div> 
+
+        <div class='select-plan-container'>
+         
+            <p> Select Plan: </p>
+            <select name="select-plan"  v-model="currentPlanId" v-on:change.prevent='changePlan()' id='plan-select-dropdown'>
+
+                <option  class='plan-dropdown-item'
+                  v-for="plan in this.$store.state.userPlanList"
+                  v-bind:key="plan.name"
+                  v-bind:value='plan.planId'
+                  >{{plan.name}}</option> 
+
+            </select>
+
+          
+        </div>
 
 
-<!-- <div id='top-of-component'> -->
+        <div id='meal-plan'>
 
-<!-- <div id='current-plan'>
-    <h1>Your Meal Plan</h1>
-    <h2 id='current-plan-name'>{{Plans[dropDown-1].name}}</h2>
-        <h2>current value of dropDown:  {{dropDown}}</h2>
+            <div class='plan-column' id='monday-meals'>
+                 <h1 class='day'>Monday</h1>
+                 <div class='meal-card'>
+                 <meal-card mealTime="breakfast" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="lunch" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'lunch')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="dinner" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'dinner')]"/>
+                </div>
+            </div>
 
-    </div> -->
+            <div class='plan-column' id='tuesday-meals'>
+                <h1 class='day'>Tuesday</h1>
+                <div class='meal-card'>
+                    <meal-card mealTime="breakfast" mealDay="tuesday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'breakfast')]"/>
+                </div>
+                <div class='meal-card'>
+                 <meal-card mealTime="lunch" mealDay="tuesday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'lunch')]"/>
+                </div>
+                <div class='meal-card'>
+                 <meal-card mealTime="dinner" mealDay="tuesday"  v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'dinner')]"/>
+                </div>
+            </div>
 
-<!-- 
-<form id='choose-plan' action="" method="">
-<p> View A Different Meal Plan: </p>
-<select name="select-plan"  v-model="dropDown" id='plan-select-dropdown'>
+            <div class='plan-column' id='wednesday-meals'>
+                <h1 class='day'>Wednesday</h1>
+                <div class='meal-card'>
+                    <meal-card mealTime="breakfast" mealDay="wednesday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'breakfast')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="lunch" mealDay="wednesday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'lunch')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="dinner" mealDay="wednesday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'dinner')]"/>
+                </div>
+            </div>
 
-<option  class='plan-dropdown-item'
-v-for="plan in Plans"
-v-bind:key="plan.name"
-v-bind:value='plan.planId'
->{{plan.name}}</option> -->
+            <div class='plan-column' id='thursday-meals'>
+                <h1 class='day'>Thursday</h1>
+                <div class='meal-card'>
+                    <meal-card mealTime="breakfast" mealDay="thursday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'breakfast')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="lunch" mealDay="thursday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'lunch')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="dinner" mealDay="thursday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'dinner')]"/>
+                </div>
+            </div>
 
-
-
-
-
-<!-- </select>
-
-</form> -->
-
-<!-- </div> -->
-
-
-<div id='meal-plan'>
-
-
-<div class='plan-column' id='monday-meals'>
-    <h1 class='day'>Monday</h1>
-    <div class='meal-card'>
-        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
-    </div>
-    <div class='meal-card'>
-        <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'lunch')]"/>
-    </div>
-    <div class='meal-card'>
-   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'dinner')]"/>
-    </div>
-</div>
-
-<div class='plan-column' id='tuesday-meals'>
-    <h1 class='day'>Tuesday</h1>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'breakfast')]"/>
-    </div>
-    <div class='meal-card'>
-   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'lunch')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('tuesday', 'dinner')]"/>
-    </div>
-</div>
-
-<div class='plan-column' id='wednesday-meals'>
-    <h1 class='day'>Wednesday</h1>
-    <div class='meal-card'>
-   <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'breakfast')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'lunch')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('wednesday', 'dinner')]"/>
-    </div>
-</div>
-
-<div class='plan-column' id='thursday-meals'>
-    <h1 class='day'>Thursday</h1>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'breakfast')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'lunch')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('thursday', 'dinner')]"/>
-    </div>
-</div>
-
-<div class='plan-column' id='friday-meals'>
-    <h1 class='day'>Friday</h1>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'breakfast')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'lunch')]"/>
-    </div>
-    <div class='meal-card'>
-    <meal-card v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'dinner')]"/>
-    </div>
-</div>
-
+            <div class='plan-column' id='friday-meals'>
+                <h1 class='day'>Friday</h1>
+                <div class='meal-card'>
+                    <meal-card mealTime="breakfast" mealDay="friday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'breakfast')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="lunch" mealDay="friday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'lunch')]"/>
+                </div>
+                <div class='meal-card'>
+                    <meal-card mealTime="dinner" mealDay="friday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'dinner')]"/>
+                </div>
+            </div>
+        </div>
       <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
+        <router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
 
+    </div>
 
-</div>
-
-<router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
+</template>
        
         <!-- <h2>{{Plans}}</h2>
         <h2>currentPlan: {{currentPlan}}</h2> -->
 
 
-
-</div>
-</template>
 
 <script>
 
@@ -133,14 +119,15 @@ export default {
 
     return {
    // Plans: [],
-   // currentPlan: 0,
-   // dropDown: null
+    currentPlanId: 1,
+ 
     };
   },
-  //mounted: function(){
- //       this.dropDown = 1;
-      
- // },
+  
+  mounted(){
+       this.$store.dispatch('loadPlanList'); 
+       
+  },
   methods: {
    
      getMealIndex(day, time){
@@ -152,10 +139,14 @@ export default {
           })
 
           return found;
+      },
+      changePlan(){
+          this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
+          this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
       }
   },
   created() {
-     this.$store.dispatch('loadPlan');
+    this.$store.dispatch('loadPlan', this.currentPlanId);
   }
 };
 
@@ -208,13 +199,20 @@ padding: 20px;
 }
 
 #plan-select-dropdown{
-    width: 100%;
-    font-size: 20pt;
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 50%;
+    height: 30px;
+    font-size: 1.2rem;
     text-transform: capitalize;
             cursor: pointer;
 }
 
-
+.select-plan-container{
+    display: flex;
+    flex-direction: row;
+    align-content:stretch;
+}
 
 .plan-column h1{
     margin-top: 0px;
@@ -228,14 +226,14 @@ padding: 20px;
 #top-of-component{
     /* border: 1px solid black; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
 
 #current-plan{
 
     width: 50%;
-    height: 100px;
+    
 }
 
 #current-plan-name{
