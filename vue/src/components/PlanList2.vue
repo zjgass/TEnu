@@ -3,9 +3,9 @@
 
     <div id='top-of-component'> 
 
-        <div id='current-plan'>
+        <!-- <div id='current-plan'>
             <h1>Your Meal Plan</h1>
-        </div> 
+        </div>  -->
 
         <div class='select-plan-container'>
          
