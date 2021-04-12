@@ -33,9 +33,10 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", plan.UserId);
                     plan.PlanId = Convert.ToInt32(cmd.ExecuteScalar());
 
+                    /*
                     sqlText = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time) " +
                         "values ";
-                    /*
+                    
                     for (int i = 0; i < plan.Meals.Count; i++)
                     {
                         sqlText += $"(@meal_id{i}, @mplan_id{i}, @meal_day{i}, @meal_time{i}) " +
