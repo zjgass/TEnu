@@ -35,7 +35,7 @@ namespace Capstone.DAO
 
                     sqlText = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time) " +
                         "values ";
-
+                    /*
                     for (int i = 0; i < plan.Meals.Count; i++)
                     {
                         sqlText += $"(@meal_id{i}, @mplan_id{i}, @meal_day{i}, @meal_time{i}) " +
@@ -51,6 +51,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@meal_time{i}", plan.Meals[i].MealTime);
                     }
                     cmd.ExecuteNonQuery();
+                    */
                 }
 
                 return plan;
