@@ -1,3 +1,12 @@
+Touch up a meal card
+Touch up meal detail
+Touch up add recipe to meal
+Route to remove meal from plan
+check to make sure recipes that are added show up in the creator's library
+of recipes.
+
+
+
 -- TODO rate recipes
 -- TODO best of the week
 -- TODO for add meal have a list based on search query

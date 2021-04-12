@@ -29,19 +29,33 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    sqlText = "insert into meal_recipe (meal_id, recipe_id) " +
+                        "values ";
+
+                    for (int i = 0; i < meal.RecipeList.Count; i++)
+                    {
+                        sqlText += $"(@meal_id{i}, @recipe_id{i})" +
+                        (i == meal.RecipeList.Count - 1 ? "; " : ",");
+                    }
+
+                    cmd = new SqlCommand(sqlText, conn);
+                    for (int i = 0; i < meal.RecipeList.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue($"@meal_id{i}", meal.MealId);
+                        cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList);
+                    }
+                    cmd.ExecuteNonQuery();
                 }
 
-                foreach(int recepeId in meal.RecipeList)
-                {
-                    AddRecipeToMeal(meal, recepeId);
-                }
+                return meal;
             }
             catch (SqlException)
             {
                 throw ;
             }
-            return meal;
         }
+
         public Meal AddRecipeToMeal(Meal meal,int recipeId)
         {
             try
@@ -62,6 +76,7 @@ namespace Capstone.DAO
             }
             return GetMeal(meal.MealId); 
         }
+
         public Meal GetMeal(int mealId)
         {
             Meal returnMeal = null;
@@ -87,19 +102,20 @@ namespace Capstone.DAO
                             returnMeal = GetMealFromReader(reader);
                     }
                 }
+
+                return returnMeal;
             }
             //TODO Implement better error catching
             catch(SqlException)
             {
                 throw;
             }
-
-            return returnMeal;
         }
+
         public List<Meal> GetMeals(int userId)
         {
-            
             List<Meal> returnMeals = new List<Meal>();
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -125,14 +141,13 @@ namespace Capstone.DAO
                         }
                     }
                 }
+
+                return returnMeals;
             }
             catch (SqlException ex)
             {
                 throw;
             }
-            return returnMeals;
-            
-            throw new NotImplementedException();
         }
         public Meal UpdateMeal(Meal meal)
         {
@@ -150,6 +165,34 @@ namespace Capstone.DAO
             }
             return GetMeal(meal.MealId);
         }
+
+        public bool DeleteRecipeFromMeal(int recipeId, int mealId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "delete from meal_recipe " +
+                        "where meal_id = @meal_id and " +
+                        "recipe_id = @recipe_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipeId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool DeleteMeal(int mealId)
         {
             try

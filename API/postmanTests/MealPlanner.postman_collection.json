@@ -473,6 +473,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "DeleteMealFromPlan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"mealId\": 1,\r\n            \"name\": \"breakfast of champions\",\r\n            \"userId\": 1,\r\n            \"recipeList\": [\r\n                {\r\n                    \"recipeId\": 3,\r\n                    \"name\": \"egg on a croissant\",\r\n                    \"description\": \"A nice simple meal!\",\r\n                    \"isPublic\": true,\r\n                    \"rating\": 5,\r\n                    \"serves\": 2,\r\n                    \"prepTime\": \"\",\r\n                    \"cookTime\": \"\",\r\n                    \"totalTime\": \"\",\r\n                    \"ingredients\": [\r\n                        {\r\n                            \"ingredientId\": 25,\r\n                            \"name\": \"croissant\",\r\n                            \"qty\": 3.0,\r\n                            \"unit\": \"ea\"\r\n                        },\r\n                        {\r\n                            \"ingredientId\": 5,\r\n                            \"name\": \"eggs\",\r\n                            \"qty\": 6.0,\r\n                            \"unit\": \"ea\"\r\n                        }\r\n                    ],\r\n                    \"utensils\": \"{utensils: [\\\"skillet\\\", \\\"oven\\\", \\\"plates\\\"]}\",\r\n                    \"instructions\": \"{instructions: [\\\"butter the croissants and put them in the oven to melt the butter\\\",\\r\\n\\t\\\"fry an egg in the skillet till done the way you like\\\", \\\"put the egg on the croissant\\\",\\r\\n\\t\\\"enjoy\\\"]}\",\r\n                    \"imgUrl\": \"https://www.thehopelesshousewife.com/wp-content/uploads/2012/05/Croissant-Eggs-Benedict2.jpg\",\r\n                    \"submittedBy\": \"1\"\r\n                }\r\n            ],\r\n            \"mealDay\": \"monday\",\r\n            \"mealTime\": \"breakfast\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44315/api/plan/3/removemeal",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44315",
+							"path": [
+								"api",
+								"plan",
+								"3",
+								"removemeal"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
