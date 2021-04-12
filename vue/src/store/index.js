@@ -61,10 +61,12 @@ export default new Vuex.Store({
     },
     ADD_RECIPE_TO_MEAL(state, recipeId){
       state.newMealRecipes.unshift(recipeId);
-    },
+    }
+    /*
     ADD_MEAL_TO_CURRENT_PLAN(state, meal){
       state.currentPlan.meals.push(meal);
     }
+    */
    
   },
   actions: {

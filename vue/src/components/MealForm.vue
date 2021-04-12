@@ -20,7 +20,7 @@
             </div>
 
 
-            <button v-on:click.prevent="saveMeal()"  id='submit-button'>Save Meal</button>
+            <button v-on:click.prevent="saveMealToPlan()"  id='submit-button'>Save Meal</button>
         </form>
 
             <div id='current-recipe'>
@@ -36,13 +36,15 @@
 
 <script>
 
-//import mealService from "../services/MealService";
+import planService from "../services/PlanService";
+import mealService from "../services/MealService";
 
 export default {
     name: "meal-form",
    
     data() {
         return {
+            returnedMeal: []
            
         };
     },
@@ -58,11 +60,11 @@ export default {
                 else{
                     let meal = {
                         name: "",
-                        mealId: "",
+                        mealId: 0,
                         recipeList: [],
                         mealDay: this.$route.params.mealDay,
                         mealTime: this.$route.params.mealTime,
-                        userId: ""
+                        //userId: ""
                     }
                     return meal;
                 }
@@ -75,28 +77,43 @@ export default {
         },
     },
     methods: {
-        saveMeal() {
-            console.log('executing saveMeal')
+        saveMealToPlan() {
+            console.log('executing saveMealToPlan')
             this.meal.recipeList = this.$store.state.newMealRecipes;
-            this.$store.commit('ADD_MEAL_TO_CURRENT_PLAN', this.meal)
+            if(this.meal.mealId != 0)
+            {
+                console.log('saveMealToPlan if true')
+                planService.addMeal(this.$store.state.currentPlan.planId,
+                                     this.$route.params.mealDay, 
+                                     this.$route.params.mealTime, 
+                                     this.meal.mealId);
 
-            this.$router.push('home2');
+                 this.$router.push('home2');
+            }
+            //create new meal first then add meal to plan
+            else{
+                console.log('saveMealToPlan if false')
+              
+                mealService.createMeal(this.meal)
+                .then(response => {
+                    this.returnedMeal = response.data;
+                    console.log('new meal id = ' + this.returnedMeal);
+                    
+                    planService.addMeal(this.$store.state.currentPlan.planId,
+                                     this.$route.params.mealDay, 
+                                     this.$route.params.mealTime, 
+                                     this.returnedMeal.mealId);
 
+                    mealService.addRecipeToMeal(this.returnedMeal.mealId, this.$store.state.newMealRecipes[0]);
+                    
+                    this.$router.push('home2');
+                });
+            
+             
 
-            /*
-           
-            mealService.createMeal(this.meal)
-            .then(response => {
-                if(response.status === 201){
-                    console.log("Created meal successfully");
-                }
-            })
-            .catch(error => {
-                if(error.response) {
-                    this.errorMsg = "Error creating new meal. Response received was '" + error.response.statusText + "'.";
-                }
-            })
-            */
+              
+            }
+          
         }
     }
 
