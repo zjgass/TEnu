@@ -23,7 +23,7 @@ select mplan_id, mplan_name, user_id
 from mplan;
 
 --GetPlan
-select * from meal_mplan where mplan_id = 3;
+select * from meal_mplan where mplan_id = 6;
 
 select mplan.mplan_id, mplan_name, mplan.user_id,
 	meal.meal_id, meal_name, meal_day, meal_time,
@@ -35,12 +35,16 @@ from mplan
 left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
 left join meal on meal.meal_id = meal_mplan.meal_id
 left join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id
-join recipe on recipe.recipe_id = meal_recipe.recipe_id
-join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
-join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
-join unit on unit.unit_id = ingredient_recipe_unit.unit_id
-where mplan.mplan_id = 3
+left join recipe on recipe.recipe_id = meal_recipe.recipe_id
+left join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
+left join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
+left join unit on unit.unit_id = ingredient_recipe_unit.unit_id
+where mplan.mplan_id = 6
 order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;
+
+select * from mplan
+left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
+where mplan.mplan_id = 6;
 
 --GetGroceryList
 --Sum same ingredient same unit
