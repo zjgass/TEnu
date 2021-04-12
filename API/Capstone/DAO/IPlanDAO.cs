@@ -11,7 +11,7 @@ namespace Capstone.DAO
 
         Plan GetPlan(int planId);
 
-        Plan CreatePlan(Plan plan);
+        Plan CreatePlan(Plan plan, int userId);
 
         Plan UpdatePlan(Plan plan);
 
