@@ -1,26 +1,24 @@
 import axios from 'axios';
 
 
-const http = axios.create({
-  baseURL: 'https://localhost:44315/api'
-});
+let mealPath = '/api/meal';
 
 export default {
 
   getMeal() {
-    return http.get('/meal');
+    return axios.get(mealPath);
   },
 
   getMeals(boardId) {
-    return http.get(`/meal/${boardId}`)
+    return axios.get(mealPath + `/${boardId}`)
   },
 
   createMeal(meal){
-    return http.post("/meal", meal);
+    return axios.post(mealPath, meal);
   },
 
   addRecipeToMeal(mealId, recipeId){
-    return http.post(`/meal/${mealId}/add/${recipeId}`);
+    return axios.post(mealPath + `/${mealId}/add/${recipeId}`);
   }
 
 
