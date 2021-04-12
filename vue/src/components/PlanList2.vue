@@ -7,7 +7,7 @@
             <h1>Your Meal Plan</h1>
         </div>  -->
 
-        <div class='select-plan-container'>
+        <div class='select-plan-container' >
          
             <p> Select Plan: </p>
             <select name="select-plan"  v-model="currentPlanId" v-on:change.prevent='changePlan()' id='plan-select-dropdown'>
@@ -20,7 +20,12 @@
 
             </select>
 
-          
+            <div v-if="enterNewPlanName">
+                <p> Name for the new Plan </p>
+                <input name="new-plan-name" type="text" v-model="plan.name"/>
+                <button name="save-new-plan-name" v-on:click='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
+            </div>
+            <button v-else name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
         </div>
 
 
@@ -107,6 +112,7 @@
 
 //import PlanService from "../services/PlanService";
 import MealCard from "../components/MealCard";
+import PlanService from '../services/PlanService';
 
 export default {
 
@@ -119,8 +125,12 @@ export default {
 
     return {
    // Plans: [],
-    currentPlanId: 1,
- 
+        currentPlanId: 1,
+        enterNewPlanName: false,
+        //newPlanName: "",
+        plan: {
+            name: ""
+        }
     };
   },
   
@@ -143,6 +153,20 @@ export default {
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
           this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
+      },
+      createNewPlan(){
+          this.enterNewPlanName = true;
+      },
+      saveNewPlanName(){
+          PlanService.createPlan(this.plan)
+            .then(response => {
+                if(response.status === 201){
+                    console.log('plan created succesfully');
+                }
+            });
+          this.changePlan();
+          this.enterNewPlanName = false;
+          this.newPlanName = "";
       }
   },
   created() {
@@ -206,6 +230,10 @@ padding: 20px;
     font-size: 1.2rem;
     text-transform: capitalize;
             cursor: pointer;
+}
+
+#new-plan-button{
+    margin: 20px;
 }
 
 .select-plan-container{
