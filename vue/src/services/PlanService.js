@@ -21,5 +21,8 @@ export default {
   },
   createPlan(plan){
     return http.post(`/plan`, plan)
+  },
+  addMeal(planId, mealDay, mealTime, mealId){
+    return http.post(`/plan/${planId}/add/${mealDay}/${mealTime}/${mealId}`)
   }
 }

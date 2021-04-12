@@ -29,7 +29,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
-
+                    /*
                     sqlText = "insert into meal_recipe (meal_id, recipe_id) " +
                         "values ";
 
@@ -46,6 +46,8 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList);
                     }
                     cmd.ExecuteNonQuery();
+                    */
+                    
                 }
 
                 return meal;
