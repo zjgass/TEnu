@@ -1,8 +1,11 @@
 <template>
     <div>
         <div id='form-page'>
+
+        <!-- <form id='meal-input' action="" method=""> -->
+
             
-        <form id='recipe-input' action="" method="">
+        <form id='meal-input' action="" method="">
             <div class='meal-card-test'>
                 <h3>Editing {{meal.mealDay}} {{meal.mealTime}} in {{this.$store.state.currentPlan.name}} plan </h3>
             </div>
@@ -23,7 +26,7 @@
             <button v-on:click.prevent="saveMealToPlan()"  id='submit-button'>Save Meal</button>
         </form>
 
-            <div id='current-recipe'>
+            <div id='current-meal'>
 
    
             <h2>Recipe Of The Week </h2>
@@ -119,6 +122,30 @@ export default {
 </script>
 
 <style>
+
+#meal-input, #current-meal{
+    width: 45%;
+min-height: 600px;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+@media(max-width: 1400px) {
+
+#meal-input, #current-meal{
+
+width: 95%;
+width: 95%;
+
+}
+#form-page{
+    display:flex;
+    flex-direction: column;
+}
+
+}
+
 
 
 </style>
