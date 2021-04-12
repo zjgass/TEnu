@@ -47,6 +47,20 @@ namespace Capstone.Controllers
             Meal updated = mealDAO.UpdateMeal(meal);
             return Ok(updated);
         }
+        //AddRecipeToMeal
+        [HttpPost("{mealId}/add/{recipeId}")]
+        public ActionResult<Meal> AddRecipeToMeal(int mealId, int recipeId)
+        {
+            return Ok(mealDAO.AddRecipeToMeal(mealId, recipeId));
+        }
+
+        //DeleteRecipeFromMeal
+        [HttpDelete("{mealId}/delete/{recipeId}")]
+        public ActionResult<bool> DeleteRecipeFromMeal(int recipeId, int mealId)
+        {
+            return Ok(mealDAO.DeleteRecipeFromMeal(recipeId, mealId));
+        }
+
         //TODO ADD DELETE MEAL MESSAGE
         [HttpDelete("{mealId}")]
         public ActionResult DeleteMeal(int mealId)

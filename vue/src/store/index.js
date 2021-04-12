@@ -26,6 +26,8 @@ export default new Vuex.Store({
     existingIngredients: [],
     newIngredients: [],
     newMealRecipes: [],
+    userPlanList: [],
+    currentPlanId: 1,
     currentPlan: []
   },
   mutations: {
@@ -41,6 +43,12 @@ export default new Vuex.Store({
     SET_CURRENT_PLAN(state, plan){
       state.currentPlan = plan;
     }, 
+    SET_CURRENT_PLAN_ID(state, id){
+      state.currentPlanId = id;
+    },
+    SET_PLAN_LIST(state, planList){
+      state.userPlanList = planList;
+    },
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -54,12 +62,17 @@ export default new Vuex.Store({
     ADD_RECIPE_TO_MEAL(state, recipeId){
       state.newMealRecipes.unshift(recipeId);
     }
+    /*
+    ADD_MEAL_TO_CURRENT_PLAN(state, meal){
+      state.currentPlan.meals.push(meal);
+    }
+    */
    
   },
   actions: {
-        loadPlan (context) {
-          //hard coded to load plan 1 for now
-          let planId = 1;
+        loadPlan (context, planId) {
+          console.log('loadplan executed');
+          console.log('planId passed = ' + planId);
           planService.getPlan(planId)
           .then(response => {
               context.commit("SET_CURRENT_PLAN", response.data)
@@ -75,6 +88,20 @@ export default new Vuex.Store({
 
 
           context.commit()
+        },
+        loadPlanList(context) {
+          planService.getPlans()
+          .then(response => {
+            context.commit("SET_PLAN_LIST", response.data)
+            if(response.status === 200){
+              console.log('plan list loaded');
+            }
+          })
+          .catch(error => {
+            if(error.response) {
+              this.errorMsg = "Error loading plan lists. Response received was '" + error.response.statusText + "'.";
+            }
+          })
         }
 
 

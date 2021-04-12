@@ -17,6 +17,13 @@ export default {
 
   createMeal(meal){
     return http.post("/meal", meal);
+  },
+
+  addRecipeToMeal(mealId, recipeId){
+    return http.post(`/meal/${mealId}/add/${recipeId}`);
   }
+
+
+
 
 }

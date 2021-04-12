@@ -15,5 +15,11 @@ export default {
   },
   getGroceries(planId){
     return http.get(`/plan/${planId}/groceryList`)
+  },
+  removeMeal(planId, mealId, mealDay, mealTime){
+    return http.delete(`/plan/${planId}/delete/${mealDay}/${mealTime}/${mealId}`)
+  },
+  addMeal(planId, mealDay, mealTime, mealId){
+    return http.post(`/plan/${planId}/add/${mealDay}/${mealTime}/${mealId}`)
   }
 }
