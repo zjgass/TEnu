@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone.Models;
 using Capstone.DAO;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Capstone.Controllers
 {
@@ -45,8 +48,10 @@ namespace Capstone.Controllers
         [HttpPost]
         public ActionResult<Plan> AddPlan(Plan plan)
         {
+            int userId = Int32.Parse(User.FindFirst("sub").Value);
+            plan.UserId = userId;
             Plan added = planDAO.CreatePlan(plan);
-            return CreatedAtRoute("GetPlan", new { planId = plan.PlanId }, plan);
+            return CreatedAtRoute("GetPlan", new { planId = plan.PlanId }, added);
         }
 
         //UpdatePlan

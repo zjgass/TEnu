@@ -56,7 +56,7 @@ namespace Capstone.DAO
             }
         }
 
-        public Meal AddRecipeToMeal(Meal meal,int recipeId)
+        public Meal AddRecipeToMeal(int mealId,int recipeId)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Capstone.DAO
                     string sqlText = "insert into meal_recipe (meal_id, recipe_id) " +
                         "values (@meal_id, @recipe_id);";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    cmd.Parameters.AddWithValue("@meal_id", meal.MealId);
+                    cmd.Parameters.AddWithValue("@meal_id", mealId);
                     cmd.Parameters.AddWithValue("@recipe_id", recipeId);
                     cmd.ExecuteNonQuery();
                 }
@@ -76,7 +76,7 @@ namespace Capstone.DAO
             {
                 throw;
             }
-            return GetMeal(meal.MealId); 
+            return GetMeal(mealId); 
         }
 
         public Meal GetMeal(int mealId)

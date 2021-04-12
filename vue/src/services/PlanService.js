@@ -18,5 +18,8 @@ export default {
   },
   removeMeal(planId, mealId, mealDay, mealTime){
     return http.delete(`/plan/${planId}/delete/${mealDay}/${mealTime}/${mealId}`)
+  },
+  createPlan(plan){
+    return http.post(`/plan`, plan)
   }
 }
