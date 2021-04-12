@@ -8,13 +8,13 @@
    <tr>
     <th class='table-heading'>Item</th>
     <th class='table-heading'>Column 2</th>
-        <th class='table-heading'>Column 3</th>
+    <th class='table-heading'>Column 3</th>
   </tr> 
   <tr v-for='item in Groceries' 
 v-bind:key='item.name'>
     <td>{{item.name}}</td>
     <td>{{item.qty}}</td>
-      <td>{{item.unit}}</td>
+    <td>{{item.unit}}</td>
   </tr>
 </table>
 
