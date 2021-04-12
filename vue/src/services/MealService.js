@@ -21,6 +21,10 @@ export default {
 
   addRecipeToMeal(mealId, recipeId){
     return http.post(`/meal/${mealId}/add/${recipeId}`);
+  },
+
+  deleteRecipeFromMeal(mealId, recipeId){
+    return http.delete(`/meal/${mealId}/delete/${recipeId}`);
   }
 
 

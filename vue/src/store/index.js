@@ -28,7 +28,8 @@ export default new Vuex.Store({
     newMealRecipes: [],
     userPlanList: [],
     currentPlanId: 1,
-    currentPlan: []
+    currentPlan: [],
+    currentMealId: Number
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -61,7 +62,28 @@ export default new Vuex.Store({
     },
     ADD_RECIPE_TO_MEAL(state, recipeId){
       state.newMealRecipes.unshift(recipeId);
+    },
+    //DELETE_RECIPE_FROM_MEAL(state, recipeId){
+      
+     
+       //fix below code to find index in newMealRecipes and remove it OR MAYBE JUST DO LOAD RECIPES AGAIN?
+      /*let index = state.newMealRecipes.find(element => {
+        if(element == recipeId){
+            return element;
+        }
+        return false;
+      })
+      console.log(index);
+      delete state.newMealRecipes[index];*/
+
+    //},
+    STORE_MEAL_RECIPES(state, recipeList){
+      state.newMealRecipes = recipeList;
+    },
+    SET_CURRENT_MEAL_ID(state, mealId){
+      state.currentMealId = mealId;
     }
+    
     /*
     ADD_MEAL_TO_CURRENT_PLAN(state, meal){
       state.currentPlan.meals.push(meal);
