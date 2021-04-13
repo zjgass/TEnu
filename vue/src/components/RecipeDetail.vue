@@ -17,7 +17,7 @@
         <h2>total time: {{recipe.totalTime}}</h2>
         <h2>ingredients:</h2>
         <ul>
-           <!-- <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li> -->
+           <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
         </ul>
         <h2>utensils: </h2>
             <!-- <li v-for="item in recipe.utensils" :key="item"> {{item}}</li> -->

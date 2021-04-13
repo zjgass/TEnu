@@ -361,6 +361,8 @@ namespace Capstone.DAO
         //TODO needs implemented
         public Recipe UpdateRecipe(Recipe recipe)
         {
+            List<Ingredient> currentIngredients = new List<Ingredient>();
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -392,12 +394,78 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    //cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                     cmd.ExecuteNonQuery();
+
+                    sqlText = "select ingredient_recipe_unit.ingredient_id, ingredient_name, qty, unit_name " +
+                        "from ingredient_recipe_unit " +
+                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "where recipe_id = @recipe_id " +
+                        "order by recipe_id, ingredient_name;";
+                    cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        currentIngredients.Add(GetIngredientFromReader(reader));
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sqlText;
+                    SqlCommand cmd = new SqlCommand();
+
+                    for (int i = 0; i < recipe.Ingredients.Count; i++)
+                    {
+                        if (!currentIngredients.Contains(recipe.Ingredients[i]))
+                        {
+                            sqlText = "insert into ingredient_recipe_unit " +
+                                "(ingredient_id, recipe_id, unit_id, qty) " +
+                                "values (@ingredient_id, @recipe_id, " +
+                                "(select unit_id from unit where unit_name = @unit_name), " +
+                                "@qty)";
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@ingredient_id", recipe.Ingredients[i].IngredientId);
+                            cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                            cmd.Parameters.AddWithValue("@unit_name", recipe.Ingredients[i].Unit);
+                            cmd.Parameters.AddWithValue("@qty", recipe.Ingredients[i].Qty);
+                            cmd.ExecuteNonQuery();
+                        } else if (currentIngredients.Contains(recipe.Ingredients[i]))
+                        {
+                            sqlText = "update ingredient_recipe_unit " +
+                                "set " +
+                                "unit_id = (select unit_id from unit where unit_name = @unit_name), " +
+                                "qty = @qty " +
+                                "where recipe_id = @recipe_id and " +
+                                "ingredient_id = @ingredient_id;";
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@unit_name", recipe.Ingredients[i].Unit);
+                            cmd.Parameters.AddWithValue("@qty", recipe.Ingredients[i].Qty);
+                            cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                            cmd.Parameters.AddWithValue("@ingredient_id", recipe.Ingredients[i].IngredientId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        currentIngredients.Remove(recipe.Ingredients[i]);
+                    }
+
+                    foreach (Ingredient ingredient in currentIngredients)
+                    {
+                        sqlText = "delete from ingredient_recipe_unit " +
+                            "where recipe_id = @recipe_id and " +
+                            "ingredient_id = @ingredient_id;";
+                        cmd = new SqlCommand(sqlText, conn);
+                        cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                        cmd.Parameters.AddWithValue("@ingredient_id", ingredient.IngredientId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
             catch(SqlException e)

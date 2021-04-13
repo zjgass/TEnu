@@ -19,5 +19,15 @@ namespace Capstone.Models
         public string MealDay { get; set; }
 
         public string MealTime { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            return this.MealId == ((Meal)obj).MealId;
+        }
     }
 }
