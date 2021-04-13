@@ -72,6 +72,7 @@
 
         <div class="show-recipe-details" v-if="showDetails">
 
+        <h1>{{recipe.name}}</h1>
         <h3>Instructions</h3>
         <p>{{recipe.instructions}}</p>
 
@@ -287,39 +288,40 @@ h2{
 
 #recipe-input{
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 47%;
-    padding: 10px;
+  border-radius: 5px;
+    width: 45%;
+    padding: 20px;
 
     height: 600px;
-    margin-left: 10px;
-    margin: auto;
+
 
 
 }
 
 .show-add-ingredient{
-    width: 47%;
+    width: 45%;
     min-height: 600px;
     height: auto;
     padding: 10px;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     max-height: 500px;
-
+  border-radius: 5px;
 
     
 
 }
 
 .show-recipe-details{
-    width: 47%;
+    width: 45%;
     min-height: 300px;
     height: auto;
-    padding: 10px;
+    padding: 20px;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     max-height: 600px;
     word-wrap: break-word;
+  border-radius: 5px;
 
 
 }
@@ -333,26 +335,21 @@ h2{
 }
 
 
-
-
-
-#current-recipe{
-
-    width: 47%;
-    min-height: 300px;
-    height: auto;
-    padding: 10px;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-right: 10px;
-        margin: auto;
-
-
+.show-recipe-details h1{
+    font-size: 24pt;
+    text-decoration: underline;
+    text-transform: capitalize;
+    text-align: center;
 }
+
+
+
+
 #form-page{
 
     display: flex;
     justify-content: space-between;
-    /* background-color: silver; */
+
     
 }
 
@@ -371,22 +368,23 @@ flex-direction: column;
 align-content: center;
 
 
+
 }
-
-
 
 #recipe-input, #current-recipe, .show-recipe-details{
     margin-bottom: 10px;
-    width: 90%;
+    width: 95%;
 
-    
 
 }
+
+
 
 #router-wrapper{
     display: flex;
     flex-direction: row;
     align-content: center;
+
 }
 
 

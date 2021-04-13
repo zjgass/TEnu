@@ -37,6 +37,8 @@ export default {
 };
 </script>
 <style scoped>
-
+#add-meal-instructions{
+  margin-top: 20px;
+}
 
 </style>
