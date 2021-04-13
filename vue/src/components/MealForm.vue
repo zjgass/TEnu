@@ -3,7 +3,6 @@
         <div id='form-page'>
 
         <!-- <form id='meal-input' action="" method=""> -->
-
             
         <form id='meal-input' action="" method="">
             <div class='meal-card-test'>
@@ -47,8 +46,7 @@ export default {
    
     data() {
         return {
-            returnedMeal: []
-           
+            returnedMeal: [],
         };
     },
     computed: {
@@ -57,6 +55,7 @@ export default {
                 return meal.mealId == this.$route.params.id}) != undefined)
                 {
                     return this.$store.state.currentPlan.meals.find((meal) => {
+                    
                     return meal.mealId == this.$route.params.id
                     })
                 }
@@ -110,14 +109,12 @@ export default {
                     mealService.addRecipeToMeal(this.returnedMeal.mealId, this.$store.state.newMealRecipes[0]);
                     
                     this.$router.push('home2');
-                });
-            
-             
-
-              
+                }); 
             }
-          
-        }
+        },
+        createNewPlan(){
+          this.enterNewPlanName = true;
+        },
     }
 
 }

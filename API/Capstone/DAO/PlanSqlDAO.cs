@@ -33,9 +33,10 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", plan.UserId);
                     plan.PlanId = Convert.ToInt32(cmd.ExecuteScalar());
 
+                    /*
                     sqlText = "insert into meal_mplan (meal_id, mplan_id, meal_day, meal_time) " +
                         "values ";
-
+                    
                     for (int i = 0; i < plan.Meals.Count; i++)
                     {
                         sqlText += $"(@meal_id{i}, @mplan_id{i}, @meal_day{i}, @meal_time{i}) " +
@@ -51,6 +52,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue($"@meal_time{i}", plan.Meals[i].MealTime);
                     }
                     cmd.ExecuteNonQuery();
+                    */
                 }
 
                 return plan;
@@ -116,17 +118,19 @@ namespace Capstone.DAO
                         "left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
                         "left join meal on meal.meal_id = meal_mplan.meal_id " +
                         "left join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
-                        "join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
-                        "join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id " +
-                        "join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
-                        "join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
+                        "left join recipe on recipe.recipe_id = meal_recipe.recipe_id " +
+                        "left join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id " +
+                        "left join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id " +
+                        "left join unit on unit.unit_id = ingredient_recipe_unit.unit_id " +
                         "where mplan.mplan_id = @mplan_id " +
                         "order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@mplan_id", planId);
                     SqlDataReader reader = cmd.ExecuteReader();
-
+                    
+     
                     int previousMealId = 0;
+                    int currentRecipeId = 0;
                     int previousRecipeId = 0;
                     while (reader.Read())
                     {
@@ -135,41 +139,52 @@ namespace Capstone.DAO
                             plan = GetPlanFromReader(reader);
                         }
 
-                        int currentMealId = Convert.ToInt32(reader["meal_id"]);
-                        int currentRecipeId = Convert.ToInt32(reader["recipe_id"]);
-
-                        if (currentRecipeId != previousRecipeId)
+                        if (!reader.IsDBNull(4))
                         {
-                            previousRecipe = currentRecipe;
-                            currentRecipe = GetRecipeFromReader(reader);
+                            int currentMealId = Convert.ToInt32(reader["meal_id"] ?? 0);
 
-                            if (previousRecipe.RecipeId != 0)
+                            if (!reader.IsDBNull(8))
                             {
-                                currentMeal.RecipeList.Add(previousRecipe);
+                                currentRecipeId = Convert.ToInt32(reader["recipe_id"] ?? 0);
+
+                                if (currentRecipeId != previousRecipeId)
+                                {
+                                    previousRecipe = currentRecipe;
+                                    currentRecipe = GetRecipeFromReader(reader);
+
+                                    if (previousRecipe.RecipeId != 0)
+                                    {
+                                        currentMeal.RecipeList.Add(previousRecipe);
+                                    }
+                                }
                             }
-                        }
 
-                        if (currentMealId != previousMealId)
-                        {
-                            previousMeal = currentMeal;
-                            currentMeal = GetMealFromReader(reader);
-
-                            if (previousMeal.MealId != 0)
+                            if (currentMealId != previousMealId)
                             {
-                                plan.Meals.Add(previousMeal);
+                                previousMeal = currentMeal;
+                                currentMeal = GetMealFromReader(reader);
+
+                                if (previousMeal.MealId != 0)
+                                {
+                                    plan.Meals.Add(previousMeal);
+                                }
                             }
+
+                            if (!reader.IsDBNull(21))
+                            {
+                                ingredient = GetIngredientFromReader(reader);
+                                currentRecipe.Ingredients.Add(ingredient);
+                            }
+
+                            previousMealId = currentMealId;
+                            previousRecipeId = currentRecipeId;
+
                         }
-
-                        ingredient = GetIngredientFromReader(reader);
-                        currentRecipe.Ingredients.Add(ingredient);
-
-                        previousMealId = currentMealId;
-                        previousRecipeId = currentRecipeId;
                     }
                     currentMeal.RecipeList.Add(currentRecipe);
                     plan.Meals.Add(currentMeal);
+                        
                 }
-
                 return plan;
             }
             catch (Exception e)
@@ -401,7 +416,7 @@ namespace Capstone.DAO
             Plan u = new Plan()
             {
                 PlanId = Convert.ToInt32(reader["mplan_id"]),
-                Name = Convert.ToString(reader["mplan_name"]),
+                Name = Convert.ToString(reader["mplan_name"] ?? "Please rename this plan."),
                 UserId = Convert.ToInt32(reader["user_id"]),
                
             };
@@ -414,7 +429,7 @@ namespace Capstone.DAO
             MealWithRecipe m = new MealWithRecipe()
             {
                 MealId = Convert.ToInt32(reader["meal_id"]),
-                Name = Convert.ToString(reader["meal_name"]),
+                Name = Convert.ToString(reader["meal_name"] ?? "Please rename this meal."),
                 UserId = Convert.ToInt32(reader["user_id"]),
                 MealDay = Convert.ToString(reader["meal_day"]),
                 MealTime = Convert.ToString(reader["meal_time"])

@@ -49,26 +49,29 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     recipe.RecipeId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    sqlText = "insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty) " +
+                    if (recipe.Ingredients.Count != 0)
+                    {
+                        sqlText = "insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty) " +
                         "values ";
 
-                    for (int i = 0; i < recipe.Ingredients.Count; i++)
-                    {
-                        sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
-                                    $"@recipe_id{i}, " +
-                                    $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i})" + 
-                                    (i == recipe.Ingredients.Count - 1 ? "; " : ",");
-                    }
+                        for (int i = 0; i < recipe.Ingredients.Count; i++)
+                        {
+                            sqlText += $"((select ingredient_id from ingredient where ingredient_name = @ingredient_name{i}), " +
+                                        $"@recipe_id{i}, " +
+                                        $"(select unit_id from unit where unit_name = @unit_name{i}), @qty{i})" +
+                                        (i == recipe.Ingredients.Count - 1 ? "; " : ",");
+                        }
 
-                    cmd = new SqlCommand(sqlText, conn);
-                    for (int i = 0; i < recipe.Ingredients.Count; i++)
-                    {
-                        cmd.Parameters.AddWithValue($"@ingredient_name{i}", recipe.Ingredients[i].Name);
-                        cmd.Parameters.AddWithValue($"@recipe_id{i}", recipe.RecipeId);
-                        cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
-                        cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
+                        cmd = new SqlCommand(sqlText, conn);
+                        for (int i = 0; i < recipe.Ingredients.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@ingredient_name{i}", recipe.Ingredients[i].Name);
+                            cmd.Parameters.AddWithValue($"@recipe_id{i}", recipe.RecipeId);
+                            cmd.Parameters.AddWithValue($"@unit_name{i}", recipe.Ingredients[i].Unit);
+                            cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
+                        }
+                        cmd.ExecuteNonQuery(); //
                     }
-                    cmd.ExecuteNonQuery(); //
 
                     sqlText = "insert into recipe_users (recipe_id, user_id) " +
                         "values (@recipe_id, @user_id);";
@@ -389,7 +392,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
+                    //cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
                     cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);

@@ -7,7 +7,7 @@
             <h1>Your Meal Plan</h1>
         </div>  -->
 
-        <div class='select-plan-container'>
+        <div class='select-plan-container' >
          
             <p> Select Plan: </p>
             <select name="select-plan"  v-model="currentPlanId" v-on:change.prevent='changePlan()' id='plan-select-dropdown'>
@@ -20,9 +20,16 @@
 
             </select>
 
-          
+<!---->
+            <div v-if="enterNewPlanName">
+                <input class="new-plan" name="new-plan-name" type="text" v-model="plan.name" placeholder="Name for the new Plan" id='new-plan-name'/>
+                <button class="new-plan" name="save-new-plan-name" v-on:click.prevent='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
+            </div>
+            <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
+<!---->
         </div>
 
+   
 
         <div id='meal-plan'>
 
@@ -105,8 +112,9 @@
 
 <script>
 
-//import PlanService from "../services/PlanService";
+import PlanService from "@/services/PlanService";
 import MealCard from "../components/MealCard";
+
 
 export default {
 
@@ -119,8 +127,14 @@ export default {
 
     return {
    // Plans: [],
-    currentPlanId: 1,
- 
+        currentPlanId: 1,
+        enterNewPlanName: false,
+        //newPlanName: "",
+        ///*
+        plan: {
+            name : ""
+        }
+        //*/
     };
   },
   
@@ -143,7 +157,30 @@ export default {
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
           this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
+      },///*,
+      createNewPlan(){
+          this.enterNewPlanName = true;
+      },
+      
+      saveNewPlanName(){
+          PlanService.createPlan(this.plan)
+            .then(response => {
+                if(response.status === 201){
+                    console.log('plan created succesfully');
+                }
+            })
+            .catch(error => {
+                if(error.response) {
+                    console.log('error saving plan')
+                    this.errorMsg = "Error creating new plan. Response received was '" + error.response.statusText + "'.";
+                }
+            });
+          this.changePlan();
+          this.enterNewPlanName = false;
+          this.newPlanName = "";
+          
       }
+      //*/
   },
   created() {
     this.$store.dispatch('loadPlan', this.currentPlanId);
@@ -206,6 +243,13 @@ padding: 20px;
     font-size: 1.2rem;
     text-transform: capitalize;
             cursor: pointer;
+}
+
+.new-plan{
+    margin-top: 20px;
+    margin-left: 10px;
+    height: 30px;
+    font-size: 1.2rem;
 }
 
 .select-plan-container{

@@ -1,27 +1,23 @@
-
-
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: 'https://localhost:44315/api'
-});
+let ingredientPath = '/api/ingredient';
 
 export default {
 
   getIngredients() {
-    return http.get('/ingredient');
+    return axios.get(ingredientPath);
   },
 
   getIngredient(ingredientId) {
-    return http.get(`/ingredient/${ingredientId}`)
+    return axios.get(ingredientPath + `/${ingredientId}`)
   },
 
   addIngredient(ingredient) {
-    return http.post('/ingredient', ingredient);
+    return axios.post(ingredientPath, ingredient);
   },
 
   deleteIngredient(ingredientId){
-    return http.delete(`/ingredient/${ingredientId}`);
+    return axios.delete(ingredientPath + `/${ingredientId}`);
   }
 
 

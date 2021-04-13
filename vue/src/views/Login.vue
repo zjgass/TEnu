@@ -51,7 +51,7 @@
 
 <div id='alernate-options'>
       <router-link id='new-account' :to="{ name: 'register' }">Need an account?</router-link>
-            <!-- <button id='submit' type="submit">Sign in as guest</button> -->
+             <button id='submit' type="submit">Sign in as guest</button> 
             </div>
     </form>
 
