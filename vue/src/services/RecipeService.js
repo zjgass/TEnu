@@ -20,6 +20,10 @@ export default {
 
   deleteRecipe(recipeId){
     return axios.delete(recipePath + `/${recipeId}`);
+  },
+
+  updateRecipe(recipe){
+    return axios.put(recipePath + `/${recipe.recipeId}`, recipe);
   }
 }
 
