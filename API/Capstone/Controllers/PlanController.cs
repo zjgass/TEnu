@@ -51,6 +51,7 @@ namespace Capstone.Controllers
         public ActionResult<Plan> AddPlan(Plan plan)
         {
             int userId = Int32.Parse(User.FindFirst("sub").Value);
+            plan.UserId = userId;
             Plan added = planDAO.CreatePlan(plan);
             return CreatedAtRoute("GetPlan", new { planId = plan.PlanId }, added);
         }

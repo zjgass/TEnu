@@ -39,7 +39,7 @@ left join recipe on recipe.recipe_id = meal_recipe.recipe_id
 left join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
 left join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
 left join unit on unit.unit_id = ingredient_recipe_unit.unit_id
-where mplan.mplan_id = 6
+where mplan.mplan_id = 1
 order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name;
 
 select * from mplan
