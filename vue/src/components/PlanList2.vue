@@ -93,6 +93,7 @@
                     <meal-card mealTime="dinner" mealDay="friday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('friday', 'dinner')]"/>
                 </div>
             </div>
+            
         </div>
       <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
         <router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
