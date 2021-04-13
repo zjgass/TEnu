@@ -20,7 +20,7 @@ v-bind:key='item.name'>
 
 
 
-<!--npm run serve
+<!--
  <h1>Groceries: {{Groceries}}</h1> -->
 
 
