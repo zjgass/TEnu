@@ -18,15 +18,7 @@ export default {
   },
 
   addRecipeToMeal(mealId, recipeId){
-<<<<<<< HEAD
-    return http.post(`/meal/${mealId}/add/${recipeId}`);
-  },
-
-  deleteRecipeFromMeal(mealId, recipeId){
-    return http.delete(`/meal/${mealId}/delete/${recipeId}`);
-=======
     return axios.post(mealPath + `/${mealId}/add/${recipeId}`);
->>>>>>> 0b194522c1fb48b991dc9b1df6d7e7058f14bfe6
   }
 
 

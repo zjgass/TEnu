@@ -47,26 +47,18 @@ export default {
     },
     data(){
         return {
-            recipe: {
-                recipeId: 0,
-                name: "",
-                isPublic: "",
-                serves: "",
-                prepTime: "",
-                cookTime: "",
-                totalTime: "",
-                ingredients: [],
-                utensils: [],
-                instructions: [],
-                imgUrl: ""
-            },
+            recipe: []
+           
         }
+    },
+    computed: {
+   
     },
     created() {
         recipeService.getRecipe(this.$route.params.id)
-        .then(response => {
-            this.recipe = response.data;
-        })
+                    .then(response => {
+                    this.recipe =  response.data;
+            });
     }
 
 }

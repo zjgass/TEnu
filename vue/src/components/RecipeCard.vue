@@ -1,4 +1,7 @@
 <template>
+  <div class="recipe-wrapper">
+    <router-link  v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
+
     <div class ="recipe">
         <div class="recipe-name">
              <h1>{{recipe.name}}</h1>
@@ -52,13 +55,15 @@
           </div>
 
        </div>
-
+    </router-link>
+  </div>
 
 </template>
 
 <script> 
 
 import recipeService from "@/services/RecipeService.js";
+//import mealService from "@/services/MealService.js";
 
 export default {
   name: 'recipe-card',
@@ -82,6 +87,8 @@ export default {
     },
     deleteRecipeFromMeal(recipeId){
       this.$store.commit("DELETE_RECIPE_FROM_MEAL", recipeId);
+      //need current mealId somehow
+      //mealService.deleteRecipeFromMeal(mealId, recipeId)
     }
   }
 }
