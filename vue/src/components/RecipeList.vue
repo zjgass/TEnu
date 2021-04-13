@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-wrapper">
+  <div class="recipe-list">
    
     <div class="flex-list">
     
@@ -79,7 +79,7 @@ export default {
 
 <style>
 
-.flex-list {
+.recipe-list {
  
   display: flex;
   flex-direction: row;
@@ -87,13 +87,9 @@ export default {
   justify-content: center flex-start;
   flex-wrap: wrap;
   width: .5fr;
-  
-  margin: 5px 10px 5px 10px;
+  /* margin: 5px 10px 5px 10px; */
   padding: 0px 0px 0px 0px;
 }
-
-
-
 
 
 

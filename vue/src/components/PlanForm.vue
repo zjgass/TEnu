@@ -33,7 +33,7 @@
         <button  id='submit-button'>Submit Plan</button>
 </form>
 
-<div id='current-plan'>
+<div id='current-plan-details'>
 <h2>Meal Plan Name: </h2>
 <p> bind plan name </p>
 
@@ -61,30 +61,29 @@ export default {
 
 <style>
 
+#form-page{
+    display: flex;
+    flex-direction: row;
+}
 
-
-#plan-input, #current-plan{
-
-width: 45%;
-min-height: 600px;
+#plan-input, #current-plan-details{
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
+    border-radius: 5px;
   padding: 20px;
-
+  width: 45%;
+  height: 600px;
 }
 
 @media(max-width: 1400px) {
 
-#plan-input, #current-plan{
-
+#plan-input, #current-plan-details{
 width: 95%;
-width: 95%;
-
+margin: 10px auto;
 }
 #form-page{
     display:flex;
     flex-direction: column;
-}
+} 
 
 }
 

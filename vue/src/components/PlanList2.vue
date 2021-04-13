@@ -3,9 +3,6 @@
 
     <div id='top-of-component'> 
 
-        <!-- <div id='current-plan'>
-            <h1>Your Meal Plan</h1>
-        </div>  -->
 
         <div class='select-plan-container' >
          
@@ -14,10 +11,9 @@
 
                 <option  class='plan-dropdown-item'
                   v-for="plan in this.$store.state.userPlanList"
-                  v-bind:key="plan.name"
+                  v-bind:key="plan.planId"
                   v-bind:value='plan.planId'
                   >{{plan.name}}</option> 
-
             </select>
 
 <!---->
@@ -256,6 +252,11 @@ padding: 20px;
     font-size: 1.2rem;
 }
 
+#new-plan-name{
+    cursor: text;
+    height: 24px;
+}
+
 .select-plan-container{
     display: flex;
     flex-direction: row;
@@ -282,6 +283,11 @@ padding: 20px;
 
     width: 50%;
     
+}
+
+
+.new-plan{
+    cursor: pointer;
 }
 
 #current-plan-name{
@@ -328,18 +334,29 @@ margin-bottom: 0px;
 
 
 
-
+.day{
+    cursor: default;
+}
 
 
 @media(max-width: 1400px) {
 #meal-plan{
     flex-direction: column;
+
     width: 90%;
 }
 
 .plan-column:not(:first-of-type){
 border: none;
-   
+}
+
+
+#top-of-component{
+
+}
+
+.meal-card{
+
 }
 
 }

@@ -136,6 +136,7 @@ min-height: 600px;
 
 width: 95%;
 width: 95%;
+margin: 10px auto;
 
 }
 #form-page{

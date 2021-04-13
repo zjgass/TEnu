@@ -1,5 +1,5 @@
 <template>
-<div class="flex-list">
+<div class="grocery-list">
 
 <h1>Grocery list for</h1>
 
@@ -62,10 +62,10 @@ export default {
   margin: 0 auto;
   max-width: 600px;
 } 
-.flex-list {
+.grocery-list {
  
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center flex-start;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
