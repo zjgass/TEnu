@@ -130,6 +130,7 @@ namespace Capstone.DAO
                     
      
                     int previousMealId = 0;
+                    int currentRecipeId = 0;
                     int previousRecipeId = 0;
                     while (reader.Read())
                     {
@@ -138,19 +139,23 @@ namespace Capstone.DAO
                             plan = GetPlanFromReader(reader);
                         }
 
-                        if (plan.Meals.Count != 0)
+                        if (!reader.IsDBNull(4))
                         {
-                            int currentMealId = Convert.ToInt32(reader["meal_id"]);
-                            int currentRecipeId = Convert.ToInt32(reader["recipe_id"]);
+                            int currentMealId = Convert.ToInt32(reader["meal_id"] ?? 0);
 
-                            if (currentRecipeId != previousRecipeId)
+                            if (!reader.IsDBNull(8))
                             {
-                                previousRecipe = currentRecipe;
-                                currentRecipe = GetRecipeFromReader(reader);
+                                currentRecipeId = Convert.ToInt32(reader["recipe_id"] ?? 0);
 
-                                if (previousRecipe.RecipeId != 0)
+                                if (currentRecipeId != previousRecipeId)
                                 {
-                                    currentMeal.RecipeList.Add(previousRecipe);
+                                    previousRecipe = currentRecipe;
+                                    currentRecipe = GetRecipeFromReader(reader);
+
+                                    if (previousRecipe.RecipeId != 0)
+                                    {
+                                        currentMeal.RecipeList.Add(previousRecipe);
+                                    }
                                 }
                             }
 
@@ -165,17 +170,21 @@ namespace Capstone.DAO
                                 }
                             }
 
-                            ingredient = GetIngredientFromReader(reader);
-                            currentRecipe.Ingredients.Add(ingredient);
+                            if (!reader.IsDBNull(21))
+                            {
+                                ingredient = GetIngredientFromReader(reader);
+                                currentRecipe.Ingredients.Add(ingredient);
+                            }
 
                             previousMealId = currentMealId;
                             previousRecipeId = currentRecipeId;
+
                         }
                     }
                     currentMeal.RecipeList.Add(currentRecipe);
                     plan.Meals.Add(currentMeal);
+                        
                 }
-
                 return plan;
             }
             catch (Exception e)
