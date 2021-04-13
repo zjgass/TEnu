@@ -7,8 +7,6 @@
       v-bind:recipe="recipe"
       />
 
-    
- 
   </div>
 
 </template>

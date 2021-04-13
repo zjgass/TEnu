@@ -1,8 +1,9 @@
 <template>
   <div class="recipe-wrapper">
-    <router-link  v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
+   
 
     <div class ="recipe">
+         <router-link  v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
         <div class="recipe-name">
              <h1>{{recipe.name}}</h1>
         </div>
@@ -34,6 +35,7 @@
           <div class="recipe-author">
             <h3> Submitted by {{recipe.author}}</h3>
             </div>
+        </router-link>
           <div class="recipe-buttons">
             <a v-on:click="deleteRecipe(recipe.recipeId)" v-if="!addToMealView">
             <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -55,7 +57,7 @@
           </div>
 
        </div>
-    </router-link>
+   
   </div>
 
 </template>
@@ -150,5 +152,12 @@ img {
     height: 100px;
     width: 100px;
     border-radius: 10px;
+}
+
+/*override vues crummy formatting for router links with this */
+a:-webkit-any-link{
+    text-decoration-color: black;
+    text-decoration: none;
+    color: black;
 }
 </style>

@@ -127,7 +127,7 @@ export default {
 
     return {
    // Plans: [],
-        currentPlanId: 6,
+        currentPlanId: 1,
         enterNewPlanName: false,
         //newPlanName: "",
         ///*
