@@ -109,7 +109,7 @@ rollback transaction;
 select recipe_name, is_public, serves, prep_time, cook_time, total_time,
 	utensils, instructions, img_url
 from recipe
-where recipe_id = (select recipe_id from recipe where recipe_name = 'banana bread');
+where recipe_id = (select recipe_id from recipe where recipe_name like 'fruit');
 
 select recipe.recipe_id, recipe_name, description, rating, serves,
 	prep_time, cook_time, total_time, utensils, instructions, img_url,

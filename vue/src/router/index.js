@@ -13,6 +13,7 @@ import Home2 from '../views/Home2.vue'
 import RecipeDetailView from '../views/RecipeDetailView.vue'
 import ViewGroceries from '../views/ViewGroceries.vue'
 import ViewMeal from '../views/ViewMeal.vue'
+import RecipeEditView from '../views/RecipeEditView'
 
 Vue.use(Router)
 
@@ -109,6 +110,11 @@ const router = new Router({
       name: 'RecipeDetailView',
       component: RecipeDetailView
 
+    },
+    {
+      path: "/RecipesEdit/:idedit",
+      name: 'RecipeEditView',
+      component: RecipeEditView,
     },
     {
       path: '/home2',

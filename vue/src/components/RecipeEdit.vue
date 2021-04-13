@@ -3,24 +3,22 @@
         
         <div id='recipe-box'>
         <h1 id='recipe-title'>{{recipe.name}}</h1>
-        <div class="buttons" v-on:click.prevent>
-            <router-link v-bind:to="{name: 'RecipeEditView', params: {idedit : this.$route.params.id}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
-                class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-            </svg>
-            </router-link>
-        </div>
+        <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
+        <input class="input-short-text" type='text' v-model="recipe.name"/>
         <h2>serves: {{recipe.serves}}</h2>
+        <input class="input-short-text" type='text' v-model="recipe.serves"/>
         <h2>prep time: {{recipe.prepTime}}</h2>
+        <input class="input-short-text" type='text' v-model="recipe.prepTime"/>
         <h2>cook time: {{recipe.cookTime}}</h2>
+        <input class="input-short-text" type='text' v-model="recipe.cookTime"/>
         <h2>total time: {{recipe.totalTime}}</h2>
+        <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
         <ul>
-           <!-- <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>-->
+            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
         </ul>
         <h2>utensils: </h2>
-           <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
+            <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
         <h2>instructions: {{recipe.instructions}}</h2>
         </div>
 
@@ -35,12 +33,6 @@
 
 
     </div>
-
-
-
-
-
-
 </template>
 
 
@@ -48,10 +40,7 @@
 import recipeService from '@/services/RecipeService';
 
 export default {
-    name: 'recipe-detail',
-    props: {
-        'recipeId' : Number
-    },
+    name: 'recipe-edit',
     data(){
         return {
             recipe: []
@@ -61,9 +50,26 @@ export default {
     computed: {
    
     },
+    methods:{
+     saveRecipe(){
+         recipeService.updateRecipe(this.recipe)
+         .then(response => {
+             if(response.status === 200){
+                 console.log('recipe updated succesfully');
+             }
+         })
+         .catch(error => {
+                if(error.response) {
+                    console.log('error saving recipe')
+                    this.errorMsg = "Error creating updating Recipe. Response received was '" + error.response.statusText + "'.";
+                }
+            })
+
+     }   
+    },
     created() {
-        console.log("Started loading recipe details.")
-        recipeService.getRecipe(this.$route.params.id)
+        console.log("Started loading recipe to edit.")
+        recipeService.getRecipe(this.$route.params.idedit)
                     .then(response => {
                     this.recipe =  response.data;
             });
@@ -99,9 +105,4 @@ text-transform: capitalize;
 #image-box{
     height: 50%;
 }
-
-
-
-
-
 </style>
