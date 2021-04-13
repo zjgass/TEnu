@@ -71,12 +71,35 @@
         user has clicked add ingredient button display AddIngredientComponent -->
 
         <div class="show-recipe-details" v-if="showDetails">
-            <div class="instruction-list">
 
-            </div>
+        <h3>Instructions</h3>
+        <p>{{recipe.instructions}}</p>
+
+        <h3>Ingredients</h3>
+        <table>
+                <!-- <tr>
+                    <th class='table-heading'>Item</th>
+                    <th class='table-heading'>Column 2</th>
+                    <th class='table-heading'>Column 3</th>
+                </tr> -->
+                <tr v-for='item in recipe.ingredients' 
+                    v-bind:key='item.name'>              
+                    <td>{{item.name}}</td>
+                    <td>{{item.qty}}</td>
+                    <td>{{item.unit}}</td>
+            </tr>
+        </table>
+
+
+    <h3>Utensils Needed</h3>
+    <p>{{recipe.utensils}}</p>
+
+            
         </div>
 
-
+                  <!-- v-for="plan in this.$store.state.userPlanList"
+                  v-bind:key="plan.name"
+                  v-bind:value='plan.planId' -->
 
         <div class="show-add-ingredient" v-if="!showDetails">
              <div class="ingredient-list" v-for="ingredient in this.$store.state.existingIngredients"                    
@@ -223,15 +246,12 @@ h2{
 .input-line{
     
     display: flex;
-
-
-
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 .input-label{
-    font-size: 1rem;
+    font-size: 18pt;
     margin-top: 0px;
     
 }
@@ -266,11 +286,11 @@ h2{
 
 
 #recipe-input{
-    border: 1px solid black;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 47%;
     padding: 10px;
 
-    min-height: 600px;
+    height: 600px;
     margin-left: 10px;
     margin: auto;
 
@@ -282,7 +302,7 @@ h2{
     min-height: 600px;
     height: auto;
     padding: 10px;
-    border: solid 1px black;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     max-height: 500px;
 
@@ -296,11 +316,24 @@ h2{
     min-height: 300px;
     height: auto;
     padding: 10px;
-    border: solid 1px black;
-
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: scroll;
+    max-height: 600px;
+    word-wrap: break-word;
 
 
 }
+
+.show-recipe-details h3{
+    font-size: 24pt;
+}
+
+.show-recipe-details p, tr{
+    font-size: 18pt;
+}
+
+
+
 
 
 #current-recipe{
@@ -309,7 +342,7 @@ h2{
     min-height: 300px;
     height: auto;
     padding: 10px;
-    border: solid 1px black;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-right: 10px;
         margin: auto;
 
@@ -355,7 +388,6 @@ align-content: center;
     flex-direction: row;
     align-content: center;
 }
-
 
 
 

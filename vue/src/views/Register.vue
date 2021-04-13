@@ -127,9 +127,7 @@ export default {
   /* width: 100px;
   height: 20px; */
 }
-#password{
 
-}
 
 .sr-only{
   width: 200px;
@@ -140,9 +138,7 @@ export default {
   margin-top: 10px;
 }
 
-button{
-  margin-top: 10px;
-}
+
 
 #alternate-options{
   /* background-color: red; */
@@ -150,5 +146,12 @@ button{
   margin: 0px auto;
   padding: 10px;
 }
+
+
+
+
+
+
+
 
 </style>
