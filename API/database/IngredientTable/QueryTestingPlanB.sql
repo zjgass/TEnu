@@ -148,6 +148,7 @@ select ingredient_name
 from ingredient
 
 begin transaction;
+
 --Insert ingredients into recipes
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
 values ((select ingredient_id from ingredient where ingredient_name = 'unsweetened chocolate'),
@@ -287,3 +288,17 @@ select *
 from meal_recipe;
 
 rollback transaction;
+
+--Updating a recipe with a changing amount of ingredients
+begin transaction;
+
+select ingredient_recipe_unit.ingredient_id, ingredient_name, qty, unit_name
+from ingredient_recipe_unit
+join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
+join unit on unit.unit_id = ingredient_recipe_unit.unit_id
+where recipe_id = 1
+order by recipe_id, ingredient_name;
+
+delete from ingredient_recipe_unit
+where recipe_id = 1 and
+ingredient_id = 11;
