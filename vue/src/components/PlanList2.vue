@@ -157,7 +157,7 @@ export default {
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
           this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
-      },///*,
+      },
       createNewPlan(){
           this.enterNewPlanName = true;
       },
@@ -175,12 +175,16 @@ export default {
                     this.errorMsg = "Error creating new plan. Response received was '" + error.response.statusText + "'.";
                 }
             });
-          this.changePlan();
-          this.enterNewPlanName = false;
-          this.newPlanName = "";
-          
+        this.enterNewPlanName = false;
+        this.newPlanName = "";
+        this.$store.dispatch('loadPlanList');
+        this.$forceUpdate;
+        this.currentPlanId = this.$store.state.userPlanList[this.$store.state.userPlanList.length - 1].planId;
+
+        this.changePlan();
+        this.enterNewPlanName = false;
+        this.newPlanName = "";
       }
-      //*/
   },
   created() {
     this.$store.dispatch('loadPlan', this.currentPlanId);
