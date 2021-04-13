@@ -29,25 +29,26 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@meal_name", meal.Name);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     meal.MealId = Convert.ToInt32(cmd.ExecuteScalar());
-                    /*
-                    sqlText = "insert into meal_recipe (meal_id, recipe_id) " +
-                        "values ";
 
-                    for (int i = 0; i < meal.RecipeList.Count; i++)
+                    if (meal.RecipeList != null && meal.RecipeList.Count > 0)
                     {
-                        sqlText += $"(@meal_id{i}, @recipe_id{i})" +
-                        (i == meal.RecipeList.Count - 1 ? "; " : ",");
-                    }
+                        sqlText = "insert into meal_recipe (meal_id, recipe_id) " +
+                            "values ";
 
-                    cmd = new SqlCommand(sqlText, conn);
-                    for (int i = 0; i < meal.RecipeList.Count; i++)
-                    {
-                        cmd.Parameters.AddWithValue($"@meal_id{i}", meal.MealId);
-                        cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList);
+                        for (int i = 0; i < meal.RecipeList.Count; i++)
+                        {
+                            sqlText += $"(@meal_id{i}, @recipe_id{i})" +
+                            (i == meal.RecipeList.Count - 1 ? "; " : ",");
+                        }
+
+                        cmd = new SqlCommand(sqlText, conn);
+                        for (int i = 0; i < meal.RecipeList.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@meal_id{i}", meal.MealId);
+                            cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList);
+                        }
+                        cmd.ExecuteNonQuery();
                     }
-                    cmd.ExecuteNonQuery();
-                    */
-                    
                 }
 
                 return meal;
@@ -103,7 +104,7 @@ namespace Capstone.DAO
 
                     if(reader.HasRows&& reader.Read())
                     {
-                            returnMeal = GetMealFromReader(reader);
+                        returnMeal = GetMealFromReader(reader);
                     }
                 }
 

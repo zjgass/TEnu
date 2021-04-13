@@ -14,5 +14,15 @@ namespace Capstone.Models
         public double Qty { get; set; }
 
         public string Unit { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            
+            return this.IngredientId == ((Ingredient)obj).IngredientId;
+        }
     }
 }

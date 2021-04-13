@@ -15,7 +15,8 @@
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
         <ul>
-            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
+            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}
+                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
         </ul>
         <h2>utensils: </h2>
             <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
@@ -64,8 +65,11 @@ export default {
                     this.errorMsg = "Error creating updating Recipe. Response received was '" + error.response.statusText + "'.";
                 }
             })
-
-     }   
+        },
+        deleteIngredient(item){
+           console.log("Attempting to delete ingredient."); 
+           this.recipe.ingredients.splice((this.recipe.ingredients.indexOf(item)),1);
+        }
     },
     created() {
         console.log("Started loading recipe to edit.")
