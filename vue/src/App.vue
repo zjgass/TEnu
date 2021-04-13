@@ -1,4 +1,5 @@
 <template>
+<div id='app-wrapper'>
   <div id="app">
     <div id="banner">
 
@@ -8,26 +9,28 @@
         <p id='subtitle'>A meal planner by Tech Elevator</p>
         </div>
 
-        <img id='banner-image' src="@/images/Grub_logo2_large.png" alt='fork and knife' />
+        <img id='banner-image' src="@/images/Grub_logo2_large.png" alt='small banner image' />
 
 
         
       </div>
     <div id="nav" v-if="$store.state.token != ''">
       <!-- <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link> -->
-      <router-link class='nav-button' v-bind:to="{ name: 'home2' }">Home</router-link>
+      <router-link class='nav-button' id='home-button' v-bind:to="{ name: 'home2' }">Home</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
-      <p class='spacer'></p>
       <router-link id='logout-button' class='nav-button' v-bind:to="{ name: 'logout' }" >Logout</router-link>
     </div>
     
     <div id='router-wrapper'>
     <router-view id='router' />
     </div>
+
+
+  </div>
 
 
   </div>
@@ -58,13 +61,11 @@ background-color: darkcyan;
   margin: auto;
 
 
-
-
 }
 
 .nav-button{
   font-size: 20px;
-  height: 60px;
+  height: 40px;
   padding-left: 10px;
   padding-right: 10px;
   text-decoration: none;
@@ -75,32 +76,36 @@ background-color: darkcyan;
   color: white;
   background-color: darkcyan;
   min-width: 140px;
-
-
-
+  border-radius: 10px;
   
-}
-
-#logout-button{
+ 
 
 }
 
-.nav-button:hover{
-color: cyan;
+#home-button{
+  margin-left: 20px;
 }
 
-#nav .router-link-exact-active{
+
+#nav .active{
 color: black;
 background-color: white;
 
 }
 
-#banner{
-  /* background-color: cyan; */
+.nav-button:hover{
+color: lightgreen;
 
-  background-image: url("images/banner-image.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+}
+
+
+
+
+#banner{
+
+  background-image: url("images/banner-background-1.png");
+background-size: cover;
+  
 
   padding: 20px;
   display: flex;
@@ -136,9 +141,7 @@ margin-top: 10px;
 
 }
 
-#spacer{
-  width: 50%;
-}
+
 
 
 #app{
@@ -152,9 +155,17 @@ height: auto;
   border-bottom: 1px solid black;
   /* padding: 20px; */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    opacity: .92;
+    background-color: white;
 }
 
+#app-wrapper{
+  background-image: url("images/banner-image-2.jpg");
+  background-size: 100%;
 
+
+  
+}
 
 #banner, #router{
 margin:auto;
@@ -175,12 +186,12 @@ margin:auto;
 
 
 
-
-
 @media(max-width: 1400px) {
 #app{
 width: 90%}
-
+#home-button{
+  margin-left: 0px;
+}
 #nav, #banner, #router{
 /* width: 97.5%; */
 
@@ -201,8 +212,12 @@ background-size: 100% 100%;
   width: 100%;
 
 }
+
 #banner{
  padding: 0px;
+   background-image: none;
+     background-image: url("images/banner-blank.png");
+
 }
 
 
@@ -210,6 +225,7 @@ background-size: 100% 100%;
 .nav-button{
   margin-top: 0px;
   width: 100%;
+
 
 }
 

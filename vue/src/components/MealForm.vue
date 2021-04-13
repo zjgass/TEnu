@@ -28,9 +28,9 @@
 
             <div id='current-meal'>
 
-   
-            <h2>Recipe Of The Week </h2>
-     
+                <ul>
+            <li>{{returnedMeal}}</li>
+                </ul>
         </div>
 
     </div>

@@ -112,7 +112,18 @@ export default {
 
   margin: 5px 10px 5px 10px;
   padding: 0px 0px 0px 0px;
+
+      background-color: rgb(178, 226, 186);
 }
+
+
+.meal-card:hover{
+    background-color: rgb(144, 218, 157);
+}
+
+
+
+
 .recipe-list h3{
     font-size: 1rem;
     text-decoration-line: none;
@@ -171,5 +182,9 @@ a:-webkit-any-link{
 }
 
 
+
+#total-time{
+    margin-top: 0px;
+}
 </style>
 

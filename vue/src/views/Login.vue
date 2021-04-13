@@ -1,5 +1,9 @@
 <template>
+
+
   <div id="login" class="text-center">
+
+    
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
@@ -55,6 +59,8 @@
 
 
   </div>
+
+  
 </template>
 
 <script>
@@ -98,6 +104,9 @@ export default {
 
 <style scoped>
 
+
+
+
 #login{
   border: 1px solid black;
   margin: 0px auto;
@@ -112,14 +121,9 @@ export default {
   margin: 0px auto;
   padding: 10px;
 
-  /* display: flex; */
-  /* flex-direction: row; */
+
 }
 
-.form-control{
-  /* width: 100px;
-  height: 20px; */
-}
 
 
 
@@ -134,15 +138,10 @@ label{
 }
 
 #alernate-options{
-  /* background-color: red; */
-  width: 40%;
-  margin: 0px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 10px;
-  height: 60px;
+
+width: 40%;
+margin: 20px auto;
+
 }
 
 
@@ -158,3 +157,6 @@ margin: 0px auto;
 
 
 </style>
+
+
+
