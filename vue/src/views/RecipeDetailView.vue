@@ -1,6 +1,6 @@
 <template>
   <div>
-    <recipe-detail v-bind:recipe-id="$route.params.recipeId" />
+    <recipe-detail v-bind:recipe-id="$route.params.id" />
   </div>
 </template>
 
