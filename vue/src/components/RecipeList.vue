@@ -20,16 +20,28 @@ export default {
   name: "recipe-list",
   components: {
     RecipeCard
+  },
+  props: {
+      userOrPublicList: String
   } ,
   data() {
     return {
-      recipes: []
+      recipes: [],
     }
   },
+
   created() {
-    RecipeService.getRecipes().then((response) => {
-      this.recipes = response.data;
-    });
+    if(this.userOrPublicList == "user")
+      {
+       RecipeService.getRecipes().then((response) => {
+       this.recipes = response.data;       
+         });
+      }
+    else {
+      RecipeService.getPublicRecipes().then((response) => {
+        this.recipes = response.data;
+      })
+    }
   }
 };
 </script>

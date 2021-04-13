@@ -3,7 +3,7 @@
     <h1>Edit selected meal</h1>
     <meal-form />
     <h1>Click + to add recipe to meal</h1>
-    <recipe-list/>
+    <recipe-list userOrPublicList = "user"/>
     
   </div>
 </template>

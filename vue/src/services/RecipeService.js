@@ -7,7 +7,9 @@ export default {
   getRecipes() {
     return axios.get(recipePath);
   },
-
+  getPublicRecipes(){
+    return axios.get(recipePath + `/public`)
+  },
   getRecipe(recipeId) {
     return axios.get(recipePath + `/${recipeId}`)
   },
