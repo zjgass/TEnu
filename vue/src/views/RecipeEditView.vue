@@ -8,7 +8,7 @@
 import RecipeEdit from "@/components/RecipeEdit.vue";
 
 export default {
-    name: 'RecipeEdit',
+    name: 'Recipe',
     components: {
     RecipeEdit
   }

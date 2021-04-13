@@ -3,8 +3,10 @@
         
         <div id='recipe-box'>
         <h1 id='recipe-title'>{{recipe.name}}</h1>
-        <h2>serves: {{recipe.serves}}</h2>
+        <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
         <input class="input-short-text" type='text' v-model="recipe.name"/>
+        <h2>serves: {{recipe.serves}}</h2>
+        <input class="input-short-text" type='text' v-model="recipe.serves"/>
         <h2>prep time: {{recipe.prepTime}}</h2>
         <input class="input-short-text" type='text' v-model="recipe.prepTime"/>
         <h2>cook time: {{recipe.cookTime}}</h2>
@@ -13,7 +15,7 @@
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
         <ul>
-            <!--<li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>-->
+            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
         </ul>
         <h2>utensils: </h2>
             <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
@@ -47,6 +49,23 @@ export default {
     },
     computed: {
    
+    },
+    methods:{
+     saveRecipe(){
+         recipeService.updateRecipe(this.recipe)
+         .then(response => {
+             if(response.status === 200){
+                 console.log('recipe updated succesfully');
+             }
+         })
+         .catch(error => {
+                if(error.response) {
+                    console.log('error saving recipe')
+                    this.errorMsg = "Error creating updating Recipe. Response received was '" + error.response.statusText + "'.";
+                }
+            })
+
+     }   
     },
     created() {
         console.log("Started loading recipe to edit.")
