@@ -256,6 +256,10 @@ padding: 20px;
     font-size: 1.2rem;
 }
 
+#new-plan-name{
+    cursor: text;
+}
+
 .select-plan-container{
     display: flex;
     flex-direction: row;
@@ -282,6 +286,11 @@ padding: 20px;
 
     width: 50%;
     
+}
+
+
+.new-plan{
+    cursor: pointer;
 }
 
 #current-plan-name{
@@ -328,7 +337,9 @@ margin-bottom: 0px;
 
 
 
-
+.day{
+    cursor: default;
+}
 
 
 @media(max-width: 1400px) {

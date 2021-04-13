@@ -2,7 +2,7 @@
   <div>
     <h1>Edit selected meal</h1>
     <meal-form />
-    <h1>Click + to add recipe to meal</h1>
+    <h1 id='add-meal-instructions'>Click + to add recipe to meal</h1>
     <recipe-list/>
     
   </div>
@@ -20,6 +20,8 @@ export default {
 };
 </script>
 <style scoped>
-
+#add-meal-instructions{
+  margin-top: 20px;
+}
 
 </style>

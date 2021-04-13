@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-list">
+  <div class="recipe-list">
    
     <recipe-card 
       v-for="recipe in recipes" 
@@ -36,7 +36,7 @@ export default {
 
 <style>
 
-.flex-list {
+.recipe-list {
  
   display: flex;
   flex-direction: row;
@@ -44,13 +44,9 @@ export default {
   justify-content: center flex-start;
  
   width: .5fr;
-  
-  margin: 5px 10px 5px 10px;
+  /* margin: 5px 10px 5px 10px; */
   padding: 0px 0px 0px 0px;
 }
-
-
-
 
 
 
