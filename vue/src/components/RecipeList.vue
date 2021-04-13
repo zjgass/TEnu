@@ -1,14 +1,16 @@
 <template>
-  <div class="flex-list">
+  <div class="outer-wrapper">
    
-    <recipe-card 
-      v-for="recipe in recipes" 
-      v-bind:key="recipe.recipeId"
-      v-bind:recipe="recipe"
-      />
+    <div class="flex-list">
+    
+     <recipe-card 
+       v-for="recipe in recipes" 
+       v-bind:key="recipe.recipeId"
+       v-bind:recipe="recipe"
+       />
 
+   </div>
   </div>
-
 </template>
 
 <script>
@@ -22,16 +24,21 @@ export default {
     RecipeCard
   },
   props: {
-      userOrPublicList: String
+      userOrPublic: String
   } ,
   data() {
     return {
       recipes: [],
+      displayType: "user"  
     }
   },
 
-  created() {
-    if(this.userOrPublicList == "user")
+  watch: {
+    // whenever question changes, this function will run
+    userOrPublic: async function (updateDisplay) {
+      this.displayType = updateDisplay;
+
+      if(this.displayType === "user")
       {
        RecipeService.getRecipes().then((response) => {
        this.recipes = response.data;       
@@ -42,7 +49,31 @@ export default {
         this.recipes = response.data;
       })
     }
-  }
+
+       
+    }
+  },
+ 
+  
+  created() {
+    
+      if(this.displayType === "user")
+      {
+       RecipeService.getRecipes().then((response) => {
+       this.recipes = response.data;       
+         });
+      }
+    else {
+      RecipeService.getPublicRecipes().then((response) => {
+        this.recipes = response.data;
+      })
+    }
+   
+  },
+  
+  
+
+  
 };
 </script>
 
@@ -54,7 +85,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center flex-start;
- 
+  flex-wrap: wrap;
   width: .5fr;
   
   margin: 5px 10px 5px 10px;
