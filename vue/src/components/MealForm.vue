@@ -55,6 +55,7 @@ export default {
                 return meal.mealId == this.$route.params.id}) != undefined)
                 {
                     return this.$store.state.currentPlan.meals.find((meal) => {
+                    
                     return meal.mealId == this.$route.params.id
                     })
                 }

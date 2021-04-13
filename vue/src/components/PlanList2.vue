@@ -23,12 +23,13 @@
 <!---->
             <div v-if="enterNewPlanName">
                 <input class="new-plan" name="new-plan-name" type="text" v-model="plan.name" placeholder="Name for the new Plan" id='new-plan-name'/>
-                <button class="new-plan" name="save-new-plan-name" v-on:click='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
+                <button class="new-plan" name="save-new-plan-name" v-on:click.prevent='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
             </div>
             <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
 <!---->
         </div>
 
+   
 
         <div id='meal-plan'>
 
@@ -131,7 +132,7 @@ export default {
         //newPlanName: "",
         ///*
         plan: {
-            name: ""
+            name : ""
         }
         //*/
     };
@@ -156,10 +157,11 @@ export default {
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
           this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
-      },///*,
+      },
       createNewPlan(){
           this.enterNewPlanName = true;
       },
+      
       saveNewPlanName(){
           PlanService.createPlan(this.plan)
             .then(response => {
@@ -173,11 +175,16 @@ export default {
                     this.errorMsg = "Error creating new plan. Response received was '" + error.response.statusText + "'.";
                 }
             });
-          this.changePlan();
-          this.enterNewPlanName = false;
-          this.newPlanName = "";
+        this.enterNewPlanName = false;
+        this.newPlanName = "";
+        this.$store.dispatch('loadPlanList');
+        this.$forceUpdate;
+        this.currentPlanId = this.$store.state.userPlanList[this.$store.state.userPlanList.length - 1].planId;
+
+        this.changePlan();
+        this.enterNewPlanName = false;
+        this.newPlanName = "";
       }
-      //*/
   },
   created() {
     this.$store.dispatch('loadPlan', this.currentPlanId);

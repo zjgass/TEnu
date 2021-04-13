@@ -86,7 +86,7 @@ export default {
             planService.removeMeal(this.$store.state.currentPlanId, 
                                     this.meal.mealId,
                                     this.mealDay,
-                                    this.mealTime);      
+                                    this.mealTime);
         }
 
     }

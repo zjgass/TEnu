@@ -28,7 +28,8 @@ export default new Vuex.Store({
     newMealRecipes: [],
     userPlanList: [],
     currentPlanId: 1,
-    currentPlan: []
+    currentPlan: [],
+ 
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -61,13 +62,12 @@ export default new Vuex.Store({
     },
     ADD_RECIPE_TO_MEAL(state, recipeId){
       state.newMealRecipes.unshift(recipeId);
+    },
+    STORE_MEAL_RECIPES(state, recipeList){
+      state.newMealRecipes = recipeList;
     }
-    /*
-    ADD_MEAL_TO_CURRENT_PLAN(state, meal){
-      state.currentPlan.meals.push(meal);
-    }
-    */
    
+
   },
   actions: {
         loadPlan (context, planId) {

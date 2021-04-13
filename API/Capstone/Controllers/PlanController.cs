@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
+
 namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
@@ -46,6 +47,7 @@ namespace Capstone.Controllers
 
         //CreatePlan
         [HttpPost]
+        [Authorize]
         public ActionResult<Plan> AddPlan(Plan plan)
         {
             int userId = Int32.Parse(User.FindFirst("sub").Value);
@@ -89,10 +91,6 @@ namespace Capstone.Controllers
 
             return BadRequest();
         }
-
-
-
-
 
     }
 }
