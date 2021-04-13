@@ -17,7 +17,7 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public Plan CreatePlan(Plan plan, int userId)
+        public Plan CreatePlan(Plan plan)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Capstone.DAO
                         "select scope_Identity();";
                     SqlCommand cmd = new SqlCommand(sqlText, conn);
                     cmd.Parameters.AddWithValue("@mplan_name", plan.Name);
-                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@user_id", plan.UserId);
                     plan.PlanId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     /*
