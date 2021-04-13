@@ -1,5 +1,9 @@
 <template>
+  <div class="recipe-wrapper">
+   
+
     <div class ="recipe">
+         <router-link  v-bind:to="{ name: 'RecipeDetailView', params: {id : recipe.recipeId} }">
         <div class="recipe-name">
              <h1>{{recipe.name}}</h1>
         </div>
@@ -31,8 +35,15 @@
           <div class="recipe-author">
             <h3> Submitted by {{recipe.author}}</h3>
             </div>
+        </router-link>
           <div class="recipe-buttons">
-            <a v-on:click="deleteRecipe(recipe.recipeId)">
+            <a v-on:click="deleteRecipe(recipe.recipeId)" v-if="!addToMealView">
+            <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            </svg>
+            </a>
+             <a v-on:click="deleteRecipeFromMeal(recipe.recipeId)" v-if="addToMealView">
             <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -46,13 +57,15 @@
           </div>
 
        </div>
-
+   
+  </div>
 
 </template>
 
 <script> 
 
 import recipeService from "@/services/RecipeService.js";
+//import mealService from "@/services/MealService.js";
 
 export default {
   name: 'recipe-card',
@@ -73,6 +86,11 @@ export default {
     },
     addRecipeToMeal(recipeId) {
       this.$store.commit("ADD_RECIPE_TO_MEAL", recipeId);
+    },
+    deleteRecipeFromMeal(recipeId){
+      this.$store.commit("DELETE_RECIPE_FROM_MEAL", recipeId);
+      //need current mealId somehow
+      //mealService.deleteRecipeFromMeal(mealId, recipeId)
     }
   }
 }
@@ -134,5 +152,12 @@ img {
     height: 100px;
     width: 100px;
     border-radius: 10px;
+}
+
+/*override vues crummy formatting for router links with this */
+a:-webkit-any-link{
+    text-decoration-color: black;
+    text-decoration: none;
+    color: black;
 }
 </style>

@@ -23,12 +23,13 @@
 <!---->
             <div v-if="enterNewPlanName">
                 <input class="new-plan" name="new-plan-name" type="text" v-model="plan.name" placeholder="Name for the new Plan" id='new-plan-name'/>
-                <button class="new-plan" name="save-new-plan-name" v-on:click='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
+                <button class="new-plan" name="save-new-plan-name" v-on:click.prevent='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
             </div>
             <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
 <!---->
         </div>
 
+   
 
         <div id='meal-plan'>
 
@@ -131,7 +132,7 @@ export default {
         //newPlanName: "",
         ///*
         plan: {
-            name: ""
+            name : ""
         }
         //*/
     };
@@ -160,6 +161,7 @@ export default {
       createNewPlan(){
           this.enterNewPlanName = true;
       },
+      
       saveNewPlanName(){
           PlanService.createPlan(this.plan)
             .then(response => {
