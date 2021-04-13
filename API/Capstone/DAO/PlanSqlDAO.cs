@@ -137,10 +137,10 @@ namespace Capstone.DAO
                             plan = GetPlanFromReader(reader);
                         }
 
-                        if (plan.Meals.Count != 0)
+                        if (!reader.IsDBNull(4))
                         {
-                            int currentMealId = Convert.ToInt32(reader["meal_id"]);
-                            int currentRecipeId = Convert.ToInt32(reader["recipe_id"]);
+                            int currentMealId = Convert.ToInt32(reader["meal_id"] ?? 0);
+                            int currentRecipeId = Convert.ToInt32(reader["recipe_id"] ?? 0);
 
                             if (currentRecipeId != previousRecipeId)
                             {
@@ -170,11 +170,10 @@ namespace Capstone.DAO
                             previousMealId = currentMealId;
                             previousRecipeId = currentRecipeId;
                         }
+                        currentMeal.RecipeList.Add(currentRecipe);
+                        plan.Meals.Add(currentMeal);
                     }
-                    currentMeal.RecipeList.Add(currentRecipe);
-                    plan.Meals.Add(currentMeal);
                 }
-
                 return plan;
             }
             catch (Exception e)
