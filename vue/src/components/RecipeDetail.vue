@@ -20,7 +20,7 @@
            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
         </ul>
         <h2>utensils: </h2>
-           <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
+            
         <h2>instructions: {{recipe.instructions}}</h2>
         </div>
 

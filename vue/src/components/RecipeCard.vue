@@ -65,7 +65,7 @@
 <script> 
 
 import recipeService from "@/services/RecipeService.js";
-//import mealService from "@/services/MealService.js";
+import mealService from "@/services/MealService.js";
 
 export default {
   name: 'recipe-card',
@@ -90,7 +90,7 @@ export default {
     deleteRecipeFromMeal(recipeId){
       this.$store.commit("DELETE_RECIPE_FROM_MEAL", recipeId);
       //need current mealId somehow
-      //mealService.deleteRecipeFromMeal(mealId, recipeId)
+      mealService.deleteRecipeFromMeal(this.$route.params.id, recipeId)
     }
   }
 }
