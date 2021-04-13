@@ -6,9 +6,9 @@
 
 <table>
    <tr>
-    <th class='table-heading'>Item</th>
-    <th class='table-heading'>Column 2</th>
-    <th class='table-heading'>Column 3</th>
+    <th class='table-heading'>Ingredient</th>
+    <th class='table-heading'>Qty</th>
+    <th class='table-heading'>Unit</th>
   </tr> 
   <tr v-for='item in Groceries' 
 v-bind:key='item.name'>
@@ -20,7 +20,8 @@ v-bind:key='item.name'>
 
 
 
-<!-- <h1>Groceries: {{Groceries}}</h1> -->
+<!--npm run serve
+ <h1>Groceries: {{Groceries}}</h1> -->
 
 
 
