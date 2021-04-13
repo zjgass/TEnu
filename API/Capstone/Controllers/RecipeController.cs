@@ -45,6 +45,7 @@ namespace Capstone.Controllers
             Recipe added = recipeDAO.CreateRecipe(recipe, userId);
             return Created($"/recipe/{recipe.RecipeId}", added);
         }
+        
         //UpdateRecipe
         [HttpPut("{recipeId}")]
         public ActionResult<RecipeController> UpdateRecipe(Recipe recipe)
