@@ -2,8 +2,8 @@
   <div>
     <h1>Edit selected meal</h1>
     <meal-form />
-    <h1 id='add-meal-instructions'>Click + to add recipe to meal</h1>
-    <recipe-list/>
+    <button v-on:click.prevent="toggleView()">Toggle View</button>
+    <recipe-list v-bind:userOrPublic.sync="userOrPublic"/>
     
   </div>
 </template>
@@ -16,6 +16,23 @@ export default {
   components: {
     MealForm,
     RecipeList
+  },
+  data() {
+    return {
+      userOrPublic: "user"
+    }
+  },
+  methods: {
+      toggleView() {
+        if(this.userOrPublic == "user"){
+          this.userOrPublic = "public";
+        }else{ 
+          this.userOrPublic = "user";
+        }
+
+        this.$forceUpdate();
+        
+      }
   }
 };
 </script>
