@@ -86,7 +86,7 @@ export default {
             planService.removeMeal(this.$store.state.currentPlanId, 
                                     this.meal.mealId,
                                     this.mealDay,
-                                    this.mealTime);
+                                    this.mealTime);      
         }
 
     }
@@ -114,6 +114,7 @@ export default {
   padding: 0px 0px 0px 0px;
 
       background-color: rgb(178, 226, 186);
+min-height: 120px;
 }
 
 
@@ -129,7 +130,6 @@ export default {
     text-decoration-line: none;
     text-decoration: none;
 }
-
 .delete-prompt {
     position:relative;
     left: 30px;
