@@ -1,6 +1,6 @@
 
 <template>
-
+<div>
     <div id='top-of-component'> 
 
 
@@ -25,9 +25,9 @@
             <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
 <!---->
         </div>
-    <p>{{this.$store.state.userPlanList.planIs}}</p>
+        <p>{{this.$store.state.userPlanList.planIs}}</p>
    
-
+    </div>
         <div id='meal-plan'>
 
             <div class='plan-column' id='monday-meals'>
@@ -103,7 +103,7 @@
 
 
 
-    </div>
+</div>
 
 </template>
        
@@ -208,16 +208,12 @@ padding: 10px;
 width: 900px;
 background-color: #1789fc;
 height: 30px;
-
 border: 1px solid black;
 
 }
 
 #meal-plan{
-    /* border: 1px solid black; */
-
     min-height: 400px;
-
     display:flex;
     flex-direction: row;
     justify-content: space-around;
@@ -286,11 +282,7 @@ padding: 20px;
     justify-content: space-between;
 }
 
-#current-plan{
 
-    width: 50%;
-    
-}
 
 
 .new-plan{
@@ -336,7 +328,8 @@ margin-bottom: 0px;
     font-size: 20pt;
     margin-top: 50px;
     cursor: pointer;
-    margin-left: 20px;
+    width: 100%;
+    
 }
 
 
@@ -349,9 +342,22 @@ margin-bottom: 0px;
 @media(max-width: 1400px) {
 #meal-plan{
     flex-direction: column;
-
     width: 90%;
+
+    margin: auto;
+
 }
+
+#top-of-component{
+padding: 0px;
+}
+
+
+.plan-column{
+ margin-left: -24px;
+
+}
+
 
 .plan-column:not(:first-of-type){
 border: none;
