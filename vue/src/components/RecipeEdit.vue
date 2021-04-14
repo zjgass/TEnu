@@ -37,8 +37,12 @@
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
         <ul>
-            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}
-                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
+
+            <div class='ingredient-line' v-for="item in recipe.ingredients" :key="item" >
+                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p>
+                <li class='ingredient-name-in-line'>{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
+            </div>
+
         </ul>
         <h2>utensils: </h2>
             <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
@@ -147,6 +151,32 @@ export default {
 
 <style scoped>
 
+.ingredient-line{
+list-style-type: none;
+display: flex;
+flex-direction: row;
+height: 34px;
+margin-bottom: 5px;
+}
+.buttons{
+    text-align: center;
+    font-size: 24pt;
+    width: 30px;
+    height: 30px;
+    color: red;
+    cursor: pointer;
+
+    margin-top: 0px;
+}
+
+.ingredient-name-in-line{
+    width: 80%;
+
+    margin-top: 5px;
+    font-size: 24px;
+
+}
+
 #recipe-title{
 text-decoration: underline;
 margin-top: 0px;
@@ -158,6 +188,7 @@ text-transform: capitalize;
     /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
 }
@@ -165,9 +196,18 @@ text-transform: capitalize;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 600px;
+    min-height: 600px;
+
 }
 #image-box{
-    height: 50%;
+    height: 600px;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
 }
+
+ul{
+    padding: 0px;
+}
+
+
 </style>

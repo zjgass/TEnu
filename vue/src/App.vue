@@ -17,8 +17,8 @@
     <div id="nav" v-if="$store.state.token != ''">
       <!-- <router-link class='nav-button' v-bind:to="{ name: 'home' }">Home</router-link> -->
       <router-link class='nav-button' id='home-button' v-bind:to="{ name: 'home2' }">Home</router-link>
-      <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link>
-      <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link>
+      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'AddPlan' }">Add Plan</router-link> -->
+      <!-- <router-link  class='nav-button' v-bind:to="{ name: 'AddMeal' }">Add Meal</router-link> -->
       <router-link  class='nav-button' v-bind:to="{ name: 'AddRecipe' }" >Add Recipe</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'ViewRecipes' }" >View Recipes</router-link>
       <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
