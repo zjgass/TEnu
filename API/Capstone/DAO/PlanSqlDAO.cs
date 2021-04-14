@@ -451,8 +451,8 @@ namespace Capstone.DAO
                 PrepTime = Convert.ToString(reader["prep_time"]),
                 CookTime = Convert.ToString(reader["cook_time"]),
                 TotalTime = Convert.ToString(reader["total_time"]),
-                Utensils = Convert.ToString(reader["utensils"]).Split(','),
-                Instructions = Convert.ToString(reader["instructions"]),
+                Utensils = Convert.ToString(reader["utensils"]).Trim().Split('|'),
+                Instructions = Convert.ToString(reader["instructions"]).Trim().Split('|'),
                 ImgUrl = Convert.ToString(reader["img_url"]),
                 SubmittedBy = Convert.ToString(reader["submitted_by"]),
             };

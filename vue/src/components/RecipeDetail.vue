@@ -28,7 +28,10 @@
             <!--<p>{{recipe.utensils}}</p> -->
         </ul>
         <h2>instructions:</h2>
-        <p>{{recipe.instructions}}</p>
+        <ol>
+            <li v-for="item in recipe.Instructions" :key="item"> {{item}} </li>
+            <!--<p>{{recipe.instructions}}</p>-->
+        </ol>
         </div>
 
       <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->

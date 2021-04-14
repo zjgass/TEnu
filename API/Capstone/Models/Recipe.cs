@@ -31,7 +31,7 @@ namespace Capstone.Models
         public string[] Utensils { get; set; }
 
         //JSON string
-        public string Instructions { get; set; }
+        public string[] Instructions { get; set; }
 
         public string ImgUrl { get; set; }
 
