@@ -101,16 +101,16 @@
 
 
         </ul>
-        <h2>utensils: </h2>
+        <h2>utensils:</h2>
             <ul>
                 <li v-for="item in recipe.utensils" :key="item"> {{item}}
                     <p class="buttons" v-on:click="deleteUtensil(item)"> x </p>
                 </li>
                 <!--<p>{{recipe.utensils}}</p> -->
             </ul>
-        <h2>instructions: {{recipe.instructions}}</h2>
+        <h2>instructions:</h2>
             <ol>
-                <li v-for="item in recipe.Instructions" :key="item"> {{item}} </li>
+                <li v-for="item in recipe.instructions" :key="item"> {{item}} </li>
                 <!--<p>{{recipe.instructions}}</p>-->
             </ol>
         </div>

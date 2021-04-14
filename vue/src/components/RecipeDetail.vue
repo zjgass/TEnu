@@ -29,7 +29,7 @@
         </ul>
         <h2>instructions:</h2>
         <ol>
-            <li v-for="item in recipe.Instructions" :key="item"> {{item}} </li>
+            <li v-for="item in recipe.instructions" :key="item"> {{item}} </li>
             <!--<p>{{recipe.instructions}}</p>-->
         </ol>
         </div>
