@@ -12,7 +12,7 @@ namespace Capstone.DAO
 
         Meal GetMeal(int mealId);
 
-        Meal CreateMeal(Meal meal, int userId);
+        MealWithRecipe CreateMeal(MealWithRecipe meal, int userId);
 
         Meal AddRecipeToMeal(int mealId, int recipeId);
 

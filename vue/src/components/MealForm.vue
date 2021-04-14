@@ -26,10 +26,20 @@
         </form>
 
             <div id='current-meal'>
-
+                <h2>{{meal.name}} contains the following recipes</h2>
                 <ul>
-            <li>{{returnedMeal}}</li>
+                     <li class='meal-recipe-list' v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId"  v-bind:value='recipe.recipeId'>
+                        <h4>{{recipe.name}}</h4>
+                        <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
+                     </li>
+                     <li class='meal-recipe-list' v-for="recipe in this.$store.state.newMealRecipes" v-bind:key="recipe.recipeId" v-bind:value='recipe.recipeId'>
+                         <h4>{{recipe.name}}</h4>
+                         <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
+                         </li>
                 </ul>
+
+
+
         </div>
 
     </div>
@@ -47,7 +57,55 @@ export default {
     data() {
         return {
             returnedMeal: [],
+            //set to invalid id at start
+            removeRecipeId: -1,
+            addRecipeId: -1
         };
+    },
+    watch: {  
+        removeRecipeId: async function (deleteRecipe) {
+         this.removeRecipeId = deleteRecipe;
+         if(this.mealId != 0){
+            mealService.deleteRecipeFromMeal(this.meal.mealId, deleteRecipe).then((response) => {
+                 //needs actual error handling
+                 console.log(response + 'recipe removed from meal successfully');
+             })
+
+             this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
+           
+            }
+         else{
+            this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
+
+         }
+
+        this.removeRecipeId = -1;
+        this.$forceUpdate();
+
+
+        },
+        addRecipeId: async function (addRecipe) {
+            this.addRecipeId = addRecipe;
+            this.meal.recipeList.unshift(this.addRecipeId);
+            if(this.meal.mealId != -1)
+            {
+                mealService.addRecipeToMeal(this.meal.mealId, addRecipe).then((response) => {
+                    //needs actual error handling
+                console.log(response + 'recipe added to meal successfully');   
+                })        
+                this.addRecipeId = -1;
+            }
+            else 
+            {
+                mealService.createMeal(this.meal);
+                this.addRecipeId = -1;
+                let clearRecipeList = [];
+                this.$store.commit("STORE_MEAL_RECIPES", clearRecipeList);
+            }
+
+
+        }
+   
     },
     computed: {
         meal() {
@@ -79,18 +137,22 @@ export default {
         },
     },
     methods: {
+        removeThisRecipe(recipeId) {
+            this.removeRecipeId = recipeId;
+
+        },
+        addThisRecipe(recipeId) {
+            this.addRecipeId = recipeId;
+        },
         saveMealToPlan() {
             console.log('executing saveMealToPlan')
             this.meal.recipeList = this.$store.state.newMealRecipes;
             if(this.meal.mealId != 0)
             {
                 console.log('saveMealToPlan if true')
-                planService.addMeal(this.$store.state.currentPlan.planId,
-                                     this.$route.params.mealDay, 
-                                     this.$route.params.mealTime, 
-                                     this.meal.mealId);
-
-                 this.$router.push('home2');
+                let clearRecipeList = [];
+                this.$store.commit("STORE_MEAL_RECIPES", clearRecipeList);
+                this.$router.push('home2');
             }
             //create new meal first then add meal to plan
             else{
@@ -107,7 +169,10 @@ export default {
                                      this.returnedMeal.mealId);
 
                     mealService.addRecipeToMeal(this.returnedMeal.mealId, this.$store.state.newMealRecipes[0]);
-                    
+
+                    let clearRecipeList = [];
+                    this.$store.commit("STORE_MEAL_RECIPES", clearRecipeList);
+  
                     this.$router.push('home2');
                 }); 
             }
@@ -115,8 +180,15 @@ export default {
         createNewPlan(){
           this.enterNewPlanName = true;
         },
+        getRecipeIndex(recipeId){
+           this.meals.recipeList.findIndex(element => {
+              if(element == recipeId){
+                  return element;
+              }
+              return false;
+          })
+        }
     }
-
 }
 </script>
 
@@ -128,6 +200,19 @@ min-height: 600px;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   padding: 20px;
+}
+
+.meal-recipe-list {
+    display: flex;
+    justify-content:flex-start;
+    align-content: flex-start;
+}
+
+.meal-recipe-list-removeBtn {
+    margin: 10px 10px 10px 10px;
+    width: 75px;
+    height: 50px;
+
 }
 
 @media(max-width: 1400px) {
