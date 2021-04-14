@@ -106,6 +106,11 @@ export default {
         clearIngredients(){
             this.recipe.ingredients = [];
         },
+        addIngredient(){
+            this.showDetails = true;
+            this.recipe.ingredients.push(this.newIngredient);
+            this.recipe.newIngredient = [];
+        },
         saveRecipe(){
          recipeService.updateRecipe(this.recipe)
          .then(response => {
