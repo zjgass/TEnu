@@ -167,11 +167,11 @@ export default {
     },
     methods: {
         addInstruction(){
-            this.recipe.instructions += this.newInstruction + ",";
+            this.recipe.instructions += this.newInstruction.trim + "|";
             this.newInstruction = "";
          },
         addUtensil(){
-            this.recipe.utensils += this.newUtensil + ",";
+            this.recipe.utensils += this.newUtensil.trim + "|";
             this.newUtensil = "";
         }, 
         saveRecipe() {

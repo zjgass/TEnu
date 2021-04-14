@@ -71,8 +71,17 @@
                 <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
         </ul>
         <h2>utensils: </h2>
-            <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
+            <ul>
+                <li v-for="item in recipe.utensils" :key="item"> {{item}}
+                    <p class="buttons" v-on:click="deleteUtensil(item)"> x </p>
+                </li>
+                <!--<p>{{recipe.utensils}}</p> -->
+            </ul>
         <h2>instructions: {{recipe.instructions}}</h2>
+            <ol>
+                <li v-for="item in recipe.Instructions" :key="item"> {{item}} </li>
+                <!--<p>{{recipe.instructions}}</p>-->
+            </ol>
         </div>
 
       <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
@@ -158,6 +167,10 @@ export default {
         deleteIngredient(item){
            console.log("Attempting to delete ingredient."); 
            this.recipe.ingredients.splice((this.recipe.ingredients.indexOf(item)),1);
+        },
+        deleteUtensil(item){
+            console.log("Attempting to delete utensil.");
+            this.recipe.utensils.splice((this.recipe.utensils.indexOf(item)),1);
         }
     },
     created() {
