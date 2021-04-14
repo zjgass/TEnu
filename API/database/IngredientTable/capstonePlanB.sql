@@ -78,7 +78,7 @@ CREATE TABLE ingredient_recipe_unit
 	ingredient_id int NOT NULL,
 	recipe_id int NOT NULL,
 	unit_id int NOT NULL,
-	qty float(5) NOT NULL,
+	qty float(4) NOT NULL,
 
 	constraint pk_ingredient_recipe_unit
 		primary key(ingredient_id, recipe_id, unit_id),
