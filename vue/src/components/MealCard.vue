@@ -88,6 +88,8 @@ export default {
         },
         deleteThisMeal() {
             this.deletePromptDiv = false;
+            //console.log(`${this.mealDay}, ${this.mealTime}`);
+            this.$store.commit("REMOVE_MEAL_FROM_PLAN", this.meal)
             planService.removeMeal(this.$store.state.currentPlanId, 
                                     this.meal.mealId,
                                     this.mealDay,

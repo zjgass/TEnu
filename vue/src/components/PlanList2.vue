@@ -189,7 +189,7 @@ export default {
       }
   },
   created() {
-    
+    this.currentPlanId = this.$store.currentPlanId;
     this.$store.dispatch('loadPlan', this.currentPlanId);
     
   }
@@ -359,13 +359,6 @@ border: none;
 }
 
 
-#top-of-component{
-
-}
-
-.meal-card{
-
-}
 
 }
 

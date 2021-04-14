@@ -283,9 +283,9 @@ values ((select ingredient_id from ingredient where ingredient_name = 'banana'),
 		(select unit_id from unit where unit_name = 'ea'), 2),
 		((select ingredient_id from ingredient where ingredient_name = 'raisin bran cereal'),
 		(select recipe_id from recipe where recipe_name = 'bananas in cereal'),
-		(select unit_id from unit where unit_name = 'ea'), 2),
+		(select unit_id from unit where unit_name = 'cups'), 4),
 		((select ingredient_id from ingredient where ingredient_name = 'almond milk'),
-		(select recipe_id from recipe where recipe_name = 'apples with peanut butter'),
+		(select recipe_id from recipe where recipe_name = 'bananas in cereal'),
 		(select unit_id from unit where unit_name = 'cups'), 3);
 
 insert into ingredient_recipe_unit (ingredient_id, recipe_id, unit_id, qty)
