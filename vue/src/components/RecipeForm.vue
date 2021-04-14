@@ -80,7 +80,6 @@
         user has clicked add ingredient button display AddIngredientComponent -->
 
         <div class="show-recipe-details" v-if="showDetails">
-
         <h1>{{recipe.name}}</h1>
         <p>{{recipe.description}}</p>
         <h3>Instructions</h3>
@@ -264,16 +263,24 @@ h2{
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
 .input-label{
     font-size: 18pt;
     margin-top: 0px;
     
 }
 
+
+
+
 .input-short-text {
     width: 200px;
     height: 20px;
 }
+
+
+
+
 
 .input-description-text {
     width: 300px;
