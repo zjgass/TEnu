@@ -60,8 +60,8 @@ export default new Vuex.Store({
     ADD_INGREDIENTS(state, ingredient){
       state.existingIngredients = ingredient;
     },
-    ADD_RECIPE_TO_MEAL(state, recipeId){
-      state.newMealRecipes.unshift(recipeId);
+    ADD_RECIPE_TO_MEAL(state, recipe){
+      state.newMealRecipes.unshift(recipe);
     },
     STORE_MEAL_RECIPES(state, recipeList){
       state.newMealRecipes = recipeList;

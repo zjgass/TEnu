@@ -14,7 +14,7 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-        public Meal CreateMeal(Meal meal, int userId)
+        public MealWithRecipe CreateMeal(MealWithRecipe meal, int userId)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Capstone.DAO
                         for (int i = 0; i < meal.RecipeList.Count; i++)
                         {
                             cmd.Parameters.AddWithValue($"@meal_id{i}", meal.MealId);
-                            cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList);
+                            cmd.Parameters.AddWithValue($"@recipe_id{i}", meal.RecipeList[i].RecipeId);
                         }
                         cmd.ExecuteNonQuery();
                     }

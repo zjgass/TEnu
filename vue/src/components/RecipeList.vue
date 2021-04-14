@@ -79,7 +79,7 @@ export default {
 
 <style>
 
-.recipe-list {
+.flex-list {
  
   display: flex;
   flex-direction: row;
