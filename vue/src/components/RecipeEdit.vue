@@ -66,8 +66,6 @@
                 </select>
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
-
-
         <ul>
 
 
