@@ -65,6 +65,17 @@ export default new Vuex.Store({
     },
     STORE_MEAL_RECIPES(state, recipeList){
       state.newMealRecipes = recipeList;
+    },
+    REMOVE_MEAL_FROM_PLAN(state, meal){
+      let found = state.currentPlan.meals.findIndex(element => {
+          if(element.mealDay == meal.mealDay && element.mealTime == meal.mealTime){
+            return element;
+          }
+        return false;
+        })
+        //console.log(`${meal.mealDay}, ${meal.mealTime}, ${found}`);
+      
+      state.currentPlan.meals.splice(found,1);
     }
    
 

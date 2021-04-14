@@ -14,6 +14,28 @@
         <h2>total time: {{recipe.totalTime}}</h2>
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
+        <div class='input-line'>
+                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
+                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
+            </div>
+            <div class='input-line'>
+                <h3 >{{newIngredient.name}}</h3>
+                <h3 class="input-label">  Quantity: </h3>
+                <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
+                <h3 class="input-label">  Measurement: </h3>
+                <select class="input-select-dropdown" v-model="newIngredient.unit">
+                    <option value="cups"> cups </option>
+                    <option value="ea"> ea </option>
+                    <option value="g"> g </option>
+                    <option value="mg"> mg </option>
+                    <option value="ml"> ml </option>
+                    <option value="oz"> oz </option>
+                    <option value="qt"> qt </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="tsp"> tsp </option>
+                </select>
+                <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
+            </div>
         <ul>
             <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}
                 <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
@@ -39,11 +61,16 @@
 
 <script>
 import recipeService from '@/services/RecipeService';
+import ingredientService from "../services/IngredientService";
 
 export default {
     name: 'recipe-edit',
+    ingredients: [],
     data(){
         return {
+            showDetails: true,
+            storeLoaded: false,
+            newIngredient: [],
             recipe: []
            
         }
@@ -52,7 +79,39 @@ export default {
    
     },
     methods:{
-     saveRecipe(){
+        loadIngredients(){
+            ingredientService.getIngredients()
+            .then(response => {
+                console.log(response.status); 
+                    this.ingredients = response.data;       
+                    console.log('Ingredients Loaded');
+                }
+            )
+            .catch(error => {
+                if(error.response){
+                    this.errorMsg = "Error loading all existing recipes.  Response received was '" + error.response.statusTest + "'.";
+                    console.log('load failed');
+                }
+            })
+
+        },
+        showIngredients(){
+            this.showDetails = false;
+            if(this.storeLoaded === false){
+                  this.$store.commit("ADD_INGREDIENTS", this.ingredients);
+                  console.log('test method commit ingredients');
+                  this.storeLoaded = true;
+            }     
+        },
+        clearIngredients(){
+            this.recipe.ingredients = [];
+        },
+        addIngredient(){
+            this.showDetails = true;
+            this.recipe.ingredients.push(this.newIngredient);
+            this.recipe.newIngredient = [];
+        },
+        saveRecipe(){
          recipeService.updateRecipe(this.recipe)
          .then(response => {
              if(response.status === 200){
@@ -72,6 +131,8 @@ export default {
         }
     },
     created() {
+        this.loadIngredients();
+        console.log('loaded recipeform');
         console.log("Started loading recipe to edit.")
         recipeService.getRecipe(this.$route.params.idedit)
                     .then(response => {
