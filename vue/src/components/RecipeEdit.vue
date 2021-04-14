@@ -14,12 +14,11 @@
         <h2>total time: {{recipe.totalTime}}</h2>
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
-        <div class='input-line'>
-                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
-                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
-            </div>
+       
             <div class='input-line'>
-                <h3 >{{newIngredient.name}}</h3>
+                <select class="input-selection-dropdown" v-model="newIngredient.name">
+                    <option v-for="ingredient in this.$store.state.existingIngredient" :key="ingredient.ingredientId" v-bind:ingredient="ingredient" value="ingredient">{{ingredient.name}}</option>
+                </select>
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
                 <h3 class="input-label">  Measurement: </h3>
@@ -37,12 +36,21 @@
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
         <ul>
-
-            <div class='ingredient-line' v-for="item in recipe.ingredients" :key="item" >
-                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p>
-                <li class='ingredient-name-in-line'>{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
-            </div>
-
+            <li v-for="item in recipe.ingredients" :key="item" >
+                {{ item.name }}
+                Qty:  <input class="input-integer-text" type='text' v-model="item.qty" />
+                 Unit: <select class="input-select-dropdown" v-model="item.unit">
+                    <option value="cups"> cups </option>
+                    <option value="ea"> ea </option>
+                    <option value="g"> g </option>
+                    <option value="mg"> mg </option>
+                    <option value="ml"> ml </option>
+                    <option value="oz"> oz </option>
+                    <option value="qt"> qt </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="tsp"> tsp </option>
+                </select>
+                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
         </ul>
         <h2>utensils: </h2>
             <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
