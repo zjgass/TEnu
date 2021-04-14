@@ -68,6 +68,9 @@ export default {
     ingredients: [],
     data(){
         return {
+            showDetails: true,
+            storeLoaded: false,
+            newIngredient: [],
             recipe: []
            
         }
@@ -91,6 +94,17 @@ export default {
                 }
             })
 
+        },
+        showIngredients(){
+            this.showDetails = false;
+            if(this.storeLoaded === false){
+                  this.$store.commit("ADD_INGREDIENTS", this.ingredients);
+                  console.log('test method commit ingredients');
+                  this.storeLoaded = true;
+            }     
+        },
+        clearIngredients(){
+            this.recipe.ingredients = [];
         },
         saveRecipe(){
          recipeService.updateRecipe(this.recipe)
