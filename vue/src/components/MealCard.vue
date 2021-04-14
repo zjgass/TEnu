@@ -63,6 +63,7 @@ export default {
     data() {
 
         return{
+            componentKey: 0,
             deletePromptDiv: false
         }
     },
@@ -75,6 +76,10 @@ export default {
         }
     },
     methods: {
+        forceRerender(){
+            this.componentKey += 1;
+
+        },
         deletePrompt(){
             this.deletePromptDiv = true;
         },
@@ -88,7 +93,9 @@ export default {
             planService.removeMeal(this.$store.state.currentPlanId, 
                                     this.meal.mealId,
                                     this.mealDay,
-                                    this.mealTime);      
+                                    this.mealTime);  
+            
+                                    
         }
 
     }

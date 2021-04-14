@@ -14,30 +14,60 @@
         <h2>total time: {{recipe.totalTime}}</h2>
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
-        <div class='input-line'>
-                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
-                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
-            </div>
+       
             <div class='input-line'>
-                <h3 >{{newIngredient.name}}</h3>
+                <select v-model="newIngredient">
+                    <option v-for="ingredient in this.$store.state.existingIngredient" :key="ingredient.ingredientId" value="ingredient">{{ingredient.name}}</option>
+                </select>
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
                 <h3 class="input-label">  Measurement: </h3>
                 <select class="input-select-dropdown" v-model="newIngredient.unit">
-                    <option value="cups"> cups </option>
-                    <option value="ea"> ea </option>
-                    <option value="g"> g </option>
-                    <option value="mg"> mg </option>
-                    <option value="ml"> ml </option>
-                    <option value="oz"> oz </option>
-                    <option value="qt"> qt </option>
-                    <option value="tbs"> tbs </option>
+                    <option value="pinch"> pinch </option>
                     <option value="tsp"> tsp </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="cups"> cups </option>
+                    <option value="oz"> oz </option>
+                    <option value="lb"> lb </option>
+                    <option value="fl oz"> fl oz </option>
+                    <option value="pt"> pt </option>
+                    <option value="qt"> qt </option>
+                    <option value="gal"> gal </option>
+                    <option value="mg"> mg </option>
+                    <option value="g"> g </option>
+                    <option value="ml"> ml </option>
+                    <option value="l"> l </option>
+                    <option value="ea"> ea </option>
+                    <option value="to taste"> to taste </option>
+                    <option value="cloves"> cloves </option>
+                    <option value="can"> can </option>
                 </select>
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
         <ul>
-            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}
+            <li v-for="item in recipe.ingredients" :key="item" >
+                {{ item.name }}
+                Qty:  <input class="input-integer-text" type='text' v-model="item.qty" />
+                 Unit: <select class="input-select-dropdown" v-model="item.unit">
+                    <option value="pinch"> pinch </option>
+                    <option value="tsp"> tsp </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="cups"> cups </option>
+                    <option value="oz"> oz </option>
+                    <option value="lb"> lb </option>
+                    <option value="fl oz"> fl oz </option>
+                    <option value="pt"> pt </option>
+                    <option value="qt"> qt </option>
+                    <option value="gal"> gal </option>
+                    <option value="mg"> mg </option>
+                    <option value="g"> g </option>
+                    <option value="ml"> ml </option>
+                    <option value="l"> l </option>
+                    <option value="ea"> ea </option>
+                    <option value="to taste"> to taste </option>
+                    <option value="cloves"> cloves </option>
+                    <option value="can"> can </option>
+                </select>
                 <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
         </ul>
         <h2>utensils: </h2>
@@ -147,6 +177,32 @@ export default {
 
 <style scoped>
 
+.ingredient-line{
+list-style-type: none;
+display: flex;
+flex-direction: row;
+height: 34px;
+margin-bottom: 5px;
+}
+.buttons{
+    text-align: center;
+    font-size: 24pt;
+    width: 30px;
+    height: 30px;
+    color: red;
+    cursor: pointer;
+
+    margin-top: 0px;
+}
+
+.ingredient-name-in-line{
+    width: 80%;
+
+    margin-top: 5px;
+    font-size: 24px;
+
+}
+
 #recipe-title{
 text-decoration: underline;
 margin-top: 0px;
@@ -158,6 +214,7 @@ text-transform: capitalize;
     /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
 }
@@ -165,9 +222,18 @@ text-transform: capitalize;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 600px;
+    min-height: 600px;
+
 }
 #image-box{
-    height: 50%;
+    height: 600px;
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
 }
+
+ul{
+    padding: 0px;
+}
+
+
 </style>

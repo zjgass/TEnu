@@ -1,7 +1,7 @@
 <template>
   <div class="recipe-list">
    
-    <div class="flex-list">
+
     
      <recipe-card 
        v-for="recipe in recipes" 
@@ -9,7 +9,7 @@
        v-bind:recipe="recipe"
        />
 
-   </div>
+
   </div>
 </template>
 
@@ -89,6 +89,7 @@ export default {
   width: .5fr;
   /* margin: 5px 10px 5px 10px; */
   padding: 0px 0px 0px 0px;
+  
 }
 
 

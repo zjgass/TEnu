@@ -14,6 +14,7 @@ import RecipeDetailView from '../views/RecipeDetailView.vue'
 import ViewGroceries from '../views/ViewGroceries.vue'
 import ViewMeal from '../views/ViewMeal.vue'
 import RecipeEditView from '../views/RecipeEditView'
+// Vue.ForceUpdate();
 
 Vue.use(Router)
 
