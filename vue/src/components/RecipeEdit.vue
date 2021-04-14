@@ -2,7 +2,7 @@
     <div id='detail-box'>
         
         <div id='recipe-box'>
-
+                <p>asdf</p>
         <h1 id='recipe-title'>{{recipe.name}}</h1>
         <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
         <input class="input-short-text" type='text' v-model="recipe.name"/>
@@ -17,6 +17,8 @@
         <h2>ingredients:</h2>
         <div class='input-line'>
 
+
+
             <select class='ingredient-dropdown'>
                     <option v-for="ingredient in this.$store.state.existingIngredients"                    
                 v-bind:key="ingredient.ingredientId"
@@ -24,13 +26,21 @@
                 > {{ ingredient.name }}</option>
             </select>
 
-                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
-                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
+
+
+                <!-- <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
+                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button> -->
             </div>
             <div class='input-line'>
-                <select class="input-selection-dropdown" v-model="newIngredient.name">
+
+                <!-- <select class="input-selection-dropdown" v-model="newIngredient.name">
                     <option v-for="ingredient in this.$store.state.existingIngredient" :key="ingredient.ingredientId" v-bind:ingredient="ingredient" value="ingredient">{{ingredient.name}}</option>
-                </select>
+                </select> -->
+
+
+
+
+
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
                 <h3 class="input-label">  Measurement: </h3>
@@ -47,9 +57,14 @@
                 </select>
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
+
+
         <ul>
-            <li v-for="item in recipe.ingredients" :key="item" >
-                {{ item.name }}
+
+
+            <li class='current-ingredient-list-item' v-for="item in recipe.ingredients" :key="item" >
+                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p>
+                <p class='ingredient-name-in-line'>{{ item.name }}</p>
                 Qty:  <input class="input-integer-text" type='text' v-model="item.qty" />
                  Unit: <select class="input-select-dropdown" v-model="item.unit">
                     <option value="cups"> cups </option>
@@ -62,7 +77,11 @@
                     <option value="tbs"> tbs </option>
                     <option value="tsp"> tsp </option>
                 </select>
-                <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
+
+                
+                </li>
+
+
         </ul>
         <h2>utensils: </h2>
             <!--<li v-for="item in recipe.utensils" :key="item"> {{item}}</li>-->
@@ -171,13 +190,16 @@ export default {
 
 <style scoped>
 
-.ingredient-line{
+.current-ingredient-list-item{
 list-style-type: none;
 display: flex;
 flex-direction: row;
-height: 34px;
+height: auto;
+min-height: 34px;
 margin-bottom: 5px;
+/* background-color: silver; */
 }
+
 .buttons{
     text-align: center;
     font-size: 24pt;
@@ -185,15 +207,20 @@ margin-bottom: 5px;
     height: 30px;
     color: red;
     cursor: pointer;
-
     margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.input-select-dropdown{
+    height: 34px;
 }
 
 .ingredient-name-in-line{
-    width: 80%;
-
+    width: 60%;
+    height: auto;
     margin-top: 5px;
     font-size: 24px;
+    margin-bottom: 0px;
 
 }
 
