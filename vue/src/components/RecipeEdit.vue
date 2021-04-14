@@ -2,6 +2,7 @@
     <div id='detail-box'>
         
         <div id='recipe-box'>
+
         <h1 id='recipe-title'>{{recipe.name}}</h1>
         <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
         <input class="input-short-text" type='text' v-model="recipe.name"/>
@@ -15,6 +16,14 @@
         <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
         <h2>ingredients:</h2>
         <div class='input-line'>
+
+            <select class='ingredient-dropdown'>
+                    <option v-for="ingredient in this.$store.state.existingIngredients"                    
+                v-bind:key="ingredient.ingredientId"
+                v-bind:ingredient="ingredient"
+                > {{ ingredient.name }}</option>
+            </select>
+
                 <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
                 <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
             </div>
@@ -208,6 +217,26 @@ text-transform: capitalize;
 ul{
     padding: 0px;
 }
+.ingredient-dropdown{
+    height: 50px;
+    font-size: 20pt;
+    width: 100%;
+}
 
+
+@media(max-width: 1400px) {
+#recipe-box, #image-box{
+
+width: 95%;
+width: 95%;
+margin: 10px auto;
+
+}
+#detail-box{
+    display:flex;
+    flex-direction: column;
+}
+
+}
 
 </style>

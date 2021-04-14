@@ -27,9 +27,11 @@
             <p>{{recipe.utensils}}</p>
         <h2>instructions:</h2>
         <p>{{recipe.instructions}}</p>
+
+              <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
         </div>
 
-      <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
+
 
 <div id='image-box'>
     <img src="recipe.imgUrl" alt='image of completed recipe' />
@@ -95,7 +97,6 @@ width: auto;
     /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
-    border-radius: 5px;
       box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
     height: auto;
@@ -132,7 +133,20 @@ margin-left: 20px;
 
 
 }
+@media(max-width: 1400px) {
+#recipe-box, #image-box{
 
+width: 95%;
+width: 95%;
+margin: 10px auto;
+
+}
+#detail-box{
+    display:flex;
+    flex-direction: column;
+}
+
+}
 
 
 </style>
