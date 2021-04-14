@@ -16,8 +16,8 @@
         <h2>ingredients:</h2>
        
             <div class='input-line'>
-                <select class="input-selection-dropdown" v-model="newIngredient.name">
-                    <option v-for="ingredient in this.$store.state.existingIngredient" :key="ingredient.ingredientId" v-bind:ingredient="ingredient" value="ingredient">{{ingredient.name}}</option>
+                <select v-model="newIngredient">
+                    <option v-for="ingredient in this.$store.state.existingIngredient" :key="ingredient.ingredientId" value="ingredient">{{ingredient.name}}</option>
                 </select>
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
@@ -49,15 +49,24 @@
                 {{ item.name }}
                 Qty:  <input class="input-integer-text" type='text' v-model="item.qty" />
                  Unit: <select class="input-select-dropdown" v-model="item.unit">
-                    <option value="cups"> cups </option>
-                    <option value="ea"> ea </option>
-                    <option value="g"> g </option>
-                    <option value="mg"> mg </option>
-                    <option value="ml"> ml </option>
-                    <option value="oz"> oz </option>
-                    <option value="qt"> qt </option>
-                    <option value="tbs"> tbs </option>
+                    <option value="pinch"> pinch </option>
                     <option value="tsp"> tsp </option>
+                    <option value="tbs"> tbs </option>
+                    <option value="cups"> cups </option>
+                    <option value="oz"> oz </option>
+                    <option value="lb"> lb </option>
+                    <option value="fl oz"> fl oz </option>
+                    <option value="pt"> pt </option>
+                    <option value="qt"> qt </option>
+                    <option value="gal"> gal </option>
+                    <option value="mg"> mg </option>
+                    <option value="g"> g </option>
+                    <option value="ml"> ml </option>
+                    <option value="l"> l </option>
+                    <option value="ea"> ea </option>
+                    <option value="to taste"> to taste </option>
+                    <option value="cloves"> cloves </option>
+                    <option value="can"> can </option>
                 </select>
                 <p class="buttons" v-on:click="deleteIngredient(item)"> x </p></li>
         </ul>

@@ -205,7 +205,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlText = "select mplan.mplan_id, mplan_name, " +
-                        "ingredient.ingredient_id, ingredient_name, Sum(qty) as qty, unit_name " +
+                        "ingredient.ingredient_id, ingredient_name, cast(sum(qty) as decimal(5,2)) as qty, unit_name " +
                         "from mplan " +
                         "join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
                         "join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
