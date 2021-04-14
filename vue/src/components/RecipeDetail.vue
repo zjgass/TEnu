@@ -23,10 +23,15 @@
            <li v-for="item in recipe.ingredients" :key="item" >{{ item.name }} Qty: {{item.qty}} {{item.unit}}</li>
         </ul>
         <h2>utensils: </h2>
-            <!-- <li v-for="item in recipe.utensils" :key="item"> {{item}}</li> -->
-            <p>{{recipe.utensils}}</p>
+        <ul>
+            <li v-for="item in recipe.utensils" :key="item"> {{item}}</li>
+            <!--<p>{{recipe.utensils}}</p> -->
+        </ul>
         <h2>instructions:</h2>
-        <p>{{recipe.instructions}}</p>
+        <ol>
+            <li v-for="item in recipe.Instructions" :key="item"> {{item}} </li>
+            <!--<p>{{recipe.instructions}}</p>-->
+        </ol>
         </div>
 
       <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
