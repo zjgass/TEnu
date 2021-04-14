@@ -3,14 +3,14 @@
 
 
 <table id='table-list'>
-   <tr>
+   <tr id='first-row'>
     <th class='table-heading'>Ingredient</th>
     <th class='table-heading'>Qty</th>
     <th class='table-heading'>Unit</th>
   </tr> 
   <tr v-for='item in Groceries' 
 v-bind:key='item.name'>
-    <td>{{item.name}}</td>
+    <td class='column-1'>{{item.name}}</td>
     <td>{{item.qty}}</td>
     <td>{{item.unit}}</td>
   </tr>
@@ -59,7 +59,7 @@ export default {
   padding: 20px 20px;
   margin: 20 auto;
   max-width: 600px;
-  
+
 } 
 .grocery-list {
  
@@ -70,11 +70,26 @@ export default {
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   width: .5fr;
-  
   margin: 5px 10px 5px 10px;
   padding: 0px 0px 0px 0px;
 }
 
+
+table{
+  width: 60%;
+  table-layout:auto;
+}
+th{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#first-row{
+  margin-bottom: 10px;
+  height: 90px;
+
+}
 
 
 </style>

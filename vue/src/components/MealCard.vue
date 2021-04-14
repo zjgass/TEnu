@@ -3,7 +3,7 @@
        
          
         <div v-if='hasMeal'>
-            <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId} }">
+            <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId, mealTime: mealTime, mealDay: mealDay} }">
             <div class="meal-body">  
               <h3 id='meal-name'>{{meal.name}}</h3> 
               <h3 id='total-time'> Total Time: {{meal.totalTime}}</h3> 
