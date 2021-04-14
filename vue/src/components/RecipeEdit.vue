@@ -94,22 +94,24 @@
                     <option value="cloves"> cloves </option>
                     <option value="can"> can </option>
                 </select>
-
-                
-                </li>
-
-
+            </li>
         </ul>
+
         <h2>utensils:</h2>
             <ul>
                 <li v-for="item in recipe.utensils" :key="item"> {{item}}
-                    <p class="buttons" v-on:click="deleteUtensil(item)"> x </p>
+                    <p class="buttons" v-on:click.prevent="deleteUtensil(item)"> x </p>
                 </li>
             </ul>
+            
         <h2>instructions:</h2>
+            <input class="input-text" type='text' v-model="newInstruction" />
+            <input class="input-integer-text" type='text' v-model="newInstructionAt" />
+            <button class="add-button" v-on:click.prevent='insertInstructionAt()'>Add</button>
             <ol>
                 <li v-for="item in recipe.instructions" :key="item"> {{item}}
-                    <p class="buttons" v-on:click="deleteInstruction(item)"> x </p> </li>
+                    <p class="buttons" v-on:click.prevent="deleteInstruction(item)"> x </p> 
+                </li>
             </ol>
         </div>
 
@@ -138,9 +140,10 @@ export default {
         return {
             showDetails: true,
             storeLoaded: false,
+            newInstruction: "",
+            newInstructionAt: 0,
             newIngredient: [],
             recipe: []
-           
         }
     },
     computed: {
@@ -178,6 +181,11 @@ export default {
             this.showDetails = true;
             this.recipe.ingredients.push(this.newIngredient);
             this.recipe.newIngredient = [];
+        },
+        insertInstructionAt(){
+            this.recipe.instructions.splice(this.newInstructionAt-1,0,this.newInstruction);
+            this.newInstruction = '';
+            this.newInstructionAt = this.recipe.instructions.count();
         },
         saveRecipe(){
          recipeService.updateRecipe(this.recipe)
