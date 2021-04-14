@@ -1,10 +1,8 @@
 <template>
 <div class="grocery-list">
 
-<h1>Grocery list for</h1>
 
-
-<table>
+<table id='table-list'>
    <tr>
     <th class='table-heading'>Ingredient</th>
     <th class='table-heading'>Qty</th>
@@ -41,7 +39,7 @@ export default {
     };
   },
   created() {
-    PlanService.getGroceries(this.$store.currentPlanId).then((response) => {
+    PlanService.getGroceries(this.$store.state.currentPlanId).then((response) => {
       this.Groceries = response.data;
 
 
@@ -57,10 +55,11 @@ export default {
   text-decoration: underline;
   
 }
-.table-list {
-  padding: 20pv 20px;
-  margin: 0 auto;
+#table-list {
+  padding: 20px 20px;
+  margin: 20 auto;
   max-width: 600px;
+  
 } 
 .grocery-list {
  

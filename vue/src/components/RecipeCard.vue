@@ -134,8 +134,19 @@ export default {
 }
 .stars {
    padding: 0px 0px 0px 0px;
+   display: flex;
+   justify-content: center;
+   width: 80%;
+
+
 }
 
+.recipe-img{
+margin-right: auto;
+align-content: center;
+display: flex;
+justify-content: space-around;
+}
 .recipe-preptime {
   font-size: .7rem;
 }
