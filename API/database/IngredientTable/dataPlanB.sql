@@ -28,7 +28,7 @@ values ('pinch'), ('tsp'), ('tbs'), ('cups'), ('oz'), ('lb'), ('fl oz'), ('pt'),
 insert into recipe (recipe_name, description, is_public, rating, serves,
 	utensils, instructions, img_url, submitted_by)
 values ('banana bread', 'my mother''s recipe, the best!', 1, 5, 8,
-	'["mixing bowl", "mixer", "bread pan", "oven"]',
+	'mixing bowl,mixer,bread pan,oven',
 	'["thaw bananas", "mix all ingredients together", "pour in bread pan", "bake in oven at 350F, check every half-hour"]',
 	'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_banana-bread_s4x3.jpg.rend.hgtvcom.826.620.suffix/1371592847747.jpeg', 'zach');
 
@@ -104,7 +104,7 @@ values ('bananas with peanut butter', 'A nice simple meal!', 1, 5, 2,
 insert into recipe (recipe_name, description, is_public, rating, serves, prep_time,cook_time,total_time,
 	utensils, instructions, img_url, submitted_by)
 values ('lasagna', 'best lasagna in the world', 1, 5, 8, '15 mins', '90 mins', '105 mins',
-	'["skillet", "midium sized pot", "9 x 13-inch casserole dish"]',
+	'["skillet","midium sized pot","9 x 13-inch casserole dish"]',
 	'["brown the ground beef, set aside", "cook bell pepper, onoions, garlic, add back the beef",
 	"transfer to medium sized pot, add tomatos, tomato sauce, tomato paste, parsrly, oregano, italian seasoning, sprinkle with garlic salt, sprinkle with red or white wine vinegar, bring to simmer and lower the heat, cook for 15 to 45 mins",
 	"boil and drain the lasagna noodles", "assemble the lasagna with sauce, cheese, pasta in a casserole dish", "bake at 375F for 45 mins"  ]',
