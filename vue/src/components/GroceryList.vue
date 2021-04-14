@@ -41,7 +41,7 @@ export default {
     };
   },
   created() {
-    PlanService.getGroceries(1).then((response) => {
+    PlanService.getGroceries(this.$store.currentPlanId).then((response) => {
       this.Groceries = response.data;
 
 

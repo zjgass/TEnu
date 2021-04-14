@@ -49,7 +49,7 @@ where mplan.mplan_id = 6;
 --GetGroceryList
 --Sum same ingredient same unit
 select mplan.mplan_id, mplan_name,
-	ingredient.ingredient_id, ingredient_name, Sum(qty) as total, unit_name
+	ingredient.ingredient_id, ingredient_name, sum(qty) as total, unit_name
 from mplan
 join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
 --join meal on meal.meal_id = meal_mplan.meal_id

@@ -184,7 +184,9 @@ export default {
   },
   created() {
     this.currentPlanId = this.$store.currentPlanId;
-    this.$store.dispatch('loadPlan', this.currentPlanId);
+    console.log("checkpoiknt 1")
+    this.$store.dispatch('loadPlan', this.currentPlanId || 1);
+    console.log("checkpoint 2")
   }
 };
 
