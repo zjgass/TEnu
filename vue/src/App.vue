@@ -183,7 +183,9 @@ margin:auto;
 }
 
 
-
+p{
+  cursor: pointer;
+}
 
 
 @media(max-width: 1400px) {

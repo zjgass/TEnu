@@ -16,6 +16,7 @@
                   >{{plan.name}}</option> 
             </select>
 
+
 <!---->
             <div v-if="enterNewPlanName">
                 <input class="new-plan" name="new-plan-name" type="text" v-model="plan.name" placeholder="Name for the new Plan" id='new-plan-name'/>
@@ -24,7 +25,7 @@
             <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
 <!---->
         </div>
-
+    <p>{{this.$store.state.userPlanList.planIs}}</p>
    
 
         <div id='meal-plan'>
@@ -32,7 +33,7 @@
             <div class='plan-column' id='monday-meals'>
                  <h1 class='day'>Monday</h1>
                  <div class='meal-card'>
-                 <meal-card mealTime="breakfast" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
+                 <meal-card  mealTime="breakfast" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'breakfast')]"/>
                 </div>
                 <div class='meal-card'>
                     <meal-card mealTime="lunch" mealDay="monday" v-bind:meal="this.$store.state.currentPlan.meals[getMealIndex('monday', 'lunch')]"/>
@@ -98,6 +99,10 @@
       <!-- <router-link  class='nav-button' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link> -->
         <router-link tag="button" id='show-grocery-list' v-bind:to="{ name: 'GroceryList' }" >Grocery List</router-link>
 
+
+
+
+
     </div>
 
 </template>
@@ -123,6 +128,7 @@ export default {
   data() {
 
     return {
+        componentKey: 0,
    // Plans: [],
         currentPlanId: 1,
         enterNewPlanName: false,
@@ -140,7 +146,6 @@ export default {
        
   },
   methods: {
-   
      getMealIndex(day, time){
           let found = this.$store.state.currentPlan.meals.findIndex(element => {
               if(element.mealDay == day && element.mealTime == time){
@@ -184,7 +189,9 @@ export default {
       }
   },
   created() {
+    
     this.$store.dispatch('loadPlan', this.currentPlanId);
+    
   }
 };
 
