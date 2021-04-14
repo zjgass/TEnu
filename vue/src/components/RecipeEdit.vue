@@ -2,7 +2,6 @@
     <div id='detail-box'>
         
         <div id='recipe-box'>
-                <p>asdf</p>
         <h1 id='recipe-title'>{{recipe.name}}</h1>
         <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
         <input class="input-short-text" type='text' v-model="recipe.name"/>
