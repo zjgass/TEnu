@@ -5,7 +5,7 @@
 
 
       <div id='title-and-sub'>
-        <h1 id='site-title'>TEnue</h1>
+        <h1 id='site-title'>TEnu</h1>
         <p id='subtitle'>A meal planner by Tech Elevator</p>
         </div>
 

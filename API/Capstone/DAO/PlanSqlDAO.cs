@@ -205,7 +205,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlText = "select mplan.mplan_id, mplan_name, " +
-                        "ingredient.ingredient_id, ingredient_name, Sum(qty) as qty, unit_name " +
+                        "ingredient.ingredient_id, ingredient_name, cast(sum(qty) as decimal(5,2)) as qty, unit_name " +
                         "from mplan " +
                         "join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id " +
                         "join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id " +
@@ -451,8 +451,8 @@ namespace Capstone.DAO
                 PrepTime = Convert.ToString(reader["prep_time"]),
                 CookTime = Convert.ToString(reader["cook_time"]),
                 TotalTime = Convert.ToString(reader["total_time"]),
-                Utensils = Convert.ToString(reader["utensils"]),
-                Instructions = Convert.ToString(reader["instructions"]),
+                Utensils = Convert.ToString(reader["utensils"]).Trim().Split('|'),
+                Instructions = Convert.ToString(reader["instructions"]).Trim().Split('|'),
                 ImgUrl = Convert.ToString(reader["img_url"]),
                 SubmittedBy = Convert.ToString(reader["submitted_by"]),
             };

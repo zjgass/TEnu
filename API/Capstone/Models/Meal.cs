@@ -20,6 +20,7 @@ namespace Capstone.Models
 
         public string MealTime { get; set; }
 
+        /*
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -29,5 +30,6 @@ namespace Capstone.Models
 
             return this.MealId == ((Meal)obj).MealId;
         }
+        */
     }
 }

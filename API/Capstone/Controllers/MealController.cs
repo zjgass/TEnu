@@ -34,10 +34,10 @@ namespace Capstone.Controllers
         }
         //CreateMeal
         [HttpPost]
-        public ActionResult<Meal> CreateMeal(Meal meal)
+        public ActionResult<MealWithRecipe> CreateMeal(MealWithRecipe meal)
         {
             int userId = Int32.Parse(User.FindFirst("sub").Value);
-            Meal added = mealDAO.CreateMeal(meal, userId);
+            MealWithRecipe added = mealDAO.CreateMeal(meal, userId);
             return Created($"/meal/{meal.MealId}", added);
         }
         //UpdateMeal

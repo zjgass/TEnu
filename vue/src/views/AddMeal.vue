@@ -3,6 +3,7 @@
     <h1>Edit selected meal</h1>
     <meal-form />
     <button v-on:click.prevent="toggleView()">Toggle View</button>
+    <p>Showing: {{this.userOrPublic}} Recipes </p>
     <recipe-list v-bind:userOrPublic.sync="userOrPublic"/>
     
   </div>
