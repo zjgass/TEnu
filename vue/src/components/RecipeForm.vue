@@ -82,7 +82,11 @@
         <div class="show-recipe-details" v-if="showDetails">
 
         <h1>{{recipe.name}}</h1>
+        <p>{{recipe.description}}</p>
         <h3>Instructions</h3>
+        <p>Serves: {{recipe.serves}}</p>
+        <p>Prep Time: {{recipe.prepTime}}</p>
+        <p>Cook Time: {{recipe.cookTime}}</p>
         <p>{{recipe.instructions}}</p>
 
         <h3>Ingredients</h3>
