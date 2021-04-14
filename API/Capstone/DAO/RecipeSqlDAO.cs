@@ -43,8 +43,8 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
-                    cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
+                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils));
+                    cmd.Parameters.AddWithValue("@instructions", String.Join('|', recipe.Instructions));
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     recipe.RecipeId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -394,8 +394,8 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    cmd.Parameters.AddWithValue("@utensils", recipe.Utensils);
-                    cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
+                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils));
+                    cmd.Parameters.AddWithValue("@instructions", String.Join('|', recipe.Instructions));
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                     cmd.ExecuteNonQuery();
