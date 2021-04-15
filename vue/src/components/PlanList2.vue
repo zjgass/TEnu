@@ -23,9 +23,13 @@
                 <button class="new-plan" name="save-new-plan-name" v-on:click.prevent='saveNewPlanName()' id='new-plan-save-button'> Save Plan </button>
             </div>
             <button v-else class="new-plan" name="new-plan" v-on:click='createNewPlan()' id='new-plan-button'> New Plan </button>
+    
 <!---->
         </div>
-        <p>{{this.$store.state.userPlanList.planIs}}</p>
+
+
+
+<!-- <p>current value of currentPlanId: {{this.$store.state.currentPlanId}}</p> -->
    
 
         <div id='meal-plan'>
@@ -159,7 +163,7 @@ export default {
       changePlan(){
           this.$store.commit("SET_CURRENT_PLAN_ID", this.currentPlanId)
           this.$store.dispatch('loadPlan', this.$store.state.currentPlanId)
-      },
+      }, 
       createNewPlan(){
           this.enterNewPlanName = true;
       },

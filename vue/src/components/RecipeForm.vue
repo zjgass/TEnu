@@ -79,6 +79,15 @@
                 </select>
                 <button class='small-non-submit-buttons' v-on:click.prevent='addIngredient()'>Add</button>
             </div>
+
+
+                <h2>Link an Image</h2>
+            <div class='input-line'>
+                <p class='input-label'>Image url:</p>
+                <input class="input-box" type='text' v-model="recipe.imgUrl"  />              
+            </div>
+
+
             
 
 
@@ -116,6 +125,9 @@
 
     <h3>Utensils Needed</h3>
     <p>{{recipe.utensils}}</p>
+
+          <img :src='recipe.imgUrl' id='detail-image'/>
+
 
             
         </div>
@@ -267,14 +279,6 @@ h2{
 
 
 
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-
 
 .input-line{
     
@@ -321,6 +325,14 @@ font-size: 20pt;
 
 }
 
+
+
+#detail-image{
+
+
+
+
+}
 .small-input-box {
 height: 24pt;
 width: 60px;
@@ -360,7 +372,7 @@ font-size: 20pt;
 
 
 #recipe-input{
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
     width: 45%;
     padding: 20px;
@@ -394,7 +406,7 @@ font-size: 20pt;
     max-height: 600px;
     height: auto;
     padding: 10px;
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
 
   border-radius: 5px;
@@ -409,7 +421,7 @@ font-size: 20pt;
     min-height: 300px;
     height: auto;
     padding: 20px;
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     max-height: 1000px;
     word-wrap: break-word;
@@ -484,9 +496,7 @@ align-content: center;
 
 }
 
-#recipe-input h2{
-width: 50%;
-}
+
 
 #router-wrapper{
     display: flex;

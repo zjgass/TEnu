@@ -4,7 +4,7 @@
 <h1>{{this.$store.state.userPlanList[this.$store.state.currentPlanId - 1].name}}</h1>
 <table id='table-list'>
    <tr id='first-row'>
-    <th class='table-heading'>Ingredient</th>
+    <th class='column-1'>Ingredient</th>
     <th class='table-heading'>Qty</th>
     <th class='table-heading'>Unit</th>
   </tr> 
@@ -72,8 +72,11 @@ export default {
   width: .5fr;
   margin: 5px 10px 5px 10px;
   padding: 0px 0px 0px 0px;
-}
 
+}
+.column-1{
+  width: 80%;
+}
 
 table{
   width: 60%;

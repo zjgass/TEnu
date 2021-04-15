@@ -1,6 +1,11 @@
 <template>
+
+
+<div>
+        <h1>Edit Recipe</h1>
+
     <div id='detail-box'>
-        
+
         <div id='recipe-box'>
 
         <div id='title-and-save-button'>
@@ -121,15 +126,13 @@
         </div>
 
       <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
-<div id='image-box'>
-    <img src="recipe.imgUrl" alt='image of completed recipe' />
 
 
+<div id='instructions-box'>
 
+</div>
 
     </div>
-
-
     </div>
 </template>
 
@@ -257,6 +260,7 @@ margin-bottom: 5px;
     margin-bottom: 0px;
 }
 
+
 .input-select-dropdown{
     height: 34px;
 }
@@ -295,11 +299,11 @@ width: 65
 }
 
 
-#recipe-box, #image-box{
+#recipe-box, #instructions-box{
     /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
-    box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
 }
@@ -310,9 +314,9 @@ width: 65
     min-height: 600px;
 
 }
-#image-box{
+#instructions-box{
     height: 600px;
-    box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
 
