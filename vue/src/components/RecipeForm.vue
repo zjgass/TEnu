@@ -1,54 +1,63 @@
 <template>
     <div>
+        <div id='title-and-button'>
+        <h1>Add A New Recipe</h1>
+        <button id='submit-button' v-on:click.prevent='saveRecipe()'>Submit Recipe</button>
+    </div>
+
         <div id='form-page'>
 
         <form id='recipe-input' action="" method="">
-
+            <h2>New Recipe Info</h2>
             <div class='input-line'>
                 <p class='input-label'>Recipe Name: </p>
-                <input class="input-short-text" type='text' v-model="recipe.name"  />              
+                <input class="input-box" type='text' v-model="recipe.name"  />              
             </div>
             
             <div class='input-line'>
                 <p class='input-label'>Description: </p>
-                <input class="input-description-text" type='text' v-model="recipe.description" />
+                <input class="input-box" type='text' v-model="recipe.description" />
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>Serves: </p>
-                <input class="input-integer-text" type='text' v-model="recipe.serves" />
+                <input class="small-input-box" type='text' v-model="recipe.serves" />
            
                 <p class='input-label'>Prep Time:  </p>
-                <input class="input-integer-text" type='text' v-model="recipe.prepTime" />
+                <input class="small-input-box" type='text' v-model="recipe.prepTime" />
            
                 <p class='input-label'>Cook Time: </p>
-                <input class="input-integer-text" type='text' v-model="recipe.cookTime" />
+                <input class="small-input-box" type='text' v-model="recipe.cookTime" />
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>Utensils Needed: </p>
-                <input type='text' v-model="newUtensil"  />
-                <button v-on:click.prevent="addUtensil()">Add Utensil</button>
-                <button v-on:click.prevent="clearUtensils()">Clear Utensils</button>
+                <input class="input-box" type='text' v-model="newUtensil"  />
+                <button class='small-non-submit-buttons' v-on:click.prevent="addUtensil()">Add Utensil</button>
+                <button class='small-non-submit-buttons' v-on:click.prevent="clearUtensils()">Clear Utensils</button>
             </div>
 
             <div class='input-line'>
                 <p class='input-label'>Instructions: </p>
-                <input type='text' v-model="newInstruction"/>
-                <button v-on:click.prevent="addInstruction()">Add Step</button>
-                <button v-on:click.prevent="clearInstructions()">Clear Steps</button>
+                <input class="input-box" type='text' v-model="newInstruction"/>
+                <button class='small-non-submit-buttons' v-on:click.prevent="addInstruction()">Add Step</button>
+                <button class='small-non-submit-buttons' v-on:click.prevent="clearInstructions()">Clear Steps</button>
+            </div>
+
+                    <h2>Add Ingredients</h2>
+
+            <div class='input-line'>
+                <button class='non-submit-buttons' v-on:click.prevent="showIngredients()">Select Ingredient</button>
+                <button class='non-submit-buttons' v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
             </div>
 
             <div class='input-line'>
-                <button v-on:click.prevent="showIngredients()">Select Ingredient</button>
-                <button v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
-            </div>
-            <div class='input-line'>
+                
                 <h3 >{{newIngredient.name}}</h3>
                 <h3 class="input-label">  Quantity: </h3>
-                <input class="input-integer-text" type='text' v-model="newIngredient.qty" />
+                <input class="input-box" type='text' v-model="newIngredient.qty" />
                 <h3 class="input-label">  Measurement: </h3>
-                <select class="input-select-dropdown" v-model="newIngredient.unit">
+                <select  v-model="newIngredient.unit">
                     <option value="pinch"> pinch </option>
                     <option value="tsp"> tsp </option>
                     <option value="tbs"> tbs </option>
@@ -68,11 +77,11 @@
                     <option value="cloves"> cloves </option>
                     <option value="can"> can </option>
                 </select>
-                <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
+                <button class='small-non-submit-buttons' v-on:click.prevent='addIngredient()'>Add</button>
             </div>
             
 
-            <button id='submit-button' v-on:click.prevent='saveRecipe()'>Submit Recipe</button>
+
         </form>
 
 
@@ -80,8 +89,14 @@
         user has clicked add ingredient button display AddIngredientComponent -->
 
         <div class="show-recipe-details" v-if="showDetails">
-
+        <h2>Recipe</h2>
         <h1>{{recipe.name}}</h1>
+        <p>{{recipe.description}}</p>
+        
+        <p>Serves: {{recipe.serves}}</p>
+        <p>Prep Time: {{recipe.prepTime}} minutes</p>
+        <p>Cook Time: {{recipe.cookTime}} minutes</p>
+        
         <h3>Instructions</h3>
         <p v-for="item in recipe.instructions" :key="item">{{item}}</p>
 
@@ -107,16 +122,14 @@
             
         </div>
 
-                  <!-- v-for="plan in this.$store.state.userPlanList"
-                  v-bind:key="plan.name"
-                  v-bind:value='plan.planId' -->
+
 
         <div class="show-add-ingredient" v-if="!showDetails">
              <div class="ingredient-list" v-for="ingredient in this.$store.state.existingIngredients"                    
                 v-bind:key="ingredient.ingredientId"
                 v-bind:ingredient="ingredient"
                 >
-                <h3 v-on:click.prevent="selectedIngredient(ingredient)">{{ingredient.name}}  </h3>
+                <h3 class='ingredient-in-large-list' v-on:click.prevent="selectedIngredient(ingredient)">{{ingredient.name}}  </h3>
         
             </div>  
         </div>
@@ -252,23 +265,73 @@ h2{
     margin-top: 0px
 }
 
+
+
+
+/* bookmark */
+/* bookmark */
+/* bookmark */
+/* bookmark */
+/* bookmark */
+/* bookmark */
+/* bookmark */
+
+
 .input-line{
     
     display: flex;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-}
-.input-label{
-    font-size: 18pt;
-    margin-top: 0px;
     
 }
 
-.input-short-text {
-    width: 200px;
-    height: 20px;
+
+.input-label{
+    font-size: 18pt;
+    margin-top: 0px;
+    width: auto;
+    margin-right: 10px;
+
+    
 }
+
+.non-submit-buttons{
+height: 38px;
+width: 200px;
+font-size: 12pt;
+
+}
+
+.small-non-submit-buttons{
+padding: 0px;
+height: 38px;
+width: 150px;
+font-size: 12pt;
+
+}
+
+
+.input-box {
+height: 24pt;
+width: 200px;
+border: none;
+border-bottom: 2px darkcyan solid;
+outline: none;
+font-size: 20pt;
+
+}
+
+.small-input-box {
+height: 24pt;
+width: 60px;
+border: none;
+border-bottom: 2px darkcyan solid;
+outline: none;
+font-size: 20pt;
+}
+
+
 
 .input-description-text {
     width: 300px;
@@ -283,24 +346,45 @@ h2{
 
 .ingredient-list{
     display: flex;
+
 }
 
 .ingredient-list>h3{
 
-    font-size: .75rem;
+    font-size: 12pt;
     cursor: pointer;
     text-transform: capitalize;
+    margin-bottom: 0px;
+
 }
 
 
 
 #recipe-input{
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
     width: 45%;
     padding: 20px;
 
-    height: 600px;
+    min-height: 1000px;
+
+
+
+}
+
+#recipe-input h2{
+    background-color: darkcyan;
+    color: white;
+    padding: 10px;
+    text-align: center;
+
+}
+
+.show-recipe-details h2{
+    background-color: darkcyan;
+    color: white;
+    padding: 10px;
+    text-align: center;
 
 
 
@@ -308,13 +392,14 @@ h2{
 
 .show-add-ingredient{
     width: 45%;
-    min-height: 600px;
+    max-height: 600px;
     height: auto;
     padding: 10px;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
-    max-height: 500px;
+
   border-radius: 5px;
+  font-size: 20px;
 
     
 
@@ -325,9 +410,9 @@ h2{
     min-height: 300px;
     height: auto;
     padding: 20px;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
-    max-height: 600px;
+    max-height: 1000px;
     word-wrap: break-word;
   border-radius: 5px;
 
@@ -361,12 +446,26 @@ h2{
     
 }
 
+#title-and-button{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
 
 #submit-button{
-    width: 90%;
-    height: 30px;
+    width: 400px;
+    height: 40px;
     font-size: 16pt;
-    margin-top: 20px;
+    /* background-color: darkcyan; */
+    font-size: 20pt;
+    /* color: white; */
+    cursor: pointer;
+    margin: 10px;
+    
+
 }
 
 @media(max-width: 1400px) {
@@ -386,7 +485,9 @@ align-content: center;
 
 }
 
-
+#recipe-input h2{
+width: 50%;
+}
 
 #router-wrapper{
     display: flex;
@@ -394,6 +495,9 @@ align-content: center;
     align-content: center;
 
 }
+
+
+
 
 
 
