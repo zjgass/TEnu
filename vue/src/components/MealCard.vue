@@ -64,7 +64,7 @@ export default {
     data() {
 
         return{
-            componentKey: 0,
+          //  componentKey: 0,
             deletePromptDiv: false
         }
     },
@@ -77,10 +77,10 @@ export default {
         }
     },
     methods: {
-        forceRerender(){
-            this.componentKey += 1;
+      //  forceRerender(){
+          //  this.componentKey += 1;
 
-        },
+       // },
         deletePrompt(){
             this.deletePromptDiv = true;
         },

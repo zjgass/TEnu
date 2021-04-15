@@ -63,6 +63,15 @@ export default new Vuex.Store({
     ADD_RECIPE_TO_MEAL(state, recipe){
       state.newMealRecipes.unshift(recipe);
     },
+    REMOVE_RECIPE_FROM_MEAL(state, recipeId){
+      let found = state.newMealRecipes.findIndex(element => {
+        if(element.recipeId == recipeId){
+          return element;
+        }
+      return false;
+      })
+    state.newMealRecipes.splice(found,1);
+    },
     STORE_MEAL_RECIPES(state, recipeList){
       state.newMealRecipes = recipeList;
     },
