@@ -14,12 +14,6 @@
 
             </div>
 
-            <div class='input-line'>
-                <p class='input-label'>Search Meals: </p>
-                <input type='text' name = 'equipment'  />
-                <button>Add Recipes</button>
-                <button>Clear Recipes</button>
-            </div>
 
 
             <button v-on:click.prevent="saveMealToPlan()"  id='submit-button'>Save Meal</button>
@@ -27,8 +21,8 @@
 
             <div id='current-meal'>
                 <h2>{{meal.name}} contains the following recipes</h2>
-                <ul>
-                     <li class='meal-recipe-list' v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId"  v-bind:value='recipe.recipeId'>
+                <ul >
+                     <li class='meal-recipe-list' v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId"  v-bind:value='recipe.recipeId' >
                         <h4>{{recipe.name}}</h4>
                         <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
                      </li>
@@ -53,13 +47,14 @@ import mealService from "../services/MealService";
 
 export default {
     name: "meal-form",
-   
+  
     data() {
         return {
             returnedMeal: [],
             //set to invalid id at start
             removeRecipeId: -1,
-            addRecipeId: -1
+            addRecipeId: -1,
+         
         };
     },
     watch: {  
@@ -69,20 +64,30 @@ export default {
             mealService.deleteRecipeFromMeal(this.meal.mealId, deleteRecipe).then((response) => {
                  //needs actual error handling
                  console.log(response + 'recipe removed from meal successfully');
-                 this.$forceUpdate;
+                let indexFound = this.meal.recipeList.findIndex(element => {
+                    console.log(element.recipeId);
+                        if(element.recipeId == deleteRecipe){
+                        console.log('element = ' + element);
+                        return element;
+                         }
+                         
+                        return false;
+                })
+
+                console.log(indexFound);
+
+                 this.meal.recipeList.splice(indexFound, 1);
+                 //this.removeRecipeId = -1;
+                 //this.$forceUpdate();
              })
 
-             this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
+            // this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
            
             }
          else{
             this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
 
          }
-
-        this.removeRecipeId = -1;
-        this.$forceUpdate();
-
 
         },
         addRecipeId: async function (addRecipe) {
@@ -95,6 +100,11 @@ export default {
                 console.log(response + 'recipe added to meal successfully');   
                 })        
                 this.addRecipeId = -1;
+
+
+                
+
+
             }
             else 
             {
@@ -196,7 +206,8 @@ export default {
         },
         getRecipeIndex(recipeId){
            this.meals.recipeList.findIndex(element => {
-              if(element == recipeId){
+              if(element.recipeId == recipeId){
+                  console.log('element = ' + element);
                   return element;
               }
               return false;

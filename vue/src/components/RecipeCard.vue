@@ -77,6 +77,7 @@ export default {
   },
   methods: {
     deleteRecipe(id) {
+      console.log('deleteRecipe run ')
       recipeService.deleteRecipe(id)
       .then(response => {
         if(response.state === 200){
@@ -90,6 +91,7 @@ export default {
 
     },
     deleteRecipeFromMeal(recipeId){
+      console.log('deleteRecipeFromMeal');
       this.$store.commit("DELETE_RECIPE_FROM_MEAL", recipeId);
       //need current mealId somehow
       mealService.deleteRecipeFromMeal(this.$route.params.id, recipeId)
