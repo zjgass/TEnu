@@ -43,7 +43,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils));
+                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils ));
                     cmd.Parameters.AddWithValue("@instructions", String.Join('|', recipe.Instructions));
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.Parameters.AddWithValue("@user_id", userId);
@@ -71,6 +71,27 @@ namespace Capstone.DAO
                             cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                         }
                         cmd.ExecuteNonQuery(); //
+                    }
+
+                    if (recipe.Categories.Count != 0)
+                    {
+                        sqlText = "insert into category_recipe (category_id, recipe_id) " +
+                            "values ";
+
+                        for (int i =0; i < recipe.Categories.Count; i++)
+                        {
+                            sqlText += $"((select category_id from category where category_name = @category_name{i}), " +
+                                $"@recipe_id{i})" +
+                                (i == recipe.Categories.Count - 1 ? "; " : ",");
+                        }
+
+                        cmd = new SqlCommand(sqlText, conn);
+                        for (int i = 0; i < recipe.Categories.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@category_name{i}", recipe.Categories[i].Name);
+                            cmd.Parameters.AddWithValue($"@recipe_id{i}", recipe.RecipeId);
+                        }
+                        cmd.ExecuteNonQuery();
                     }
 
                     sqlText = "insert into recipe_users (recipe_id, user_id) " +
@@ -349,6 +370,24 @@ namespace Capstone.DAO
                     }
                 }
 
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select category.category_id, category_name " +
+                        "from category_recipe " +
+                        "join category on category.category_id = category_recipe.category_id " +
+                        "where recipe_id = @recipe_id;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipeId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnRecipe.Categories.Add(GetCategoryFromReader(reader));
+                    }
+                }
+
                 return returnRecipe;
             }
             //TODO implement better exception handling
@@ -362,6 +401,7 @@ namespace Capstone.DAO
         public Recipe UpdateRecipe(Recipe recipe)
         {
             List<Ingredient> currentIngredients = new List<Ingredient>();
+            List<Category> currentCategories = new List<Category>();
 
             try
             {
@@ -419,6 +459,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
+
                     string sqlText;
                     SqlCommand cmd = new SqlCommand();
 
@@ -464,6 +505,60 @@ namespace Capstone.DAO
                         cmd = new SqlCommand(sqlText, conn);
                         cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                         cmd.Parameters.AddWithValue("@ingredient_id", ingredient.IngredientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select category_recipe.category_id, category_name " +
+                        "from category_recipe " +
+                        "join category on category.category_id = category_recipe.category_id " +
+                        "where recipe_id = @recipe_id " +
+                        "order by recipe_id, category_name;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        currentCategories.Add(GetCategoryFromReader(reader));
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "";
+                    SqlCommand cmd = new SqlCommand();
+
+                    for (int i = 0; i < recipe.Categories.Count; i++)
+                    {
+                        if (!currentCategories.Contains(recipe.Categories[i]))
+                        {
+                            sqlText = "insert into category_recipe " +
+                                "(category_id, recipe_id) " +
+                                "values (@category_id, @recipe_id);";
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@category_id", recipe.Categories[i].CategoryId);
+                            cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        currentIngredients.Remove(recipe.Ingredients[i]);
+                    }
+
+                    foreach (Category category in currentCategories)
+                    {
+                        sqlText = "delete from category_recipe " +
+                            "where recipe_id = @recipe_id and " +
+                            "category_id = @category_id;";
+                        cmd = new SqlCommand(sqlText, conn);
+                        cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                        cmd.Parameters.AddWithValue("@category_id", category.CategoryId);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -541,6 +636,17 @@ namespace Capstone.DAO
             };
 
             return i;
+        }
+
+        private Category GetCategoryFromReader(SqlDataReader reader)
+        {
+            Category c = new Category()
+            {
+                CategoryId = Convert.ToInt32(reader["category_id"]),
+                Name = Convert.ToString(reader["category_name"]),
+            };
+
+            return c;
         }
     }
 }

@@ -194,7 +194,7 @@ export default {
   },
   created() {
     this.currentPlanId = this.$store.state.currentPlanId;
-    this.$store.dispatch('loadPlan', this.currentPlanId || 1);
+    this.$store.dispatch('loadPlan', this.currentPlanId );
   }
 };
 

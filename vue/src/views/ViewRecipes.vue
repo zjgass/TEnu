@@ -1,9 +1,8 @@
 <template>
   <div>
-    <h1>Recipes</h1>
-    <recipe-list />
-   
-
+    <button v-on:click.prevent="toggleView()">Toggle View</button>
+    <p>Showing: {{this.userOrPublic}} Recipes </p>
+    <recipe-list v-bind:userOrPublic.sync="userOrPublic"/>
   </div>
 </template>
 
@@ -14,6 +13,23 @@ import RecipeList from "../components/RecipeList.vue";
 export default {
   components: {
     RecipeList,
+  },
+  data(){
+    return{
+      userOrPublic: "user"
+    } 
+  },
+  methods: {
+      toggleView() {
+        if(this.userOrPublic == "user"){
+          this.userOrPublic = "public";
+        }else{ 
+          this.userOrPublic = "user";
+        }
+
+        this.$forceUpdate();
+        
+      }
   }
 
 };
