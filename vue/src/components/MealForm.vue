@@ -80,7 +80,7 @@ export default {
          }
 
         this.removeRecipeId = -1;
-        this.$forceUpdate();
+        //this.$forceUpdate();
 
 
         },
