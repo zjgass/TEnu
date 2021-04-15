@@ -6,7 +6,7 @@
             <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId, mealTime: mealTime, mealDay: mealDay} }">
             <div class="meal-body">  
               <h3 id='meal-name'>{{meal.name}}</h3> 
-              <h3 id='total-time'> Total Time: {{meal.totaltime}}</h3> 
+              <h3 id='total-time'> Total Time: {{mealTotalTime}}</h3> <!--{{meal.totaltime}}</h3> -->
               <!-- <h3>{{meal.recipeList[0].name}}</h3> -->
 
               
@@ -74,6 +74,25 @@ export default {
                 return false;
             }
             return true;
+        },
+        mealTotalTime(){
+            let mealTime = 0;
+
+            if(this.$store.state.currentPlan.meals.find((meal) => {
+                return meal.mealId == this.$route.params.id}) != undefined)
+                {
+                    let returnMeal = this.$store.state.currentPlan.meals.find((meal) => {
+                        return meal.mealId == this.$route.params.id
+                    })
+
+                    if(returnMeal.recipeList.count != null){
+                            mealTime = returnMeal.recipeList.reduce((accumulator, recipe) => {
+                                return accumulator += recipe.totalTime;
+                            },0)
+                    }
+                }
+            
+            return mealTime;
         }
     },
     methods: {
