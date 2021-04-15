@@ -401,6 +401,7 @@ namespace Capstone.DAO
         public Recipe UpdateRecipe(Recipe recipe)
         {
             List<Ingredient> currentIngredients = new List<Ingredient>();
+            List<Category> currentCategories = new List<Category>();
 
             try
             {
@@ -458,6 +459,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
+
                     string sqlText;
                     SqlCommand cmd = new SqlCommand();
 
@@ -503,6 +505,60 @@ namespace Capstone.DAO
                         cmd = new SqlCommand(sqlText, conn);
                         cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
                         cmd.Parameters.AddWithValue("@ingredient_id", ingredient.IngredientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "select category_recipe.category_id, category_name " +
+                        "from category_recipe " +
+                        "join category on category.category_id = category_recipe.category_id " +
+                        "where recipe_id = @recipe_id " +
+                        "order by recipe_id, category_name;";
+                    SqlCommand cmd = new SqlCommand(sqlText, conn);
+                    cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        currentCategories.Add(GetCategoryFromReader(reader));
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlText = "";
+                    SqlCommand cmd = new SqlCommand();
+
+                    for (int i = 0; i < recipe.Categories.Count; i++)
+                    {
+                        if (!currentCategories.Contains(recipe.Categories[i]))
+                        {
+                            sqlText = "insert into category_recipe " +
+                                "(category_id, recipe_id) " +
+                                "values (@category_id, @recipe_id);";
+                            cmd = new SqlCommand(sqlText, conn);
+                            cmd.Parameters.AddWithValue("@category_id", recipe.Categories[i].CategoryId);
+                            cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        currentIngredients.Remove(recipe.Ingredients[i]);
+                    }
+
+                    foreach (Category category in currentCategories)
+                    {
+                        sqlText = "delete from category_recipe " +
+                            "where recipe_id = @recipe_id and " +
+                            "category_id = @category_id;";
+                        cmd = new SqlCommand(sqlText, conn);
+                        cmd.Parameters.AddWithValue("@recipe_id", recipe.RecipeId);
+                        cmd.Parameters.AddWithValue("@category_id", category.CategoryId);
                         cmd.ExecuteNonQuery();
                     }
                 }

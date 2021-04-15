@@ -10,5 +10,15 @@ namespace Capstone.Models
         public int CategoryId { get; set; }
 
         public string Name { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            return this.CategoryId == ((Category)obj).CategoryId;
+        }
     }
 }
