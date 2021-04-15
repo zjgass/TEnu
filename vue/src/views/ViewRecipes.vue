@@ -1,8 +1,14 @@
 <template>
   <div>
-    <button v-on:click.prevent="toggleView()">Toggle View</button>
-    <p>Showing: {{this.userOrPublic}} Recipes </p>
+
+      <div id='title-and-button-recipes'>
+        <p class='list-title'>Showing: {{this.userOrPublic}} Recipes </p>
+        <button class='toggle-pubic' v-on:click.prevent="toggleView()">Toggle View</button>
+    </div>
+
     <recipe-list v-bind:userOrPublic.sync="userOrPublic"/>
+
+
   </div>
 </template>
 
@@ -35,6 +41,28 @@ export default {
 };
 </script>
 <style scoped>
+
+#title-and-button-recipes{
+
+display: flex;
+justify-content: start;
+margin-bottom: 40px;
+}
+
+.toggle-pubic{
+
+height: 30px;
+
+
+}
+
+.list-title{
+
+width: auto;
+font-size: 20pt;
+margin: 0px;
+margin-right: 40px;
+}
 
 
 </style>

@@ -20,16 +20,23 @@
         </form>
 
             <div id='current-meal'>
-                <h2>{{meal.name}} contains the following recipes</h2>
+                <h2 id='title-of-current-meal-box'>Recipes</h2>
+                <h2 >{{meal.name}} contains the following recipes:</h2>
+
                 <ul >
-                     <li class='meal-recipe-list' v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId"  v-bind:value='recipe.recipeId' >
-                        <h4>{{recipe.name}}</h4>
-                        <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
+                     <li class='meal-recipe-list-edit' v-for="recipe in meal.recipeList" v-bind:key="recipe.recipeId"  v-bind:value='recipe.recipeId'>
+                        <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>X</button>
+                        <h4 class='recipe-name-edit'>{{recipe.name}}</h4>
+
                      </li>
-                     <li class='meal-recipe-list' v-for="recipe in this.$store.state.newMealRecipes" v-bind:key="recipe.recipeId" v-bind:value='recipe.recipeId'>
-                         <h4>{{recipe.name}}</h4>
-                         <button v-on:click.prevent='removeThisNewRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
+
+                     <li class='meal-recipe-list-edit' v-for="recipe in this.$store.state.newMealRecipes" v-bind:key="recipe.recipeId" v-bind:value='recipe.recipeId'>
+                         <button v-on:click.prevent='removeThisNewRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>X</button>
+                         <h4 class='recipe-name-edit'>{{recipe.name}}</h4>
+
+
                          </li>
+                         
                 </ul>
 
 
@@ -222,7 +229,7 @@ export default {
 #meal-input, #current-meal{
     width: 45%;
 min-height: 600px;
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   padding: 20px;
 }
@@ -234,11 +241,56 @@ min-height: 600px;
 }
 
 .meal-recipe-list-removeBtn {
-    margin: 10px 10px 10px 10px;
+    margin-right: 10px;
     width: 75px;
-    height: 50px;
+    height: 30px;
+    background-color: white;
+    border:none;
+    font-size: 20pt;
+    color: red;
+    
 
 }
+
+
+
+
+.meal-recipe-list-edit{
+        list-style: none;
+        display: flex;
+        height: auto;
+        margin-bottom: 50px;
+}
+
+
+#current-meal ul{
+    padding-left: 0px;
+}
+
+
+.recipe-name-edit{
+width: 50%;
+margin: 0px;
+height: 30px;
+font-size: 20pt;
+}
+
+
+#title-of-current-meal-box{
+background-color: darkcyan;
+color: white;
+padding: 10px;
+text-align: center;
+font-size: 24pt;
+
+
+    
+}
+
+#meal-item{
+    background-color: red;
+}
+
 
 @media(max-width: 1400px) {
 
