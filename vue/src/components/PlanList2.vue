@@ -1,7 +1,7 @@
 
 <template>
 <div>
-    <div id='top-of-component'> 
+
 
 
         <div class='select-plan-container' >
@@ -27,7 +27,7 @@
         </div>
         <p>{{this.$store.state.userPlanList.planIs}}</p>
    
-    </div>
+
         <div id='meal-plan'>
 
             <div class='plan-column' id='monday-meals'>
@@ -325,10 +325,16 @@ margin-bottom: 0px;
 
 
 #show-grocery-list{
-    font-size: 20pt;
+    font-size: 24pt;
     margin-top: 50px;
     cursor: pointer;
     width: 100%;
+    border: none;
+    background-color: darkcyan;
+    color: white;
+    height: auto;
+    padding: 20px;
+
     
 }
 
@@ -348,9 +354,6 @@ margin-bottom: 0px;
 
 }
 
-#top-of-component{
-padding: 0px;
-}
 
 
 .plan-column{

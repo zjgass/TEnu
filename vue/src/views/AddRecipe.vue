@@ -1,6 +1,6 @@
 <template>
   <div id='recipe-list'>
-    <h1>Add A New Recipe</h1>
+    <!-- <h1>Add A New Recipe</h1> -->
     <recipe-form />
   </div>
   

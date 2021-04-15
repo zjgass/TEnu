@@ -2,8 +2,13 @@
     <div id='detail-box'>
         
         <div id='recipe-box'>
+
+        <div id='title-and-save-button'>
         <h1 id='recipe-title'>{{recipe.name}}</h1>
-        <button v-on:click.prevent="saveRecipe()"> Save Changes </button>
+        <button id='save-button' v-on:click.prevent="saveRecipe()"> Save Changes </button>
+        </div>
+
+
         <input class="input-short-text" type='text' v-model="recipe.name"/>
         <h2>serves: {{recipe.serves}}</h2>
         <input class="input-short-text" type='text' v-model="recipe.serves"/>
@@ -265,18 +270,36 @@ margin-bottom: 5px;
 
 }
 
+
+#title-and-save-button{
+
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 #recipe-title{
 text-decoration: underline;
 margin-top: 0px;
 text-transform: capitalize;
+width: 65
 
 }
+#save-button{
+    width: 30%;
+    height: 30px;
+    font-size: 16pt;
+    cursor: pointer;
+
+}
+
 
 #recipe-box, #image-box{
     /* border: 1px solid black; */
     width: 45%;
     padding: 10px;
-    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
 }
@@ -289,7 +312,7 @@ text-transform: capitalize;
 }
 #image-box{
     height: 600px;
-    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
 
