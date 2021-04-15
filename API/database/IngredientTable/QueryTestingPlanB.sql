@@ -49,7 +49,7 @@ where mplan.mplan_id = 6;
 --GetGroceryList
 --Sum same ingredient same unit
 select mplan.mplan_id, mplan_name,
-	ingredient.ingredient_id, ingredient_name, sum(qty) as total, unit_name
+	ingredient.ingredient_id, ingredient_name, cast(sum(qty) as decimal(5,2)) as total, unit_name
 from mplan
 join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
 --join meal on meal.meal_id = meal_mplan.meal_id
@@ -111,13 +111,20 @@ select recipe_name, is_public, serves, prep_time, cook_time, total_time,
 from recipe
 where recipe_id = (select recipe_id from recipe where recipe_name like 'fruit');
 
+select * from category
+insert into category_recipe (category_id, recipe_id)
+values (2, 1)
+
 select recipe.recipe_id, recipe_name, description, rating, serves,
 	prep_time, cook_time, total_time, utensils, instructions, img_url,
-	ingredient.ingredient_name, qty, unit_name
+	ingredient.ingredient_name, qty, unit_name,
+	category.category_id, category_name
 from recipe
 join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = recipe.recipe_id
 join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
 join unit on unit.unit_id = ingredient_recipe_unit.unit_id
+join category_recipe on category_recipe.recipe_id = recipe.recipe_id
+join category on category.category_id = category_recipe.category_id
 where ingredient_recipe_unit.recipe_id = 
 	(select recipe_id from recipe where recipe_name = 'banana bread');
 
@@ -302,3 +309,24 @@ order by recipe_id, ingredient_name;
 delete from ingredient_recipe_unit
 where recipe_id = 1 and
 ingredient_id = 11;
+
+--GetPlan including categories
+select mplan.mplan_id, mplan_name, mplan.user_id,
+	meal.meal_id, meal_name, meal_day, meal_time,
+	recipe.recipe_id, recipe_name, description, is_public, rating,
+		serves, prep_time, cook_time, total_time, utensils,
+		instructions, img_url, submitted_by,
+	ingredient.ingredient_id, ingredient_name, qty, unit_name,
+	category.category_id, category_name
+from mplan
+left join meal_mplan on meal_mplan.mplan_id = mplan.mplan_id
+left join meal on meal.meal_id = meal_mplan.meal_id
+left join meal_recipe on meal_recipe.meal_id = meal_mplan.meal_id
+left join recipe on recipe.recipe_id = meal_recipe.recipe_id
+left join ingredient_recipe_unit on ingredient_recipe_unit.recipe_id = meal_recipe.recipe_id
+left join ingredient on ingredient.ingredient_id = ingredient_recipe_unit.ingredient_id
+left join unit on unit.unit_id = ingredient_recipe_unit.unit_id
+left join category_recipe on category_recipe.recipe_id = meal_recipe.recipe_id
+left join category on category.category_id = category_recipe.category_id
+where mplan.mplan_id = 1
+order by meal_day, meal_time, recipe.recipe_id, ingredient.ingredient_name, category_name;
