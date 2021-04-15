@@ -472,5 +472,16 @@ namespace Capstone.DAO
 
             return i;
         }
+
+        private Category GetCategoryFromReader(SqlDataReader reader)
+        {
+            Category c = new Category()
+            {
+                CategoryId = Convert.ToInt32(reader["category_id"]),
+                Name = Convert.ToString(reader["category_name"]),
+            };
+
+            return c;
+        }
     }
 }
