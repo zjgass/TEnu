@@ -34,7 +34,7 @@
                      </li>
                      <li class='meal-recipe-list' v-for="recipe in this.$store.state.newMealRecipes" v-bind:key="recipe.recipeId" v-bind:value='recipe.recipeId'>
                          <h4>{{recipe.name}}</h4>
-                         <button v-on:click.prevent='removeThisRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
+                         <button v-on:click.prevent='removeThisNewRecipe(recipe.recipeId)' class='meal-recipe-list-removeBtn'>Remove Recipe</button>
                          </li>
                 </ul>
 
@@ -80,7 +80,7 @@ export default {
          }
 
         this.removeRecipeId = -1;
-        this.$forceUpdate();
+        //this.$forceUpdate();
 
 
         },
@@ -112,10 +112,14 @@ export default {
                 if(this.$store.state.currentPlan.meals.find((meal) => {
                 return meal.mealId == this.$route.params.id}) != undefined)
                 {
-                    return this.$store.state.currentPlan.meals.find((meal) => {
+                    let returnMeal = this.$store.state.currentPlan.meals.find((meal) => {
                     
                     return meal.mealId == this.$route.params.id
                     })
+
+                    returnMeal.mealDay = this.$route.params.mealDay;
+                    returnMeal.mealTime = this.$route.params.mealTime;
+                    return returnMeal;
                 }
                 else{
                     let meal = {
@@ -140,6 +144,9 @@ export default {
         removeThisRecipe(recipeId) {
             this.removeRecipeId = recipeId;
 
+        },
+        removeThisNewRecipe(recipeId) {
+            this.$store.commit("REMOVE_RECIPE_FROM_MEAL", recipeId)
         },
         addThisRecipe(recipeId) {
             this.addRecipeId = recipeId;
