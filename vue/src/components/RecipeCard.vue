@@ -86,6 +86,8 @@ export default {
     },
     addRecipeToMeal(recipe) {
       this.$store.commit("ADD_RECIPE_TO_MEAL", recipe);
+      this.$store.dispatch('addRecipeToMealRequest', recipe.recipeId);
+
     },
     deleteRecipeFromMeal(recipeId){
       this.$store.commit("DELETE_RECIPE_FROM_MEAL", recipeId);

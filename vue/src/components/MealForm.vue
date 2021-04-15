@@ -69,6 +69,7 @@ export default {
             mealService.deleteRecipeFromMeal(this.meal.mealId, deleteRecipe).then((response) => {
                  //needs actual error handling
                  console.log(response + 'recipe removed from meal successfully');
+                 this.$forceUpdate;
              })
 
              this.meal.recipeList.splice(this.getRecipeIndex(deleteRecipe), 1);
@@ -80,7 +81,7 @@ export default {
          }
 
         this.removeRecipeId = -1;
-        //this.$forceUpdate();
+        this.$forceUpdate();
 
 
         },
@@ -139,6 +140,11 @@ export default {
             //     return meal.mealId == this.$route.params.id
             //});
         },
+    },
+    created() {
+        this.$store.commit('SET_CURRENT_MEAL_ID', this.$route.params.id);
+        let clearRecipeList = [];
+        this.$store.commit("STORE_MEAL_RECIPES", clearRecipeList);
     },
     methods: {
         removeThisRecipe(recipeId) {

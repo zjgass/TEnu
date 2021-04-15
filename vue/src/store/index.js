@@ -30,6 +30,7 @@ export default new Vuex.Store({
     userPlanList: [],
     currentPlanId: 1,
     currentPlan: [],
+    currentMealId: -1
  
   },
   mutations: {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     SET_CURRENT_PLAN(state, plan){
       state.currentPlan = plan;
     }, 
+    SET_CURRENT_MEAL_ID(state, mealId){
+      state.currentMealId = mealId;
+    },
     SET_CURRENT_PLAN_ID(state, id){
       state.currentPlanId = id;
     },
@@ -124,10 +128,14 @@ export default new Vuex.Store({
             }
           })
         },
-        addRecipeToMeal(context, recipeId) {
-          mealService.addRecipeToMeal(this.meal.mealId, addRecipe).then((response) => {
+        addRecipeToMealRequest(context, recipeId) {
+          console.log('addRecipeToMealRequest dispatched');
+          mealService.addRecipeToMeal(this.state.currentMealId, recipeId).then((response) => {
             //needs actual error handling
-        console.log(response + 'recipe added to meal successfully');   
+           console.log('addRecipeToMealRequest action executed');
+           console.log(response + 'recipe added to meal successfully');   
+           //let clearRecipeList = [];
+           //context.commit("STORE_MEAL_RECIPES", clearRecipeList);
         })        
 
           
