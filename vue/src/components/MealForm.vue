@@ -156,6 +156,7 @@ export default {
             this.meal.recipeList = this.$store.state.newMealRecipes;
             if(this.meal.mealId != 0)
             {
+
                 console.log('saveMealToPlan if true')
                 let clearRecipeList = [];
                 this.$store.commit("STORE_MEAL_RECIPES", clearRecipeList);

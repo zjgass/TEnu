@@ -18,6 +18,7 @@ if(currentToken != null) {
 }
 
 import planService from "../services/PlanService";
+import mealService from "../services/MealService";
 
 export default new Vuex.Store({
   state: {
@@ -122,7 +123,16 @@ export default new Vuex.Store({
               this.errorMsg = "Error loading plan lists. Response received was '" + error.response.statusText + "'.";
             }
           })
+        },
+        addRecipeToMeal(context, recipeId) {
+          mealService.addRecipeToMeal(this.meal.mealId, addRecipe).then((response) => {
+            //needs actual error handling
+        console.log(response + 'recipe added to meal successfully');   
+        })        
+
+          
         }
+       
 
 
   },
