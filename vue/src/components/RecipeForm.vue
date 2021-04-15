@@ -51,11 +51,17 @@
                 <button class='non-submit-buttons' v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
             </div>
 
-            <div class='input-line'>
+            <div class='new-ingredient-name'>
                 
-                <h3 >{{newIngredient.name}}</h3>
+
+                <p >add ingredient: {{newIngredient.name}}</p>
+            </div>
+            <div class='input-line'>
+
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-box" type='text' v-model="newIngredient.qty" />
+            </div>
+            <div class='input-line'>
                 <h3 class="input-label">  Measurement: </h3>
                 <select  v-model="newIngredient.unit">
                     <option value="pinch"> pinch </option>
@@ -79,6 +85,15 @@
                 </select>
                 <button class='small-non-submit-buttons' v-on:click.prevent='addIngredient()'>Add</button>
             </div>
+
+
+                <h2>Link an Image</h2>
+            <div class='input-line'>
+                <p class='input-label'>Image url:</p>
+                <input class="input-box" type='text' v-model="recipe.imgUrl"  />              
+            </div>
+
+
             
 
 
@@ -118,6 +133,9 @@
 
     <h3>Utensils Needed</h3>
     <p v-for="item in recipe.utensils" :key="item">{{item}}</p>
+
+          <img :src='recipe.imgUrl' id='detail-image'/>
+
 
             
         </div>
@@ -268,14 +286,6 @@ h2{
 
 
 
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-/* bookmark */
-
 
 .input-line{
     
@@ -285,6 +295,17 @@ h2{
     margin-bottom: 10px;
     
 }
+
+.new-ingredient-name{
+    
+    display: flex;
+    padding: 0px 0px 0px 10px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    font-size: 18pt;
+}
+
+
 
 
 .input-label{
@@ -321,6 +342,14 @@ outline: none;
 font-size: 20pt;
 
 }
+
+
+
+#detail-image{
+
+}
+
+
 
 .small-input-box {
 height: 24pt;
@@ -361,7 +390,7 @@ font-size: 20pt;
 
 
 #recipe-input{
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
     width: 45%;
     padding: 20px;
@@ -395,7 +424,7 @@ font-size: 20pt;
     max-height: 600px;
     height: auto;
     padding: 10px;
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
 
   border-radius: 5px;
@@ -410,7 +439,7 @@ font-size: 20pt;
     min-height: 300px;
     height: auto;
     padding: 20px;
-  box-shadow:0 4px 8px 0 darkcyan, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     max-height: 1000px;
     word-wrap: break-word;
@@ -485,9 +514,7 @@ align-content: center;
 
 }
 
-#recipe-input h2{
-width: 50%;
-}
+
 
 #router-wrapper{
     display: flex;
