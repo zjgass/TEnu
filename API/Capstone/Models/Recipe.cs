@@ -28,14 +28,16 @@ namespace Capstone.Models
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
         //JSON string
-        public string[] Utensils { get; set; }
+        public string[] Utensils { get; set; } = { "" };
 
         //JSON string
-        public string[] Instructions { get; set; }
+        public string[] Instructions { get; set; } = { "" };
 
         public string ImgUrl { get; set; }
 
         public string SubmittedBy { get; set; }
+
+        public List<Category> Categories { get; set; } = new List<Category>();
     }
 
 }

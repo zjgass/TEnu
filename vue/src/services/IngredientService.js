@@ -19,6 +19,4 @@ export default {
   deleteIngredient(ingredientId){
     return axios.delete(ingredientPath + `/${ingredientId}`);
   }
-
-
 }

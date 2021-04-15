@@ -10,7 +10,7 @@ namespace Capstone.DAO
     {
         Category CreateCategory(Category category);
 
-        Category GetCategories();
+        List<Category> GetCategories();
 
         Category UpdateCategory(Category category);
     }
