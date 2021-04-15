@@ -250,6 +250,10 @@ padding: 20px;
     font-size: 1.2rem;
     text-transform: capitalize;
             cursor: pointer;
+            border:none;
+            border-bottom: 2px darkcyan solid;
+            outline: none;
+
 }
 
 .new-plan{

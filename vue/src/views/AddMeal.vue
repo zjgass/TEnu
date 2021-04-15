@@ -2,7 +2,7 @@
   <div>
     <h1>Edit selected meal</h1>
     <meal-form />
-    <button v-on:click.prevent="toggleView()">Toggle View</button>
+    <button class='toggle-button-show-meals' v-on:click.prevent="toggleView()">Toggle View</button>
     <p>Showing: {{this.userOrPublic}} Recipes </p>
     <recipe-list v-bind:userOrPublic.sync="userOrPublic"/>
     
@@ -40,6 +40,12 @@ export default {
 <style scoped>
 #add-meal-instructions{
   margin-top: 20px;
+}
+
+
+.toggle-button-show-meals{
+
+  margin: 20px;
 }
 
 </style>

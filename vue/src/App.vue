@@ -63,6 +63,13 @@ background-color: darkcyan;
 
 }
 
+#nav :last-child{
+
+  margin-left: 50%;
+}
+
+
+
 .nav-button{
   font-size: 20px;
   height: 40px;
@@ -214,6 +221,7 @@ background-size: 100% 100%;
   padding: 0px;
   width: 100%;
 
+
 }
 
 #banner{
@@ -228,7 +236,7 @@ background-size: 100% 100%;
 .nav-button{
   margin-top: 0px;
   width: 100%;
-
+  border-radius: 0px;
 
 }
 

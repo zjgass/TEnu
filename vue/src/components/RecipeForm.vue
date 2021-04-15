@@ -51,11 +51,17 @@
                 <button class='non-submit-buttons' v-on:click.prevent="clearIngredients()">Clear Ingredients</button>
             </div>
 
-            <div class='input-line'>
+            <div class='new-ingredient-name'>
                 
-                <h3 >{{newIngredient.name}}</h3>
+
+                <p >add ingredient: {{newIngredient.name}}</p>
+            </div>
+            <div class='input-line'>
+
                 <h3 class="input-label">  Quantity: </h3>
                 <input class="input-box" type='text' v-model="newIngredient.qty" />
+            </div>
+            <div class='input-line'>
                 <h3 class="input-label">  Measurement: </h3>
                 <select  v-model="newIngredient.unit">
                     <option value="pinch"> pinch </option>
@@ -290,6 +296,17 @@ h2{
     
 }
 
+.new-ingredient-name{
+    
+    display: flex;
+    padding: 0px 0px 0px 10px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    font-size: 18pt;
+}
+
+
+
 
 .input-label{
     font-size: 18pt;
@@ -330,10 +347,10 @@ font-size: 20pt;
 
 #detail-image{
 
-
-
-
 }
+
+
+
 .small-input-box {
 height: 24pt;
 width: 60px;

@@ -80,7 +80,7 @@
         <ul>
 
 
-            <li class='current-ingredient-list-item' v-for="item in recipe.ingredients" :key="item" >
+            <li class='list-item' v-for="item in recipe.ingredients" :key="item" >
                 <p class="buttons" v-on:click="deleteIngredient(item)"> x </p>
                 <p class='ingredient-name-in-line'>{{ item.name }}</p>
                 Qty:  <input class="input-integer-text" type='text' v-model="item.qty" />
@@ -109,20 +109,16 @@
 
         <h2>utensils:</h2>
             <ul>
-                <li v-for="item in recipe.utensils" :key="item"> {{item}}
+                <li v-for="item in recipe.utensils" :key="item" class='list-item'> 
+                    
+
                     <p class="buttons" v-on:click.prevent="deleteUtensil(item)"> x </p>
+                    <p class='ingredient-name-in-line'> {{item}}</p>
+
                 </li>
             </ul>
             
-        <h2>instructions:</h2>
-            <input class="input-text" type='text' v-model="newInstruction" />
-            <input class="input-integer-text" type='text' v-model="newInstructionAt" />
-            <button class="add-button" v-on:click.prevent='insertInstructionAt()'>Add</button>
-            <ol>
-                <li v-for="item in recipe.instructions" :key="item"> {{item}}
-                    <p class="buttons" v-on:click.prevent="deleteInstruction(item)"> x </p> 
-                </li>
-            </ol>
+
 
         <h2>categories: </h2>
         <select class='category-dropdown'>
@@ -138,7 +134,22 @@
 
 
 <div id='instructions-box'>
+        <h2>instructions:</h2>
+            <input class="input-text" type='text' v-model="newInstruction" />
+            <input class="input-integer-text" type='text' v-model="newInstructionAt" />
+            <button class="add-button" v-on:click.prevent='insertInstructionAt()'>Add</button>
+            <ol>
 
+                    <li v-for="item in recipe.instructions" :key="item" class='list-item'>
+
+                    <div class='button-and-list-item'>
+                    <p class="buttons" v-on:click.prevent="deleteInstruction(item)"> x </p> 
+                    <p class='ingredient-name-in-line'> {{item}}</p>
+
+                    </div>
+                    </li>
+
+            </ol>
 </div>
 
     </div>
@@ -272,15 +283,34 @@ export default {
 
 <style scoped>
 
-.current-ingredient-list-item{
+
+
+/* **********************************
+********************************** */
+
+
+.list-item{
 list-style-type: none;
 display: flex;
 flex-direction: row;
 height: auto;
 min-height: 34px;
 margin-bottom: 5px;
-/* background-color: silver; */
+
 }
+
+ol{
+    padding: 0px;
+}
+.button-and-list-item{
+
+/* background-color: silver; */
+margin-bottom: 10px;
+display: flex;
+
+}
+
+
 
 .buttons{
     text-align: center;
@@ -299,18 +329,34 @@ margin-bottom: 5px;
 }
 
 .ingredient-name-in-line{
-    width: 60%;
+    width: 100%;
     height: auto;
     margin-top: 5px;
     font-size: 24px;
     margin-bottom: 0px;
+    padding-left: 5px;
 
 }
 
 
+
+
+
+/* **********************************
+********************************** */
+
+
+
+.category-dropdown{
+    width: 200px;
+    height: 40px;
+}
+
+
+
+
+
 #title-and-save-button{
-
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -348,7 +394,8 @@ width: 65
 
 }
 #instructions-box{
-    height: 600px;
+
+    height: auto;
     box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
