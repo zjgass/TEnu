@@ -162,7 +162,8 @@ height: auto;
 #app-wrapper{
   background-image: url("images/banner-image-2.jpg");
   background-size: 100%;
-
+  background-repeat: repeat-y;
+  height: 200%;
 
   
 }

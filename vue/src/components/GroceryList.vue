@@ -1,7 +1,7 @@
 <template>
 <div class="grocery-list">
 
-
+<h1>{{this.$store.state.userPlanList[this.$store.state.currentPlanId - 1].name}}</h1>
 <table id='table-list'>
    <tr id='first-row'>
     <th class='table-heading'>Ingredient</th>
@@ -89,6 +89,11 @@ th{
   margin-bottom: 10px;
   height: 90px;
 
+}
+
+h1{
+  margin-top: 20px;
+      text-transform: capitalize;
 }
 
 
