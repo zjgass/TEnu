@@ -18,6 +18,7 @@ if(currentToken != null) {
 }
 
 import planService from "../services/PlanService";
+import mealService from "../services/MealService";
 
 export default new Vuex.Store({
   state: {
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     userPlanList: [],
     currentPlanId: 1,
     currentPlan: [],
+    currentMealId: -1
  
   },
   mutations: {
@@ -44,6 +46,9 @@ export default new Vuex.Store({
     SET_CURRENT_PLAN(state, plan){
       state.currentPlan = plan;
     }, 
+    SET_CURRENT_MEAL_ID(state, mealId){
+      state.currentMealId = mealId;
+    },
     SET_CURRENT_PLAN_ID(state, id){
       state.currentPlanId = id;
     },
@@ -122,7 +127,20 @@ export default new Vuex.Store({
               this.errorMsg = "Error loading plan lists. Response received was '" + error.response.statusText + "'.";
             }
           })
+        },
+        addRecipeToMealRequest(context, recipeId) {
+          console.log('addRecipeToMealRequest dispatched');
+          mealService.addRecipeToMeal(this.state.currentMealId, recipeId).then((response) => {
+            //needs actual error handling
+           console.log('addRecipeToMealRequest action executed');
+           console.log(response + 'recipe added to meal successfully');   
+           //let clearRecipeList = [];
+           //context.commit("STORE_MEAL_RECIPES", clearRecipeList);
+        })        
+
+          
         }
+       
 
 
   },

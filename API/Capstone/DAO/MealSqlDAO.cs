@@ -77,7 +77,7 @@ namespace Capstone.DAO
             }
             catch (Exception)
             {
-                throw;
+                return GetMeal(mealId);
             }
             return GetMeal(mealId); 
         }
