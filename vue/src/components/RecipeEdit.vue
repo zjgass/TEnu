@@ -75,8 +75,6 @@
                 </select>
                 <button class="add-button" v-on:click.prevent='addIngredient()'>Add</button>
             </div>
-
-
         <ul>
 
 
@@ -262,7 +260,7 @@ export default {
         },
         deleteCategory(item){
             console.log("Attempting to delete instruction.");
-            this.recipe.categories.splice((this.recipe.instructions.indexOf(item)),1);
+            this.recipe.categories.splice((this.recipe.categories.indexOf(item)),1);
         }
     },
     created() {

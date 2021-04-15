@@ -144,6 +144,23 @@ export default {
         //*/
     };
   },
+
+  watch: {
+      enterNewPlanName: async function (){
+          if(this.enterNewPlanName === false){
+              let oldList = this.$store.state.userPlanList;
+              this.$store.dispatch('loadPlanList');
+              this.$forceUpdate;
+              this.currentPlanId = this.$store.state.userPlanList.fileter(
+                  plan => {
+                      if(!oldList.includes(plan)){
+                          return plan.planId;
+                      }
+                  })
+                //this.plan.name = "";
+          }
+      }
+  },
   
   mounted(){
        this.$store.dispatch('loadPlanList'); 
@@ -181,15 +198,16 @@ export default {
                     this.errorMsg = "Error creating new plan. Response received was '" + error.response.statusText + "'.";
                 }
             });
+        this.plan.name = "";
         this.enterNewPlanName = false;
-        this.newPlanName = "";
-        this.$store.dispatch('loadPlanList');
-        this.$forceUpdate;
-        this.currentPlanId = this.$store.state.userPlanList[this.$store.state.userPlanList.length - 1].planId;
 
-        this.changePlan();
-        this.enterNewPlanName = false;
-        this.newPlanName = "";
+        //this.$store.dispatch('loadPlanList');
+        //this.$forceUpdate;
+        //this.currentPlanId = this.$store.state.userPlanList[this.$store.state.userPlanList.length - 1].planId;
+
+        //this.changePlan();
+        //this.enterNewPlanName = false;
+        //this.newPlanName = "";
       }
   },
   created() {
