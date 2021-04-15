@@ -83,7 +83,7 @@
 
         <h1>{{recipe.name}}</h1>
         <h3>Instructions</h3>
-        <p>{{recipe.instructions}}</p>
+        <p v-for="item in recipe.instructions" :key="item">{{item}}</p>
 
         <h3>Ingredients</h3>
         <table>
@@ -102,7 +102,7 @@
 
 
     <h3>Utensils Needed</h3>
-    <p>{{recipe.utensils}}</p>
+    <p v-for="item in recipe.utensils" :key="item">{{item}}</p>
 
             
         </div>
@@ -138,12 +138,11 @@ export default {
         return {
             showDetails: true,
             storeLoaded: false,
-            ingredients: [],   
+            //ingredients: [],   
             newInstruction: "",    
             newUtensil: "",   
-            newIngredient: [],
+            newIngredient: "",
             recipe: {
-               // recipeId: 0, 
                 name: "",
                 isPublic: true,
                 description: "",
@@ -152,8 +151,8 @@ export default {
                 cookTime: "",
                 totalTime: "",
                 ingredients: [],
-                utensils: "",
-                instructions: "",
+                utensils: [],
+                instructions: [],
                 imgUrl: "",
                 submittedBy: "",
                 rating: 0
@@ -167,11 +166,11 @@ export default {
     },
     methods: {
         addInstruction(){
-            this.recipe.instructions += this.newInstruction.trim + "|";
+            this.recipe.instructions.push(this.newInstruction.trim());
             this.newInstruction = "";
          },
         addUtensil(){
-            this.recipe.utensils += this.newUtensil.trim + "|";
+            this.recipe.utensils.push(this.newUtensil.trim());
             this.newUtensil = "";
         }, 
         saveRecipe() {
@@ -215,7 +214,7 @@ export default {
         addIngredient(){
             this.showDetails = true;
             this.recipe.ingredients.push(this.newIngredient);
-            this.recipe.newIngredient = [];
+            this.newIngredient = "";
         },
         clearIngredients(){
             this.recipe.ingredients = [];

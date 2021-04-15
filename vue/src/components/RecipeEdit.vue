@@ -114,6 +114,15 @@
                     <p class="buttons" v-on:click.prevent="deleteInstruction(item)"> x </p> 
                 </li>
             </ol>
+
+        <h2>categories: </h2>
+        <select class='category-dropdown'>
+                    <option v-for="category in this.$store.state.existingCategories"                    
+                v-bind:key="category.categoryId"
+                v-bind:category="category"
+                > {{ category.name }}</option>
+            </select>
+        <div v-for="item in recipe.categories" :key="item">{{ item.name }} <p class="buttons" v-on:click.prevent="deleteCategory(item)"> x </p></div>
         </div>
 
       <!-- <tr v-for="recipe in Recipes" :key="recipe.recipeId" > -->
@@ -133,10 +142,12 @@
 <script>
 import recipeService from '@/services/RecipeService';
 import ingredientService from "../services/IngredientService";
+import categoryService from "../services/CategoryService";
 
 export default {
     name: 'recipe-edit',
     ingredients: [],
+    categories: [],
     data(){
         return {
             showDetails: true,
@@ -144,6 +155,7 @@ export default {
             newInstruction: "",
             newInstructionAt: 0,
             newIngredient: [],
+            newCategory: [],
             recipe: []
         }
     },
@@ -161,7 +173,23 @@ export default {
             )
             .catch(error => {
                 if(error.response){
-                    this.errorMsg = "Error loading all existing recipes.  Response received was '" + error.response.statusTest + "'.";
+                    this.errorMsg = "Error loading all existing ingredients.  Response received was '" + error.response.statusTest + "'.";
+                    console.log('load failed');
+                }
+            })
+
+        },
+        loadCategories(){
+            categoryService.getCategories()
+            .then(response => {
+                console.log(response.status); 
+                    this.categories = response.data;       
+                    console.log('Categories Loaded');
+                }
+            )
+            .catch(error => {
+                if(error.response){
+                    this.errorMsg = "Error loading all existing categories.  Response received was '" + error.response.statusTest + "'.";
                     console.log('load failed');
                 }
             })
@@ -213,10 +241,15 @@ export default {
         deleteInstruction(item){
             console.log("Attempting to delete instruction.");
             this.recipe.instructions.splice((this.recipe.instructions.indexOf(item)),1);
+        },
+        deleteCategory(item){
+            console.log("Attempting to delete instruction.");
+            this.recipe.categories.splice((this.recipe.instructions.indexOf(item)),1);
         }
     },
     created() {
         this.loadIngredients();
+        this.loadCategories();
         console.log('loaded recipeform');
         console.log("Started loading recipe to edit.")
         recipeService.getRecipe(this.$route.params.idedit)

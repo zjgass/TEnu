@@ -32,6 +32,8 @@
             <li v-for="item in recipe.instructions" :key="item"> {{item}} </li>
             <!--<p>{{recipe.instructions}}</p>-->
         </ol>
+        <h2>categories: </h2>
+        <div v-for="item in recipe.categories" :key="item">{{ item.name }}</div>
         </div>
 
 

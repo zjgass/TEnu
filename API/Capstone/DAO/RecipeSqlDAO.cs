@@ -43,7 +43,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@prep_time", recipe.PrepTime);
                     cmd.Parameters.AddWithValue("@cook_time", recipe.CookTime);
                     cmd.Parameters.AddWithValue("@total_time", recipe.TotalTime);
-                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils));
+                    cmd.Parameters.AddWithValue("@utensils", String.Join('|', recipe.Utensils ));
                     cmd.Parameters.AddWithValue("@instructions", String.Join('|', recipe.Instructions));
                     cmd.Parameters.AddWithValue("@img_url", recipe.ImgUrl);
                     cmd.Parameters.AddWithValue("@user_id", userId);
@@ -71,6 +71,27 @@ namespace Capstone.DAO
                             cmd.Parameters.AddWithValue($"@qty{i}", recipe.Ingredients[i].Qty);
                         }
                         cmd.ExecuteNonQuery(); //
+                    }
+
+                    if (recipe.Categories.Count != 0)
+                    {
+                        sqlText = "insert into category_recipe (category_id, recipe_id) " +
+                            "values ";
+
+                        for (int i =0; i < recipe.Categories.Count; i++)
+                        {
+                            sqlText += $"((select category_id from category where category_name = @category_name{i}), " +
+                                $"@recipe_id{i})" +
+                                (i == recipe.Categories.Count - 1 ? "; " : ",");
+                        }
+
+                        cmd = new SqlCommand(sqlText, conn);
+                        for (int i = 0; i < recipe.Categories.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@category_name{i}", recipe.Categories[i].Name);
+                            cmd.Parameters.AddWithValue($"@recipe_id{i}", recipe.RecipeId);
+                        }
+                        cmd.ExecuteNonQuery();
                     }
 
                     sqlText = "insert into recipe_users (recipe_id, user_id) " +
