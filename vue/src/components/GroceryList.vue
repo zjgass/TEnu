@@ -12,7 +12,7 @@
 v-bind:key='item.name'>
     <td class='column-1'>{{item.name}}</td>
     <td>{{item.qty}}</td>
-    <td>{{item.unit}}</td>
+    <td class='column-3'>{{item.unit}}</td>
   </tr>
 </table>
 
@@ -78,9 +78,15 @@ export default {
   width: 80%;
 }
 
+.colum-3{
+width: 20%;
+
+}
+
+
 table{
   width: 60%;
-  table-layout:auto;
+  table-layout: auto;
 }
 th{
   width: 100%;

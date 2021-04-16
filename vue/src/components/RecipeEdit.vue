@@ -14,17 +14,29 @@
         </div>
 
 
-        <input class="input-short-text" type='text' v-model="recipe.name"/>
-        <h2>serves: {{recipe.serves}}</h2>
-        <input class="input-short-text" type='text' v-model="recipe.serves"/>
-        <h2>prep time: {{recipe.prepTime}}</h2>
-        <input class="input-short-text" type='text' v-model="recipe.prepTime"/>
-        <h2>cook time: {{recipe.cookTime}}</h2>
-        <input class="input-short-text" type='text' v-model="recipe.cookTime"/>
-        <h2>total time: {{recipe.totalTime}}</h2>
-        <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
-        <h2>ingredients:</h2>
-        <div class='input-line'>
+        <div class='recipe-edit-line'>
+            <h2 class='edit-label'>change recipe name: </h2>
+            <input class="input-short-text-title" type='text' v-model="recipe.name"/>
+        </div>
+        <div class='recipe-edit-line'>
+            <h2 class='edit-label'>serves:</h2>
+            <input class="input-short-text" type='text' v-model="recipe.serves"/>
+        </div>
+        <div class='recipe-edit-line'>
+            <h2 class='edit-label'>prep time:</h2>
+            <input class="input-short-text" type='text' v-model="recipe.prepTime"/>
+        </div>
+        <div class='recipe-edit-line'>
+            <h2 class='edit-label'>cook time:</h2>
+            <input class="input-short-text" type='text' v-model="recipe.cookTime"/>
+        </div>
+        <div class='recipe-edit-line'>
+            <h2 class='edit-label'>total time:</h2>
+            <input class="input-short-text" type='text' v-model="recipe.totalTime"/>
+        </div>
+
+            <h2>Ingredients:</h2>
+            <div class='input-line'>
 
 
 
@@ -132,7 +144,7 @@
 
 
 <div id='instructions-box'>
-        <h2>instructions:</h2>
+        <h2 id='instructions-title'>Instructions</h2>
             <input class="input-text" type='text' v-model="newInstruction" />
             <input class="input-integer-text" type='text' v-model="newInstructionAt" />
             <button class="add-button" v-on:click.prevent='insertInstructionAt()'>Add</button>
@@ -375,6 +387,44 @@ width: 65
 
 }
 
+/* ****************************************** */
+.recipe-edit-line{
+    display: flex;
+}
+
+
+.edit-label{
+    text-transform: capitalize;
+    font-size: 20pt;
+    margin-right: 10px;
+}
+
+.input-short-text-title{
+
+    height: 32px;
+    font-size: 20pt;
+    border: none;
+    outline: none;
+    border-bottom: 2px darkcyan solid;
+
+}
+
+.input-short-text{
+
+    height: 28px;
+    font-size: 20pt;
+    width: 120px;
+        border: none;
+    outline: none;
+    border-bottom: 2px darkcyan solid;
+}
+
+
+
+
+
+/* ****************************************** */
+
 
 #recipe-box, #instructions-box{
     /* border: 1px solid black; */
@@ -407,9 +457,17 @@ ul{
     width: 100%;
 }
 
+#instructions-title{
+    text-align: center;
+    color: white;
+    background-color: darkcyan;
+    padding: 15px;
+    font-size: 24pt;
+}
+
 
 @media(max-width: 1400px) {
-#recipe-box, #image-box{
+#recipe-box, #image-box, #instructions-box{
 
 width: 95%;
 width: 95%;

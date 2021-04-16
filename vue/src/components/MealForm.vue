@@ -10,7 +10,7 @@
             </div>
             <div class='input-line'>
                 <p class='input-label' >Meal Name: </p>
-                <input type='text' v-model="meal.name"  />
+                <input id='meal-name-edit' type='text' v-model="meal.name"  />
 
             </div>
 
@@ -286,6 +286,18 @@ font-size: 24pt;
 
     
 }
+
+#meal-name-edit{
+    font-size: 20px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-bottom: 2px darkcyan solid;
+
+
+}
+
+
 
 #meal-item{
     background-color: red;
