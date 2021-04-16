@@ -89,6 +89,7 @@ export default {
   width: .5fr;
   /* margin: 5px 10px 5px 10px; */
   padding: 0px 0px 0px 0px;
+
   
 }
 

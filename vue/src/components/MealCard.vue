@@ -6,7 +6,7 @@
             <router-link  v-bind:to="{ name: 'AddMeal', params: {id : meal.mealId, mealTime: mealTime, mealDay: mealDay} }">
             <div class="meal-body">  
               <h3 id='meal-name'>{{meal.name}}</h3> 
-              <h3 id='total-time'> Total Time: {{mealTotalTime}}</h3> <!--{{meal.totaltime}}</h3> -->
+              <h3 id='total-time'> Total Time: {{mealTotalTime}} Min</h3> <!--{{meal.totaltime}}</h3> -->
               <!-- <h3>{{meal.recipeList[0].name}}</h3> -->
 
               
@@ -16,9 +16,6 @@
               </div>
 
               -->
-
-
-  
 
               <div class='delete-prompt' v-show='deletePromptDiv'>
                     <h3>Do you wish to remove this meal?</h3>
@@ -79,16 +76,24 @@ export default {
             let mealTime = 0;
 
             if(this.$store.state.currentPlan.meals.find((meal) => {
-                return meal.mealId == this.$route.params.id}) != undefined)
+                return meal.mealId == this.meal.mealId}) != undefined)
                 {
                     let returnMeal = this.$store.state.currentPlan.meals.find((meal) => {
-                        return meal.mealId == this.$route.params.id
+                        return meal.mealId == this.meal.mealId;
                     })
+   
+                    if(returnMeal.recipeList.length != 0){
 
-                    if(returnMeal.recipeList.count != null){
-                            mealTime = returnMeal.recipeList.reduce((accumulator, recipe) => {
-                                return accumulator += recipe.totalTime;
-                            },0)
+                        const timeArray = [];
+
+                        returnMeal.recipeList.forEach(element => {
+                            timeArray.unshift(element.totalTime);
+                        });
+                     
+                        let max = Math.max(...timeArray);
+                        mealTime = max;
+                        console.log(max);
+                   
                     }
 
                     /*

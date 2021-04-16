@@ -224,6 +224,11 @@ background-size: 100% 100%;
 
 }
 
+#nav :last-child{
+
+  margin-left: 0px;
+}
+
 #banner{
  padding: 0px;
    background-image: none;

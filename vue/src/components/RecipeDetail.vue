@@ -33,7 +33,7 @@
             <!--<p>{{recipe.instructions}}</p>-->
         </ol>
         <h2>categories: </h2>
-        <div v-for="item in recipe.categories" :key="item">{{ item.name }}</div>
+        <div id='category' v-for="item in recipe.categories" :key="item">{{ item.name }}</div>
         </div>
 
 
@@ -101,7 +101,9 @@ width: auto;
     height: 100%;
 }
 
-
+#category{
+    font-size: 18pt;
+}
 
 #recipe-box, #image-box{
     /* border: 1px solid black; */
