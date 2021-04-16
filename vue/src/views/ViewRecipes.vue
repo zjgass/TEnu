@@ -62,6 +62,7 @@ width: auto;
 font-size: 20pt;
 margin: 0px;
 margin-right: 40px;
+text-transform: capitalize;
 }
 
 
