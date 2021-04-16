@@ -17,9 +17,6 @@
 
               -->
 
-
-  
-
               <div class='delete-prompt' v-show='deletePromptDiv'>
                     <h3>Do you wish to remove this meal?</h3>
                     <button v-on:click.prevent='deleteThisMeal()'>Yes</button>
